@@ -5,7 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha Cadastral</title>
     <style>
-        /* Seu CSS completo, inalterado */
+        /* CSS INALTERADO */ 
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        /* ESTILOS CORRIGIDOS DO CABEÇALHO */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            width: 100px;
+            height: 50px;
+            border: 1px dashed #ccc;
+            text-align: center;
+            line-height: 50px;
+            font-size: 10px;
+        }
+        
+        .header-title {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .header-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .header-date {
+            width: 150px;
+            font-size: 10px;
+        }
+        
+        /* ESTILOS CORRIGIDOS DOS BOTÕES DE ABA */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            background-color: #f1f1f1;
+            margin-bottom: -2px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 10px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .tab-button:hover {
+            background-color: #e2e2e2;
+        }
+        
+        .tab-button.active {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+            border-bottom-color: #fff;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        /* ESTILOS INALTERADOS */
         .tooltip-container {
             position: relative;
             display: inline-flex;
@@ -58,40 +147,6 @@
             visibility: visible;
             opacity: 1;
         }
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            width: 800px;
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .header-logo {
-            width: 100px;
-            height: 50px;
-            border: 1px dashed #ccc;
-            text-align: center;
-            line-height: 50px;
-            font-size: 10px;
-        }
-        .header-title {
-            text-align: center;
-            flex-grow: 1;
-        }
-        .header-title h1 {
-            font-size: 16px;
-            margin: 0;
-        }
-        .header-date {
-            width: 150px;
-            font-size: 10px;
-        }
         .form-section {
             border: 1px solid #000;
             margin-bottom: 15px;
@@ -101,6 +156,7 @@
             font-size: 12px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: #000; /* Removido o fundo preto para os títulos de seção internos */
         }
         .field-group {
             display: flex;
@@ -222,35 +278,6 @@
         .save-button:hover {
             background-color: #0056b3;
         }
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            border-bottom: 2px solid #ccc;
-            margin-bottom: 20px;
-        }
-        .tab-button {
-            padding: 10px 20px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            border-bottom: none;
-            background-color: #f1f1f1;
-            margin-bottom: -2px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            transition: background-color 0.3s;
-            font-size: 10px;
-            font-weight: bold;
-        }
-        .tab-button:hover {
-            background-color: #e2e2e2;
-        }
-        .tab-button.active {
-            background-color: #fff;
-            border-color: #000;
-            border-bottom-color: #fff;
-            color: #000;
-        }
         .tab-content {
             display: none;
             padding: 15px;
@@ -315,7 +342,7 @@
 
         /* Novo estilo para a assinatura */
         .signature-block {
-            margin-top: 80px; /* Aumenta o espaço para a assinatura */
+            margin-top: 80px;
             text-align: center;
         }
         .signature-block .line {
@@ -343,7 +370,7 @@
 
     <div id="form-content">
         <div class="header">
-            <div class="header-logo">LOGO</div>
+           <img src="C:\Users\nilton.filho\Desktop\projeto ficha\Nova pasta\logo.svg" alt="Logo da Empresa" class="header-logo">
             <div class="header-title">
                 <h1>FICHA CADASTRO</h1>
             </div>
@@ -354,19 +381,19 @@
         </div>
 
         <div class="tabs">
-            <button class="tab-button active" data-tab-target="#identificacao">Identificação</button>
-            <button class="tab-button" data-tab-target="#info-pf">Informações P.F.</button>
-            <button class="tab-button" data-tab-target="#endereco-pf">Endereço P.F.</button>
-            <button class="tab-button" data-tab-target="#rendas">Rendas</button>
-            <button class="tab-button" data-tab-target="#outras-receitas">Outras Receitas</button>
-            <button class="tab-button" data-tab-target="#dados-financeiros">Dados Financeiros</button>
-            <button class="tab-button" data-tab-target="#pecuaria">Pecuária</button>
-            <button class="tab-button" data-tab-target="#bens-moveis">Bens Móveis</button>
-            <button class="tab-button" data-tab-target="#bens-imoveis">Bens Imóveis</button>
-            <button class="tab-button" data-tab-target="#funcionarios">Funcionários</button>
-            <button class="tab-button" data-tab-target="#seguros">Seguros</button>
-            <button class="tab-button" data-tab-target="#aceites">Aceites</button>
-            <button class="tab-button" data-tab-target="#declaracao">Declaração</button>
+            <button class="tab-button active section-title" data-tab-target="#identificacao">Identificação</button>
+            <button class="tab-button section-title" data-tab-target="#info-pf">Informações P.F.</button>
+            <button class="tab-button section-title" data-tab-target="#endereco-pf">Endereço P.F.</button>
+            <button class="tab-button section-title" data-tab-target="#rendas">Rendas</button>
+            <button class="tab-button section-title" data-tab-target="#outras-receitas">Outras Receitas</button>
+            <button class="tab-button section-title" data-tab-target="#dados-financeiros">Dados Financeiros</button>
+            <button class="tab-button section-title" data-tab-target="#pecuaria">Pecuária</button>
+            <button class="tab-button section-title" data-tab-target="#bens-moveis">Bens Móveis</button>
+            <button class="tab-button section-title" data-tab-target="#bens-imoveis">Bens Imóveis</button>
+            <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
+            <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
+            <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
+            <button class="tab-button section-title" data-tab-target="#declaracao">Declaração</button>
         </div>
         
         <div class="tab-content-container">
@@ -684,7 +711,7 @@
                         </div>
                         <div class="field-item">
                             <label>Valor remuneração</label>
-                            <input type="text" class="valor-input" placeholder="0,00">
+                            <input type="text" class="valor-input" placeholder="R$ 0,00">
                         </div>
                         <div class="field-item">
                             <label>Insc. Estadual</label>
@@ -740,15 +767,15 @@
                         </div>
                         <div class="field-item">
                             <label>Receita Bruta Agrícola</label>
-                            <input type="text" class="valor-input" id="receita-agricola" placeholder="0,00">
+                            <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
                         </div>
                         <div class="field-item">
                             <label>Demais Receitas</label>
-                            <input type="text" class="valor-input" id="demais-receitas" placeholder="0,00">
+                            <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
                         </div>
                         <div class="field-item">
                             <label>Total Rendas</label>
-                            <input type="text" class="valor-input" id="total-rendas" placeholder="0,00" readonly>
+                            <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
                         </div>
                     </div>
                 </div>
@@ -785,11 +812,11 @@
                             </div>
                             <div class="field-item">
                                 <label>Preço por saca (R$)</label>
-                                <input type="text" class="valor-input renda-preco" placeholder="0,00">
+                                <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Valor da produção (R$)</label>
-                                <input type="text" class="valor-input renda-valor-producao" placeholder="0,00" readonly>
+                                <input type="text" class="valor-input renda-valor-producao" placeholder="R$ 0,00" readonly>
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -803,7 +830,7 @@
                             <div class="field-item">
                                 <label>Ano safra</label>
                                 <select>
-                                    <option value="2024/2025">2024/2025</option>
+                                    <option value="2024/2025">2224/2025</option>
                                     <option value="2025/2026">2025/2026</option>
                                 </select>
                             </div>
@@ -828,11 +855,11 @@
                             </div>
                             <div class="field-item">
                                 <label>Preço por saca (R$)</label>
-                                <input type="text" class="valor-input projecao-preco" placeholder="0,00">
+                                <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Valor da produção (R$)</label>
-                                <input type="text" class="valor-input projecao-valor-producao" placeholder="0,00" readonly>
+                                <input type="text" class="valor-input projecao-valor-producao" placeholder="R$ 0,00" readonly>
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -851,11 +878,11 @@
                             </div>
                             <div class="field-item">
                                 <label>Vr. Mensal</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Vr. Anual</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -928,7 +955,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Vr. Mercado</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Obs.</label>
@@ -955,7 +982,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Valor de mercado</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Marca</label>
@@ -983,7 +1010,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Valor de mercado</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Marca</label>
@@ -1018,7 +1045,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Valor venal</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Município</label>
@@ -1111,7 +1138,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Valor média folha fixos</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Qtde. temporários</label>
@@ -1119,7 +1146,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Valor média folha temporários</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                         </div>
                     </div>
@@ -1147,7 +1174,7 @@
                             </div>
                             <div class="field-item">
                                 <label>Vr. cobertura</label>
-                                <input type="text" class="valor-input" placeholder="0,00">
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Vencimento</label>
@@ -1237,32 +1264,30 @@
                     <div style="margin-top: 10px;">
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>I. consultar os débitos e responsabilidades decorrentes de operações com características de crédito e demais informações e registros que em seu nome constem ou venham a contar do Sistema de Informações de Crédito (SCR), gerido pelo Banco Central do Brasil (BACEN), declarando estar ciente que os dados de suas respectivas operações contratadas com a Tentos S.A Crédito, Financiamento e Investimento, serão registrados no SCR e que o mesmo poderá ser consultado por outras instituições financeiras ou de qualquer forma autorizadas a consultar o referido Sistema, para fins de análise de risco de crédito, a qualquer tempo.</p>
+                            <p>I. Consultar os débitos e responsabilidades decorrentes de operações com características de crédito e demais informações e registros que em seu nome constem ou venham a contar do Sistema de Informações de Crédito (SCR), gerido pelo Banco Central do Brasil (BACEN), declarando estar ciente que os dados de suas respectivas operações contratadas com a Tentos S.A Crédito, Financiamento e Investimento também serão registradas no SCR;</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>II. realizar consultas em seu nome ao Cadastro de Clientes do Sistema Financeiro Nacional (CCS), gerido pelo Banco Central do Brasil (BACEN), declarando estar ciente de que os dados sobre o relacionamento com a Tentos S.A Crédito, Financiamento e Investimento poderão ser registrados no referido sistema.</p>
+                            <p>II. consultar todas as organizações de cadastros de proteção ao crédito, incluindo mas não se limitando ao Serviço de Proteção ao Crédito (SPC), Serviço Central de Proteção ao Crédito (SCPC), Serasa Experian, SCI Brasil, e assemelhados sobre suas obrigações, bem como a divulgar seus dados, inclusive cadastrais, relativos às operações contratadas e aos débitos constituídos perante a Tentos S.A Crédito, Financiamento e Investimento decorrentes de operações com características de crédito, para constarem nos bancos dessas empresas, cuja finalidade será o compartilhamento com os contratantes das referidas entidades, que utilizarão esses dados para subsidiar suas decisões de crédito e negócios;</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>III. consultar o Cadastro Positivo, declarando estar ciente de que as informações de adimplemento das suas obrigações financeiras e de pagamentos poderão ser registradas e consultadas pelas empresas de proteção ao crédito.</p>
+                            <p> Consultar as informações e processos em seu nome que constem nas bases informatizadas do Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis (IBAMA), do Instituto Chico Mendes de Conservação da Biodiversidade (ICM-Bio), além de outros órgãos ambientais federais, estaduais e municipais no âmbito de suas competências;</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>IV. consultar a plataforma de informações de Crédito Rural mantida pelo Banco Central do Brasil (BACEN), especialmente quanto ao valor do seu limite de crédito rural, e aos registros de operações de crédito rural com outras instituições financeiras.</p>
+                            <p>IV – Fornecer, a qualquer tempo, informações relativas à dados pessoais e/ou operações de crédito que tenha contratado com a Tentos S.A Crédito, Financiamento e Investimento, por obrigação regulatória ou solicitação de entes ou órgãos federais, estaduais e municipais, tais como, Ministério da Agricultura, Pecuária e Abastecimento, Ministério da Fazenda, Banco Central do Brasil, bem como suas secretarias, mas não limitados a estes;</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>V. consultar bases de dados públicas e privadas, especialmente à Receita Federal, para verificação de informações cadastrais, de renda, patrimônio e de crédito, para fins de análise de risco e verificação de informações prestadas.</p>
+                            <p>V – Acessar dados relativos às suas operações registradas no Sistema de Operações do Crédito Rural e do Proagro (Sicor), com a finalidade de obter informações relativas às características das propriedades, empreendimentos financiados e operações de crédito rural; permitir o uso de dados necessários em processos de certificação, validação ou de natureza semelhante, em que o beneficiário do crédito rural seja parte envolvida; examinar o nível de alavancagem e o grau de endividamento do beneficiário de crédito rural em operações de crédito rural;
+</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>VI. autoriza a coleta, armazenamento, tratamento e compartilhamento das informações e dados pessoais do seu cadastro, para as finalidades relacionadas à análise de crédito, à concessão de crédito, à manutenção e gestão do crédito concedido, e às demais finalidades previstas em lei ou nos regulamentos dos órgãos competentes.</p>
-                        </div>
-                        <div class="legal-item">
-                            <input type="checkbox" checked>
-                            <p>VII. autoriza o envio de informações e comunicações relativas às suas operações e serviços contratados, por meio de mensagens eletrônicas (SMS, e-mail), WhatsApp ou qualquer outro meio de comunicação digital.</p>
-                        </div>
+                            <p>VI – compartilhar os dados pessoais aqui referidos neste instrumento, bem como aqueles referentes a volumes e periodicidade de pagamento de crédito concedidos, com as demais empresas integrantes do Grupo 3tentos, com o objetivo de criar um limite geral de crédito do cliente, analisar seu potencial de adimplemento do empréstimo e assegurar a prestação mais personalizada e adequada dos serviços.</p>
+                       
+                                                </div>
                     </div>
                 </div>
             </div>
@@ -1290,9 +1315,8 @@
                 </div>
             </div>
         </div>
-    </div>
-
-  <script>
+    </div> 
+<script>
     document.addEventListener('DOMContentLoaded', () => {
         const tabs = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -1300,19 +1324,18 @@
         const regimeCasamentoContainer = document.getElementById('regime-casamento-container');
         const conjugeInfoContainer = document.getElementById('conjuge-info-container');
         const conjugeInfoContainer2 = document.getElementById('conjuge-info-container-2');
-        const conjugeInfoContainer3 = document.getElementById('conjuge-info-container-3');
+        const conjugeInfoContainer3 = document = document.getElementById('conjuge-info-container-3');
         const pepSelect = document.getElementById('pep-select');
         const pepDetailsContainer = document.getElementById('pep-details-container');
         const pepRelacionamentoSelect = document.getElementById('pep-relacionamento-select');
         const pepRelacionamentoDetailsContainer = document.getElementById('pep-relacionamento-details-container');
-        const nomePfInput = document.getElementById('nome-pf');
-        const cpfInput = document.getElementById('cpf');
-        
+        const totalRendasInput = document.getElementById('total-rendas');
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 tabs.forEach(item => item.classList.remove('active'));
                 tabContents.forEach(item => item.classList.remove('active'));
-                
+
                 tab.classList.add('active');
                 const target = document.querySelector(tab.dataset.tabTarget);
                 target.classList.add('active');
@@ -1379,49 +1402,124 @@
             }
         });
 
-        // Removida a função formatValue e o listener. A formatação agora ocorre apenas no output.
-        // As entradas de valor serão tratadas como números para o cálculo.
-
         const parseValor = (valorString) => {
             if (!valorString) return 0;
-            return parseFloat(valorString.replace(/\./g, '').replace(',', '.')) || 0;
+            return parseFloat(valorString.replace('R$ ', '').replace(/\./g, '').replace(',', '.')) || 0;
         };
 
         const formatarValor = (valor) => {
-            if (isNaN(valor)) return '0,00';
-            return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (isNaN(valor)) return 'R$ 0,00';
+            const formatted = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return `R$ ${formatted}`;
         };
 
-        const setupRendaCalculations = (containerId) => {
-            const container = document.getElementById(containerId);
-            container.addEventListener('input', (event) => {
-                const item = event.target.closest('.renda-safra-item, .projecao-safra-item');
-                if (item) {
-                    const areaInput = item.querySelector('.renda-area, .projecao-area');
-                    const produtividadeInput = item.querySelector('.renda-produtividade, .projecao-produtividade');
-                    const precoInput = item.querySelector('.renda-preco, .projecao-preco');
-                    const valorProducaoInput = item.querySelector('.renda-valor-producao, .projecao-valor-producao');
+        // Máscara de CPF
+        const applyCpfMask = (event) => {
+            let value = event.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            if (value.length > 9) {
+                value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            } else if (value.length > 6) {
+                value = value.replace(/^(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
+            } else if (value.length > 3) {
+                value = value.replace(/^(\d{3})(\d{3})/, '$1.$2');
+            } else if (value.length > 0) {
+                value = value.replace(/^(\d{3})/, '$1');
+            }
+            event.target.value = value;
+        };
 
-                    const area = parseFloat(areaInput.value) || 0;
-                    const produtividade = parseFloat(produtividadeInput.value) || 0;
-                    const preco = parseValor(precoInput.value);
+        // Máscara de Telefone e Celular
+        const applyPhoneMask = (event) => {
+            let value = event.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            if (value.length === 11) { // Celular com 9º dígito
+                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length === 10) { // Telefone fixo ou celular sem 9º dígito
+                value = value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                value = value.replace(/^(\d{2})(\d{4,5})/, '($1) $2-');
+            } else if (value.length > 2) {
+                value = value.replace(/^(\d{2})/, '($1) ');
+            }
+            event.target.value = value;
+        };
 
-                    if (area > 0 && produtividade > 0 && preco > 0) {
-                        const valor = area * produtividade * preco;
-                        valorProducaoInput.value = formatarValor(valor);
-                    } else {
-                        valorProducaoInput.value = '0,00';
-                    }
+        // Aplica as máscaras nos campos específicos
+        document.getElementById('cpf').addEventListener('input', applyCpfMask);
+        document.getElementById('cpf-conjuge').addEventListener('input', applyCpfMask);
+        document.getElementById('telefone').addEventListener('input', applyPhoneMask);
+        document.getElementById('celular').addEventListener('input', applyPhoneMask);
+
+        // Delegação de eventos para máscara de valor
+        document.body.addEventListener('focus', (event) => {
+            if (event.target.classList.contains('valor-input')) {
+                // Excluir campos de soma da lógica de focus para evitar que o valor seja apagado
+                if (event.target.classList.contains('renda-valor-producao') || event.target.id === 'total-rendas') {
+                    return;
                 }
-            });
+                let value = event.target.value.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+                if (value === '0.00' || value === '0') {
+                    event.target.value = '';
+                } else {
+                    event.target.value = value;
+                }
+            }
+        }, true);
+
+        document.body.addEventListener('blur', (event) => {
+            if (event.target.classList.contains('valor-input')) {
+                // Excluir campos de soma da lógica de blur para evitar reformatar
+                if (event.target.classList.contains('renda-valor-producao') || event.target.id === 'total-rendas') {
+                    return;
+                }
+                event.target.value = formatarValor(parseValor(event.target.value));
+            }
+        }, true);
+
+        // Inicializa os placeholders de todos os campos de valor na página
+        document.querySelectorAll('.valor-input').forEach(input => {
+            if (input.value) {
+                input.value = formatarValor(parseValor(input.value));
+            } else {
+                input.placeholder = 'R$ 0,00';
+            }
+        });
+
+        const calcularValorProducao = (item) => {
+            const areaInput = item.querySelector('.renda-area, .projecao-area');
+            const produtividadeInput = item.querySelector('.renda-produtividade, .projecao-produtividade');
+            const precoInput = item.querySelector('.renda-preco, .projecao-preco');
+            const valorProducaoInput = item.querySelector('.renda-valor-producao, .projecao-valor-producao');
+
+            const area = parseFloat(areaInput.value) || 0;
+            const produtividade = parseFloat(produtividadeInput.value) || 0;
+            const preco = parseValor(precoInput.value);
+
+            if (area > 0 && produtividade > 0 && preco > 0) {
+                const valor = area * produtividade * preco;
+                valorProducaoInput.value = formatarValor(valor);
+            } else {
+                valorProducaoInput.value = 'R$ 0,00';
+            }
         };
 
-        setupRendaCalculations('renda-safra-container');
-        setupRendaCalculations('projecao-safra-container');
+        // Delegação de eventos para cálculo de renda
+        document.body.addEventListener('blur', (event) => {
+            const item = event.target.closest('.renda-safra-item, .projecao-safra-item');
+            if (item) {
+                const target = event.target;
+                if (target.classList.contains('renda-area') || target.classList.contains('projecao-area') ||
+                    target.classList.contains('renda-produtividade') || target.classList.contains('projecao-produtividade') ||
+                    target.classList.contains('renda-preco') || target.classList.contains('projecao-preco')) {
+                    calcularValorProducao(item);
+                }
+            }
+        }, true);
 
         const receitaAgricolaInput = document.getElementById('receita-agricola');
         const demaisReceitasInput = document.getElementById('demais-receitas');
-        const totalRendasInput = document.getElementById('total-rendas');
+
 
         const calcularTotalRendas = () => {
             const receitaAgricola = parseValor(receitaAgricolaInput.value);
@@ -1430,16 +1528,16 @@
             totalRendasInput.value = formatarValor(totalRendas);
         };
 
-        receitaAgricolaInput.addEventListener('input', calcularTotalRendas);
-        demaisReceitasInput.addEventListener('input', calcularTotalRendas);
+        receitaAgricolaInput.addEventListener('blur', calcularTotalRendas);
+        demaisReceitasInput.addEventListener('blur', calcularTotalRendas);
 
         document.body.addEventListener('click', (event) => {
             const button = event.target;
-            
+
             if (button.classList.contains('add-button')) {
                 const item = button.closest('.field-group');
                 const newItem = item.cloneNode(true);
-                
+
                 newItem.querySelectorAll('input, select, textarea').forEach(input => {
                     if (input.type === 'checkbox') {
                         input.checked = false;
@@ -1447,14 +1545,14 @@
                         input.value = '';
                     }
                 });
-                
+
                 const newButton = newItem.querySelector('.add-button');
                 if (newButton) {
                     newButton.textContent = '- Remover';
                     newButton.classList.remove('add-button');
                     newButton.classList.add('remove-button');
                 }
-                
+
                 const kmlDisplay = newItem.querySelector('.kml-area-display');
                 if (kmlDisplay) {
                     kmlDisplay.textContent = '';
@@ -1489,7 +1587,7 @@
                             const parser = new DOMParser();
                             const kmlDoc = parser.parseFromString(kmlText, "text/xml");
                             const coordinatesText = kmlDoc.querySelector('coordinates').textContent;
-                            
+
                             const coords = coordinatesText.trim().split(/\s+/).map(c => c.split(',').map(Number));
                             if (coords.length > 2) {
                                 let area = 0;
@@ -1497,10 +1595,10 @@
                                     area += coords[i][0] * coords[i+1][1] - coords[i+1][0] * coords[i][1];
                                 }
                                 area = Math.abs(area / 2);
-                                
+
                                 const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
                                 areaDisplay.textContent = `Área calculada: ${area.toFixed(2)} ha`;
-                                
+
                                 const areaTotalInput = event.target.closest('.field-group').querySelector('[aria-label="Área total (ha)"]');
                                 if (areaTotalInput) {
                                     areaTotalInput.value = area.toFixed(2);
@@ -1541,5 +1639,5 @@
             if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
         }
     });
-</script> </body>
+</script>  </body>
 </html>
