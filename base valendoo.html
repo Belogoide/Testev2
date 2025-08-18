@@ -6,8 +6,8 @@
     <title>Ficha Cadastral</title>
     <style>
         /* CSS INALTERADO */ 
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
         body {
             font-family: Arial, sans-serif;
@@ -335,6 +335,12 @@
             .print-only {
                 display: block !important;
             }
+            .tab-button[data-tab-target="#declaracao"] {
+                display: none !important; /* Oculta o botão da aba Declaração no PDF */
+            }
+            .add-button, .remove-button, .kml-button {
+                display: none !important; /* Oculta os botões de adicionar/remover no PDF */
+            }
         }
         .print-only {
             display: none;
@@ -362,6 +368,10 @@
         }
         .flex-row-signature .signature-item {
             text-align: center;
+        }
+        /* Oculta a aba Declaração no site */
+        .tab-button[data-tab-target="#declaracao"] {
+            display: none;
         }
     </style>
 </head>
@@ -393,7 +403,7 @@
             <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
             <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
             <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
-            <button class="tab-button section-title" data-tab-target="#declaracao">Declaração</button>
+            <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
         </div>
         
         <div class="tab-content-container">
@@ -459,42 +469,43 @@
                                 <option value="Pelotas">Pelotas</option>
                                 <option value="Porto dos Gaúchos">Porto dos Gaúchos</option>
                                 <option value="Querência">Querência</option>
-                                <option value="Rosário do Sul">Rosário do Sul</option>
-                                <option value="Saldanha Marinho">Saldanha Marinho</option>
+                                <option value="Redentora">Redentora</option>
+                                <option value="Rio Grande">Rio Grande</option>
                                 <option value="Santa Bárbara do Sul">Santa Bárbara do Sul</option>
-                                <option value="Santa Cruz do Xingu">Santa Cruz do Xingu</option>
                                 <option value="Santa Maria">Santa Maria</option>
-                                <option value="Santa Vitória do Palmar">Santa Vitória do Palmar</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
                                 <option value="Santiago">Santiago</option>
-                                <option value="Santo Augusto">Santo Augusto</option>
+                                <option value="Santo Ângelo">Santo Ângelo</option>
+                                <option value="São Borja">São Borja</option>
                                 <option value="São Gabriel">São Gabriel</option>
                                 <option value="São Luiz Gonzaga">São Luiz Gonzaga</option>
+                                <option value="Sarandi">Sarandi</option>
+                                <option value="Selbach">Selbach</option>
                                 <option value="Sinop">Sinop</option>
-                                <option value="Sorriso">Sorriso</option>
-                                <option value="Três de Maio">Três de Maio</option>
+                                <option value="Tapejara">Tapejara</option>
+                                <option value="Tapera">Tapera</option>
+                                <option value="Tenente Portela">Tenente Portela</option>
                                 <option value="Tupanciretã">Tupanciretã</option>
-                                <option value="Vacaria">Vacaria</option>
+                                <option value="Uruguaiana">Uruguaiana</option>
+                                <option value="Vera">Vera</option>
+                                <option value="Victor Graeff">Victor Graeff</option>
+                                <option value="Vitória das Missões">Vitória das Missões</option>
                             </select>
                         </div>
                         <div class="field-item">
-                            <label>Regional TC</label>
+                            <label>Tipo de Pessoa</label>
+                            <select id="tipo-pessoa">
+                                <option value="PF">Pessoa Física</option>
+                                <option value="PJ">Pessoa Jurídica</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label>Ramo de Atividade</label>
                             <select>
                                 <option value="">Selecione</option>
-                                <option value="Noroeste - Ijuí">Noroeste - Ijuí</option>
-                                <option value="Noroeste - Missões">Noroeste - Missões</option>
-                                <option value="Norte - Matriz">Norte - Matriz</option>
-                                <option value="Norte - Passo Fundo">Norte - Passo Fundo</option>
-                                <option value="Planalto">Planalto</option>
-                                <option value="Pomelo">Pomelo</option>
-                                <option value="Sudeste - Centro">Sudeste - Centro</option>
-                                <option value="Sudeste - Litoral">Sudeste - Litoral</option>
-                                <option value="Sul">Sul</option>
-                                <option value="163 Norte - Alta Floresta - MT">163 Norte - Alta Floresta - MT</option>
-                                <option value="163 Norte - Sinop - MT">163 Norte - Sinop - MT</option>
-                                <option value="163 Sul - Lucas do Rio Verde - MT">163 Sul - Lucas do Rio Verde - MT</option>
-                                <option value="163 Sul - Sorriso - MT">163 Sul - Sorriso - MT</option>
-                                <option value="Araguaia Norte - MT">Araguaia Norte - MT</option>
-                                <option value="Araguaia Sul - MT">Araguaia Sul - MT</option>
+                                <option value="Agricultor">Agricultor</option>
+                                <option value="Pecuarista">Pecuarista</option>
+                                <option value="Ambos">Ambos</option>
                             </select>
                         </div>
                     </div>
@@ -793,17 +804,10 @@
                             </div>
                             <div class="field-item">
                                 <label>Cultura</label>
-                                <select>
-                                    <option value="Soja">Soja</option>
-                                    <option value="Milho">Milho</option>
-                                    <option value="Trigo">Trigo</option>
-                                    <option value="Canola">Canola</option>
-                                    <option value="Sorgo">Sorgo</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
+                                <input type="text">
                             </div>
                             <div class="field-item">
-                                <label>Área plantada (ha)</label>
+                                <label>Área (ha)</label>
                                 <input type="number" class="renda-area">
                             </div>
                             <div class="field-item">
@@ -811,12 +815,12 @@
                                 <input type="number" class="renda-produtividade">
                             </div>
                             <div class="field-item">
-                                <label>Preço por saca (R$)</label>
+                                <label>Preço (R$/sc)</label>
                                 <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
-                                <label>Valor da produção (R$)</label>
-                                <input type="text" class="valor-input renda-valor-producao" placeholder="R$ 0,00" readonly>
+                                <label>Valor da Produção</label>
+                                <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -830,23 +834,16 @@
                             <div class="field-item">
                                 <label>Ano safra</label>
                                 <select>
-                                    <option value="2024/2025">2224/2025</option>
+                                    <option value="2024/2025">2024/2025</option>
                                     <option value="2025/2026">2025/2026</option>
                                 </select>
                             </div>
                             <div class="field-item">
                                 <label>Cultura</label>
-                                <select>
-                                    <option value="Soja">Soja</option>
-                                    <option value="Milho">Milho</option>
-                                    <option value="Trigo">Trigo</option>
-                                    <option value="Canola">Canola</option>
-                                    <option value="Sorgo">Sorgo</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
+                                <input type="text">
                             </div>
                             <div class="field-item">
-                                <label>Área plantada (ha)</label>
+                                <label>Área (ha)</label>
                                 <input type="number" class="projecao-area">
                             </div>
                             <div class="field-item">
@@ -854,12 +851,12 @@
                                 <input type="number" class="projecao-produtividade">
                             </div>
                             <div class="field-item">
-                                <label>Preço por saca (R$)</label>
+                                <label>Preço (R$/sc)</label>
                                 <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
-                                <label>Valor da produção (R$)</label>
-                                <input type="text" class="valor-input projecao-valor-producao" placeholder="R$ 0,00" readonly>
+                                <label>Valor da Produção</label>
+                                <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -871,17 +868,13 @@
                 <div class="form-section">
                     <div class="section-title">Outras Receitas</div>
                     <div id="outras-receitas-container">
-                        <div class="field-group outra-receita-item">
+                        <div class="field-group outras-receitas-item">
                             <div class="field-item">
-                                <label>Descrição</label>
+                                <label>Origem</label>
                                 <input type="text">
                             </div>
                             <div class="field-item">
-                                <label>Vr. Mensal</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Vr. Anual</label>
+                                <label>Valor</label>
                                 <input type="text" class="valor-input" placeholder="R$ 0,00">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
@@ -892,44 +885,47 @@
 
             <div id="dados-financeiros" class="tab-content">
                 <div class="form-section">
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Banco</label>
-                            <select>
-                                <option value="">Selecione</option>
-                                <option value="TentosCap">TentosCap</option>
-                                <option value="Banco do Brasil">Banco do Brasil</option>
-                                <option value="Bradesco">Bradesco</option>
-                                <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
-                                <option value="Itaú">Itaú</option>
-                                <option value="Santander">Santander</option>
-                                <option value="Sicoob">Sicoob</option>
-                                <option value="Sicredi">Sicredi</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Tipo de Conta</label>
-                            <select>
-                                <option value="corrente">Conta Corrente</option>
-                                <option value="poupanca">Conta Poupança</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Agência</label>
-                            <input type="text">
-                        </div>
-                        <div class="field-item">
-                            <label>Conta</label>
-                            <input type="text">
-                        </div>
-                        <div class="field-item field-small">
-                            <label>Dígito</label>
-                            <input type="text">
+                    <div class="section-title">Bancos</div>
+                    <div id="bancos-container">
+                        <div class="field-group banco-item">
+                            <div class="field-item">
+                                <label>Banco</label>
+                                <select>
+                                    <option value="">Selecione</option>
+                                    <option value="TentosCap">TentosCap</option>
+                                    <option value="Banco do Brasil">Banco do Brasil</option>
+                                    <option value="Bradesco">Bradesco</option>
+                                    <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
+                                    <option value="Itaú">Itaú</option>
+                                    <option value="Santander">Santander</option>
+                                    <option value="Sicoob">Sicoob</option>
+                                    <option value="Sicredi">Sicredi</option>
+                                </select>
+                            </div>
+                            <div class="field-item">
+                                <label>Tipo de Conta</label>
+                                <select>
+                                    <option value="corrente">Conta Corrente</option>
+                                    <option value="poupanca">Conta Poupança</option>
+                                </select>
+                            </div>
+                            <div class="field-item">
+                                <label>Agência</label>
+                                <input type="text">
+                            </div>
+                            <div class="field-item">
+                                <label>Conta</label>
+                                <input type="text">
+                            </div>
+                            <div class="field-item field-small">
+                                <label>Dígito</label>
+                                <input type="text">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div id="pecuaria" class="tab-content">
                 <div class="form-section">
                     <div class="section-title">Atividades de Pecuária</div>
@@ -966,14 +962,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="bens-moveis" class="tab-content">
                 <div class="form-section">
-                    <div class="section-title">Bens Móveis em Geral</div>
-                    <div id="bens-moveis-container">
-                        <div class="field-group bens-moveis-item">
+                    <div class="section-title">Veículos</div>
+                    <div id="veiculos-container">
+                        <div class="field-group veiculo-item">
                             <div class="field-item">
-                                <label>Ano fabricação</label>
+                                <label>Ano de fabricação</label>
                                 <input type="number">
                             </div>
                             <div class="field-item">
@@ -992,12 +988,46 @@
                                 <label>Modelo</label>
                                 <input type="text">
                             </div>
+                            <div class="field-item">
+                                <label>Placa</label>
+                                <input type="text">
+                            </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
                     </div>
                 </div>
                 <div class="form-section">
-                    <div class="section-title">Implementos usados na atividade rural</div>
+                    <div class="section-title">Máquinas e Implementos</div>
+                    <div id="maquinas-container">
+                        <div class="field-group maquina-item">
+                            <div class="field-item">
+                                <label>Ano de fabricação</label>
+                                <input type="number">
+                            </div>
+                            <div class="field-item">
+                                <label>Ano modelo</label>
+                                <input type="number">
+                            </div>
+                            <div class="field-item">
+                                <label>Valor de mercado</label>
+                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                            </div>
+                            <div class="field-item">
+                                <label>Marca</label>
+                                <input type="text">
+                            </div>
+                            <div class="field-item">
+                                <label>Modelo</label>
+                                <input type="text">
+                            </div>
+                            <div class="field-item">
+                                <label>Tipo de máquina</label>
+                                <input type="text">
+                            </div>
+                            <button class="add-button" type="button">+ Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="section-title">Implementos</div>
                     <div id="implementos-container">
                         <div class="field-group implemento-item">
                             <div class="field-item">
@@ -1276,18 +1306,16 @@
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>IV – Fornecer, a qualquer tempo, informações relativas à dados pessoais e/ou operações de crédito que tenha contratado com a Tentos S.A Crédito, Financiamento e Investimento, por obrigação regulatória ou solicitação de entes ou órgãos federais, estaduais e municipais, tais como, Ministério da Agricultura, Pecuária e Abastecimento, Ministério da Fazenda, Banco Central do Brasil, bem como suas secretarias, mas não limitados a estes;</p>
+                            <p>IV. compartilhar dados e informações com empresas do mesmo grupo econômico, bem como com parceiros comerciais, para fins de oferta de produtos e serviços e para análise de crédito;</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>V – Acessar dados relativos às suas operações registradas no Sistema de Operações do Crédito Rural e do Proagro (Sicor), com a finalidade de obter informações relativas às características das propriedades, empreendimentos financiados e operações de crédito rural; permitir o uso de dados necessários em processos de certificação, validação ou de natureza semelhante, em que o beneficiário do crédito rural seja parte envolvida; examinar o nível de alavancagem e o grau de endividamento do beneficiário de crédito rural em operações de crédito rural;
-</p>
+                            <p>V. realizar consultas e obter informações junto à Receita Federal do Brasil, a fim de confirmar dados cadastrais e fiscais, bem como a situação de regularidade fiscal;</p>
                         </div>
                         <div class="legal-item">
                             <input type="checkbox" checked>
-                            <p>VI – compartilhar os dados pessoais aqui referidos neste instrumento, bem como aqueles referentes a volumes e periodicidade de pagamento de crédito concedidos, com as demais empresas integrantes do Grupo 3tentos, com o objetivo de criar um limite geral de crédito do cliente, analisar seu potencial de adimplemento do empréstimo e assegurar a prestação mais personalizada e adequada dos serviços.</p>
-                       
-                                                </div>
+                            <p>VI. utilizar os dados e informações coletados para fins de prevenção à fraude e à lavagem de dinheiro, em conformidade com a legislação vigente.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1296,349 +1324,328 @@
                 <div class="form-section">
                     <div class="section-title">Declaração</div>
                     <div class="legal-text">
-                        Eu, <span class="print-only">_________________________________</span>, inscrito no CPF sob o nº <span class="print-only">_________________________</span>, declaro que as informações acima são verdadeiras.
+                        Declaro, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e completas, assumindo total responsabilidade pelas mesmas.
                     </div>
-                </div>
-                <div class="signature-block">
-                    <div class="line"></div>
-                    <div class="info-text">Assinatura</div>
-                </div>
-                <div class="flex-row-signature">
-                    <div class="signature-item">
+                    <div class="signature-block print-only">
                         <div class="line"></div>
-                        <div class="info-text">CPF</div>
-                    </div>
-                    <div class="signature-item">
-                        <div class="line"></div>
-                        <div class="info-text">RG</div>
+                        <div class="info-text" id="assinatura-nome"></div>
+                        <div class="info-text" id="assinatura-cpf"></div>
+                        <div class="info-text" id="assinatura-unidade-3t"></div>
+                        <div class="info-text" id="assinatura-data-cadastro"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const tabs = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const estadoCivilSelect = document.getElementById('estado-civil');
-        const regimeCasamentoContainer = document.getElementById('regime-casamento-container');
-        const conjugeInfoContainer = document.getElementById('conjuge-info-container');
-        const conjugeInfoContainer2 = document.getElementById('conjuge-info-container-2');
-        const conjugeInfoContainer3 = document = document.getElementById('conjuge-info-container-3');
-        const pepSelect = document.getElementById('pep-select');
-        const pepDetailsContainer = document.getElementById('pep-details-container');
-        const pepRelacionamentoSelect = document.getElementById('pep-relacionamento-select');
-        const pepRelacionamentoDetailsContainer = document.getElementById('pep-relacionamento-details-container');
-        const totalRendasInput = document.getElementById('total-rendas');
+    </div>
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(item => item.classList.remove('active'));
-                tabContents.forEach(item => item.classList.remove('active'));
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabButtons = document.querySelectorAll(".tab-button");
+            const tabContents = document.querySelectorAll(".tab-content");
+            const totalRendasInput = document.getElementById("total-rendas");
 
-                tab.classList.add('active');
-                const target = document.querySelector(tab.dataset.tabTarget);
-                target.classList.add('active');
+            tabButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    tabButtons.forEach(btn => btn.classList.remove("active"));
+                    tabContents.forEach(content => content.classList.remove("active"));
+
+                    button.classList.add("active");
+                    const targetTab = document.querySelector(button.dataset.tabTarget);
+                    targetTab.classList.add("active");
+                });
             });
-        });
 
-        estadoCivilSelect.addEventListener('change', (event) => {
-            const isCasado = event.target.value === 'Casado';
-            if (isCasado) {
-                regimeCasamentoContainer.classList.remove('hidden');
-                conjugeInfoContainer.classList.remove('hidden');
-                conjugeInfoContainer2.classList.remove('hidden');
-                conjugeInfoContainer3.classList.remove('hidden');
-            } else {
-                regimeCasamentoContainer.classList.add('hidden');
-                conjugeInfoContainer.classList.add('hidden');
-                conjugeInfoContainer2.classList.add('hidden');
-                conjugeInfoContainer3.classList.add('hidden');
-            }
-        });
-
-        pepSelect.addEventListener('change', (event) => {
-            const isPep = event.target.value === 'Sim';
-            if (isPep) {
-                pepDetailsContainer.classList.remove('hidden');
-            } else {
-                pepDetailsContainer.classList.add('hidden');
-            }
-        });
-
-        pepRelacionamentoSelect.addEventListener('change', (event) => {
-            const hasPepRel = event.target.value === 'Sim';
-            if (hasPepRel) {
-                pepRelacionamentoDetailsContainer.classList.remove('hidden');
-            } else {
-                pepRelacionamentoDetailsContainer.classList.add('hidden');
-            }
-        });
-
-        const cepInput = document.getElementById('cep');
-        const logradouroInput = document.getElementById('logradouro');
-        const bairroInput = document.getElementById('bairro');
-        const cidadeInput = document.getElementById('cidade');
-        const ufInput = document.getElementById('uf');
-
-        cepInput.addEventListener('blur', async (event) => {
-            const cep = event.target.value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                try {
-                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-                    const data = await response.json();
-                    if (!data.erro) {
-                        logradouroInput.value = data.logradouro;
-                        bairroInput.value = data.bairro;
-                        cidadeInput.value = data.localidade;
-                        ufInput.value = data.uf;
-                    } else {
-                        alert('CEP não encontrado.');
+            // Máscaras de input
+            const applyMask = (input, mask) => {
+                input.addEventListener("input", (e) => {
+                    let value = e.target.value.replace(/\D/g, "");
+                    let maskedValue = "";
+                    let maskCharIndex = 0;
+                    for (let i = 0; i < value.length; i++) {
+                        while (maskCharIndex < mask.length && mask[maskCharIndex] !== "#") {
+                            maskedValue += mask[maskCharIndex];
+                            maskCharIndex++;
+                        }
+                        if (maskCharIndex < mask.length) {
+                            maskedValue += value[i];
+                            maskCharIndex++;
+                        }
                     }
-                } catch (error) {
-                    console.error('Erro ao buscar CEP:', error);
-                    alert('Erro ao buscar CEP.');
+                    e.target.value = maskedValue;
+                });
+            };
+
+            applyMask(document.getElementById("cpf"), "###.###.###-##");
+            applyMask(document.getElementById("cpf-conjuge"), "###.###.###-##");
+            applyMask(document.getElementById("telefone"), "(##) ####-####");
+            applyMask(document.getElementById("celular"), "(##) #####-####");
+            applyMask(document.getElementById("cep"), "#####-###");
+
+            document.querySelectorAll(".cep-input").forEach(input => {
+                applyMask(input, "#####-###");
+            });
+
+            // Preenchimento automático de endereço por CEP
+            document.getElementById("cep").addEventListener("blur", function() {
+                const cep = this.value.replace(/\D/g, "");
+                if (cep.length === 8) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                document.getElementById("logradouro").value = data.logradouro;
+                                document.getElementById("bairro").value = data.bairro;
+                                document.getElementById("cidade").value = data.localidade;
+                                document.getElementById("uf").value = data.uf;
+                            } else {
+                                alert("CEP não encontrado.");
+                            }
+                        })
+                        .catch(error => console.error("Erro ao buscar CEP:", error));
                 }
-            }
-        });
+            });
 
-        const parseValor = (valorString) => {
-            if (!valorString) return 0;
-            return parseFloat(valorString.replace('R$ ', '').replace(/\./g, '').replace(',', '.')) || 0;
-        };
+            // Lógica para campos de valor
+            const formatarValor = (valor) => {
+                return "R$ " + valor.toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
+            };
 
-        const formatarValor = (valor) => {
-            if (isNaN(valor)) return 'R$ 0,00';
-            const formatted = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            return `R$ ${formatted}`;
-        };
+            const parseValor = (texto) => {
+                return parseFloat(texto.replace("R$", "").replace(".", "").replace(",", ".")) || 0;
+            };
 
-        // Máscara de CPF
-        const applyCpfMask = (event) => {
-            let value = event.target.value.replace(/\D/g, '');
-            if (value.length > 11) value = value.slice(0, 11);
-            if (value.length > 9) {
-                value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-            } else if (value.length > 6) {
-                value = value.replace(/^(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
-            } else if (value.length > 3) {
-                value = value.replace(/^(\d{3})(\d{3})/, '$1.$2');
-            } else if (value.length > 0) {
-                value = value.replace(/^(\d{3})/, '$1');
-            }
-            event.target.value = value;
-        };
+            document.querySelectorAll(".valor-input").forEach(input => {
+                input.addEventListener("focus", (e) => {
+                    e.target.value = parseValor(e.target.value);
+                });
+                input.addEventListener("blur", (e) => {
+                    e.target.value = formatarValor(parseValor(e.target.value));
+                });
+            });
 
-        // Máscara de Telefone e Celular
-        const applyPhoneMask = (event) => {
-            let value = event.target.value.replace(/\D/g, '');
-            if (value.length > 11) value = value.slice(0, 11);
-            if (value.length === 11) { // Celular com 9º dígito
-                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-            } else if (value.length === 10) { // Telefone fixo ou celular sem 9º dígito
-                value = value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-            } else if (value.length > 6) {
-                value = value.replace(/^(\d{2})(\d{4,5})/, '($1) $2-');
-            } else if (value.length > 2) {
-                value = value.replace(/^(\d{2})/, '($1) ');
-            }
-            event.target.value = value;
-        };
+            // Lógica para exibir/ocultar campos de cônjuge e regime de casamento
+            const estadoCivilSelect = document.getElementById("estado-civil");
+            const conjugeInfoContainer = document.getElementById("conjuge-info-container");
+            const conjugeInfoContainer2 = document.getElementById("conjuge-info-container-2");
+            const conjugeInfoContainer3 = document.getElementById("conjuge-info-container-3");
+            const regimeCasamentoContainer = document.getElementById("regime-casamento-container");
 
-        // Aplica as máscaras nos campos específicos
-        document.getElementById('cpf').addEventListener('input', applyCpfMask);
-        document.getElementById('cpf-conjuge').addEventListener('input', applyCpfMask);
-        document.getElementById('telefone').addEventListener('input', applyPhoneMask);
-        document.getElementById('celular').addEventListener('input', applyPhoneMask);
-
-        // Delegação de eventos para máscara de valor
-        document.body.addEventListener('focus', (event) => {
-            if (event.target.classList.contains('valor-input')) {
-                // Excluir campos de soma da lógica de focus para evitar que o valor seja apagado
-                if (event.target.classList.contains('renda-valor-producao') || event.target.id === 'total-rendas') {
-                    return;
-                }
-                let value = event.target.value.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
-                if (value === '0.00' || value === '0') {
-                    event.target.value = '';
+            const toggleConjugeFields = () => {
+                if (estadoCivilSelect.value === "Casado") {
+                    conjugeInfoContainer.classList.remove("hidden");
+                    conjugeInfoContainer2.classList.remove("hidden");
+                    conjugeInfoContainer3.classList.remove("hidden");
+                    regimeCasamentoContainer.classList.remove("hidden");
                 } else {
-                    event.target.value = value;
+                    conjugeInfoContainer.classList.add("hidden");
+                    conjugeInfoContainer2.classList.add("hidden");
+                    conjugeInfoContainer3.classList.add("hidden");
+                    regimeCasamentoContainer.classList.add("hidden");
                 }
-            }
-        }, true);
+            };
 
-        document.body.addEventListener('blur', (event) => {
-            if (event.target.classList.contains('valor-input')) {
-                // Excluir campos de soma da lógica de blur para evitar reformatar
-                if (event.target.classList.contains('renda-valor-producao') || event.target.id === 'total-rendas') {
-                    return;
+            estadoCivilSelect.addEventListener("change", toggleConjugeFields);
+            toggleConjugeFields(); // Chama na inicialização para ajustar o estado inicial
+
+            // Lógica para exibir/ocultar campos PEP
+            const pepSelect = document.getElementById("pep-select");
+            const pepDetailsContainer = document.getElementById("pep-details-container");
+            const pepRelacionamentoSelect = document.getElementById("pep-relacionamento-select");
+            const pepRelacionamentoDetailsContainer = document.getElementById("pep-relacionamento-details-container");
+
+            const togglePepFields = () => {
+                if (pepSelect.value === "Sim") {
+                    pepDetailsContainer.classList.remove("hidden");
+                } else {
+                    pepDetailsContainer.classList.add("hidden");
                 }
-                event.target.value = formatarValor(parseValor(event.target.value));
-            }
-        }, true);
+            };
 
-        // Inicializa os placeholders de todos os campos de valor na página
-        document.querySelectorAll('.valor-input').forEach(input => {
-            if (input.value) {
-                input.value = formatarValor(parseValor(input.value));
-            } else {
-                input.placeholder = 'R$ 0,00';
-            }
-        });
+            const togglePepRelacionamentoFields = () => {
+                if (pepRelacionamentoSelect.value === "Sim") {
+                    pepRelacionamentoDetailsContainer.classList.remove("hidden");
+                } else {
+                    pepRelacionamentoDetailsContainer.classList.add("hidden");
+                }
+            };
 
-        const calcularValorProducao = (item) => {
-            const areaInput = item.querySelector('.renda-area, .projecao-area');
-            const produtividadeInput = item.querySelector('.renda-produtividade, .projecao-produtividade');
-            const precoInput = item.querySelector('.renda-preco, .projecao-preco');
-            const valorProducaoInput = item.querySelector('.renda-valor-producao, .projecao-valor-producao');
+            pepSelect.addEventListener("change", togglePepFields);
+            pepRelacionamentoSelect.addEventListener("change", togglePepRelacionamentoFields);
 
-            const area = parseFloat(areaInput.value) || 0;
-            const produtividade = parseFloat(produtividadeInput.value) || 0;
-            const preco = parseValor(precoInput.value);
+            togglePepFields(); // Chama na inicialização
+            togglePepRelacionamentoFields(); // Chama na inicialização
 
-            if (area > 0 && produtividade > 0 && preco > 0) {
+            // Lógica para cálculo de valor de produção
+            const calcularValorProducao = (item) => {
+                const area = parseFloat(item.querySelector(".renda-area, .projecao-area")?.value) || 0;
+                const produtividade = parseFloat(item.querySelector(".renda-produtividade, .projecao-produtividade")?.value) || 0;
+                const preco = parseValor(item.querySelector(".renda-preco, .projecao-preco")?.value || "R$ 0,00");
                 const valor = area * produtividade * preco;
-                valorProducaoInput.value = formatarValor(valor);
-            } else {
-                valorProducaoInput.value = 'R$ 0,00';
-            }
-        };
-
-        // Delegação de eventos para cálculo de renda
-        document.body.addEventListener('blur', (event) => {
-            const item = event.target.closest('.renda-safra-item, .projecao-safra-item');
-            if (item) {
-                const target = event.target;
-                if (target.classList.contains('renda-area') || target.classList.contains('projecao-area') ||
-                    target.classList.contains('renda-produtividade') || target.classList.contains('projecao-produtividade') ||
-                    target.classList.contains('renda-preco') || target.classList.contains('projecao-preco')) {
-                    calcularValorProducao(item);
+                const valorProducaoInput = item.querySelector(".renda-producao, .projecao-producao");
+                if (valorProducaoInput) {
+                    valorProducaoInput.value = formatarValor(valor);
+                } else {
+                    valorProducaoInput.value = 'R$ 0,00';
                 }
-            }
-        }, true);
+            };
 
-        const receitaAgricolaInput = document.getElementById('receita-agricola');
-        const demaisReceitasInput = document.getElementById('demais-receitas');
+            // Delegação de eventos para cálculo de renda
+            document.body.addEventListener('blur', (event) => {
+                const item = event.target.closest('.renda-safra-item, .projecao-safra-item');
+                if (item) {
+                    const target = event.target;
+                    if (target.classList.contains('renda-area') || target.classList.contains('projecao-area') ||
+                        target.classList.contains('renda-produtividade') || target.classList.contains('projecao-produtividade') ||
+                        target.classList.contains('renda-preco') || target.classList.contains('projecao-preco')) {
+                        calcularValorProducao(item);
+                    }
+                }
+            }, true);
+
+            const receitaAgricolaInput = document.getElementById('receita-agricola');
+            const demaisReceitasInput = document.getElementById('demais-receitas');
 
 
-        const calcularTotalRendas = () => {
-            const receitaAgricola = parseValor(receitaAgricolaInput.value);
-            const demaisReceitas = parseValor(demaisReceitasInput.value);
-            const totalRendas = receitaAgricola + demaisReceitas;
-            totalRendasInput.value = formatarValor(totalRendas);
-        };
+            const calcularTotalRendas = () => {
+                const receitaAgricola = parseValor(receitaAgricolaInput.value);
+                const demaisReceitas = parseValor(demaisReceitasInput.value);
+                const totalRendas = receitaAgricola + demaisReceitas;
+                totalRendasInput.value = formatarValor(totalRendas);
+            };
 
-        receitaAgricolaInput.addEventListener('blur', calcularTotalRendas);
-        demaisReceitasInput.addEventListener('blur', calcularTotalRendas);
+            receitaAgricolaInput.addEventListener('blur', calcularTotalRendas);
+            demaisReceitasInput.addEventListener('blur', calcularTotalRendas);
 
-        document.body.addEventListener('click', (event) => {
-            const button = event.target;
+            document.body.addEventListener('click', (event) => {
+                const button = event.target;
 
-            if (button.classList.contains('add-button')) {
-                const item = button.closest('.field-group');
-                const newItem = item.cloneNode(true);
+                if (button.classList.contains('add-button')) {
+                    const item = button.closest('.field-group');
+                    const newItem = item.cloneNode(true);
 
-                newItem.querySelectorAll('input, select, textarea').forEach(input => {
-                    if (input.type === 'checkbox') {
-                        input.checked = false;
-                    } else {
-                        input.value = '';
+                    newItem.querySelectorAll('input, select, textarea').forEach(input => {
+                        if (input.type === 'checkbox') {
+                            input.checked = false;
+                        } else {
+                            input.value = '';
+                        }
+                    });
+
+                    const newButton = newItem.querySelector('.add-button');
+                    if (newButton) {
+                        newButton.textContent = '- Remover';
+                        newButton.classList.remove('add-button');
+                        newButton.classList.add('remove-button');
+                    }
+
+                    const kmlDisplay = newItem.querySelector('.kml-area-display');
+                    if (kmlDisplay) {
+                        kmlDisplay.textContent = '';
+                    }
+
+                    button.closest('.form-section').appendChild(newItem);
+                } else if (button.classList.contains('remove-button')) {
+                    const itemToRemove = button.closest('.field-group');
+                    if (itemToRemove) {
+                        itemToRemove.remove();
+                    }
+                }
+            });
+
+            const kmlButtons = document.querySelectorAll('.kml-button');
+            kmlButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const fileInput = button.parentElement.querySelector('.kml-file-input');
+                    fileInput.click();
+                });
+            });
+
+            const kmlFileInputs = document.querySelectorAll('.kml-file-input');
+            kmlFileInputs.forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            try {
+                                const kmlText = e.target.result;
+                                const parser = new DOMParser();
+                                const kmlDoc = parser.parseFromString(kmlText, "text/xml");
+                                const coordinatesText = kmlDoc.querySelector('coordinates').textContent;
+
+                                const coords = coordinatesText.trim().split(/\s+/).map(c => c.split(',').map(Number));
+                                if (coords.length > 2) {
+                                    let area = 0;
+                                    for (let i = 0; i < coords.length - 1; i++) {
+                                        area += coords[i][0] * coords[i+1][1] - coords[i+1][0] * coords[i][1];
+                                    }
+                                    area = Math.abs(area / 2);
+
+                                    const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
+                                    areaDisplay.textContent = `Área calculada: ${area.toFixed(2)} ha`;
+
+                                    const areaTotalInput = event.target.closest('.field-group').querySelector('[aria-label="Área total (ha)"]');
+                                    if (areaTotalInput) {
+                                        areaTotalInput.value = area.toFixed(2);
+                                    }
+                                }
+                            } catch (err) {
+                                console.error("Erro ao processar KML:", err);
+                                const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
+                                areaDisplay.textContent = 'Erro ao processar KML.';
+                            }
+                        };
+                        reader.readAsText(file);
                     }
                 });
-
-                const newButton = newItem.querySelector('.add-button');
-                if (newButton) {
-                    newButton.textContent = '- Remover';
-                    newButton.classList.remove('add-button');
-                    newButton.classList.add('remove-button');
-                }
-
-                const kmlDisplay = newItem.querySelector('.kml-area-display');
-                if (kmlDisplay) {
-                    kmlDisplay.textContent = '';
-                }
-
-                button.closest('.form-section').appendChild(newItem);
-            } else if (button.classList.contains('remove-button')) {
-                const itemToRemove = button.closest('.field-group');
-                if (itemToRemove) {
-                    itemToRemove.remove();
-                }
-            }
-        });
-
-        const kmlButtons = document.querySelectorAll('.kml-button');
-        kmlButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const fileInput = button.parentElement.querySelector('.kml-file-input');
-                fileInput.click();
             });
-        });
 
-        const kmlFileInputs = document.querySelectorAll('.kml-file-input');
-        kmlFileInputs.forEach(input => {
-            input.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        try {
-                            const kmlText = e.target.result;
-                            const parser = new DOMParser();
-                            const kmlDoc = parser.parseFromString(kmlText, "text/xml");
-                            const coordinatesText = kmlDoc.querySelector('coordinates').textContent;
+            window.generatePdf = () => {
+                // Atualiza os campos da declaração antes de imprimir
+                updateDeclaracaoInfo();
+                window.print();
+            };
 
-                            const coords = coordinatesText.trim().split(/\s+/).map(c => c.split(',').map(Number));
-                            if (coords.length > 2) {
-                                let area = 0;
-                                for (let i = 0; i < coords.length - 1; i++) {
-                                    area += coords[i][0] * coords[i+1][1] - coords[i+1][0] * coords[i][1];
-                                }
-                                area = Math.abs(area / 2);
+            // Função para preencher a data atual
+            const setDataAtual = () => {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months start at 0!
+                const dd = String(today.getDate()).padStart(2, '0');
+                document.getElementById('data-cadastro').value = `${yyyy}-${mm}-${dd}`;
+            };
 
-                                const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
-                                areaDisplay.textContent = `Área calculada: ${area.toFixed(2)} ha`;
+            setDataAtual(); // Chama a função para preencher a data ao carregar a página
 
-                                const areaTotalInput = event.target.closest('.field-group').querySelector('[aria-label="Área total (ha)"]');
-                                if (areaTotalInput) {
-                                    areaTotalInput.value = area.toFixed(2);
-                                }
-                            }
-                        } catch (err) {
-                            console.error("Erro ao processar KML:", err);
-                            const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
-                            areaDisplay.textContent = 'Erro ao processar KML.';
-                        }
-                    };
-                    reader.readAsText(file);
+            document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
+            document.getElementById('data-cadastro').addEventListener('change', updateDeclaracaoInfo);
+            document.getElementById('nome-pf').addEventListener('input', updateDeclaracaoInfo); // Adicionado listener para nome
+            document.getElementById('cpf').addEventListener('input', updateDeclaracaoInfo);     // Adicionado listener para CPF
+
+            function updateDeclaracaoInfo() {
+                const unidade3T = document.getElementById('unidade-3t').value;
+                const dataCadastro = document.getElementById('data-cadastro').value;
+                const nomePf = document.getElementById('nome-pf').value;
+                const cpf = document.getElementById('cpf').value;
+
+                const unidadeElement = document.getElementById('assinatura-unidade-3t');
+                const dataElement = document.getElementById('assinatura-data-cadastro');
+                const nomeElement = document.getElementById('assinatura-nome');
+                const cpfElement = document.getElementById('assinatura-cpf');
+
+                let dataFormatada = '';
+                if (dataCadastro) {
+                    const [ano, mes, dia] = dataCadastro.split('-');
+                    dataFormatada = `${dia}/${mes}/${ano}`;
                 }
-            });
-        });
 
-        window.generatePdf = () => {
-            window.print();
-        };
-
-        document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
-        document.getElementById('data-cadastro').addEventListener('change', updateDeclaracaoInfo);
-
-        function updateDeclaracaoInfo() {
-            const unidade3T = document.getElementById('unidade-3t').value;
-            const dataCadastro = document.getElementById('data-cadastro').value;
-
-            const unidadeElement = document.getElementById('assinatura-unidade-3t');
-            const dataElement = document.getElementById('assinatura-data-cadastro');
-
-            let dataFormatada = '';
-            if (dataCadastro) {
-                const [ano, mes, dia] = dataCadastro.split('-');
-                dataFormatada = `${dia}/${mes}/${ano}`;
+                if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
+                if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
+                if (nomeElement) nomeElement.textContent = nomePf ? `Nome: ${nomePf}` : '';
+                if (cpfElement) cpfElement.textContent = cpf ? `CPF: ${cpf}` : '';
             }
-
-            if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
-            if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
-        }
-    });
-</script>  </body>
+            updateDeclaracaoInfo(); // Chama na inicialização para preencher os campos se já houver dados
+        });
+    </script>  </body>
 </html>
 
