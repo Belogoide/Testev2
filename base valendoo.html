@@ -261,10 +261,9 @@
             color: #555;
             padding-left: 10px;
         }
-        .save-button {
+        .save-button, .save-data-button, .import-data-button {
             position: fixed;
             top: 20px;
-            right: 20px;
             background-color: #007BFF;
             color: white;
             border: none;
@@ -275,8 +274,25 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
+        .save-button {
+            right: 20px;
+        }
+        .save-data-button {
+            right: 150px;
+            background-color: #28a745;
+        }
+        .import-data-button {
+            right: 290px;
+            background-color: #17a2b8;
+        }
         .save-button:hover {
             background-color: #0056b3;
+        }
+        .save-data-button:hover {
+            background-color: #218838;
+        }
+        .import-data-button:hover {
+            background-color: #138496;
         }
         .tab-content {
             display: none;
@@ -310,7 +326,7 @@
                 padding: 0;
                 border: none;
             }
-            .header, .tabs, .save-button {
+            .header, .tabs, .save-button, .save-data-button, .import-data-button {
                 display: none !important;
             }
             .tab-content-container {
@@ -377,6 +393,8 @@
 </head>
 <body>
     <button class="save-button" onclick="generatePdf()">Salvar PDF</button>
+    <button class="save-data-button" onclick="saveDataAsJson()">Salvar Dados</button>
+    <button class="import-data-button" onclick="importDataFromJson()">Importar Dados</button>
 
     <div id="form-content">
         <div class="header">
@@ -413,7 +431,7 @@
                     <div class="field-group">
                         <div class="field-item full-width">
                             <label>Código Cliente</label>
-                            <input type="text">
+                            <input type="text" id="codigo-cliente">
                         </div>
                     </div>
                     <div class="field-group">
@@ -519,11 +537,11 @@
                         </div>
                         <div class="field-item">
                             <label>Data de Nasc.</label>
-                            <input type="date">
+                            <input type="date" id="data-nascimento">
                         </div>
                         <div class="field-item">
                             <label>Sexo</label>
-                            <select>
+                            <select id="sexo">
                                 <option value="">Selecione</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
@@ -531,7 +549,7 @@
                         </div>
                         <div class="field-item">
                             <label>Nacionalidade</label>
-                            <select>
+                            <select id="nacionalidade">
                                 <option value="Brasil">Brasil</option>
                                 <option value="Estrangeiro">Estrangeiro</option>
                             </select>
@@ -540,11 +558,11 @@
                     <div class="field-group">
                         <div class="field-item">
                             <label>Naturalidade</label>
-                            <input type="text">
+                            <input type="text" id="naturalidade">
                         </div>
                         <div class="field-item">
                             <label>UF Naturalidade</label>
-                            <select>
+                            <select id="uf-naturalidade">
                                 <option value="">Selecione</option>
                                 <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
                             </select>
@@ -553,28 +571,28 @@
                     <div class="field-group">
                         <div class="field-item">
                             <label>Tipo Documento</label>
-                            <select>
+                            <select id="tipo-documento">
                                 <option value="RG">RG</option>
                                 <option value="CNH">CNH</option>
                             </select>
                         </div>
                         <div class="field-item">
                             <label>Nº Documento</label>
-                            <input type="number">
+                            <input type="number" id="numero-documento">
                         </div>
                         <div class="field-item">
                             <label>Órgão Emissor</label>
-                            <input type="text">
+                            <input type="text" id="orgao-emissor">
                         </div>
                         <div class="field-item">
                             <label>Data Emissão</label>
-                            <input type="date">
+                            <input type="date" id="data-emissao">
                         </div>
                     </div>
                     <div class="field-group">
                         <div class="field-item">
                             <label>Grau de Instrução</label>
-                            <select>
+                            <select id="grau-instrucao">
                                 <option value="">Selecione</option>
                                 <option value="fundamental_inc">Ensino Fundamental Incompleto</option>
                                 <option value="fundamental_comp">Ensino Fundamental Completo</option>
@@ -586,13 +604,13 @@
                         </div>
                         <div class="field-item">
                             <label>Nº de Dependentes</label>
-                            <select>
+                            <select id="dependentes">
                                 <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
                             </select>
                         </div>
                         <div class="field-item">
                             <label>Analfabeto?</label>
-                            <select>
+                            <select id="analfabeto">
                                 <option value="nao">Não</option>
                                 <option value="sim">Sim</option>
                             </select>
@@ -613,11 +631,11 @@
                         </div>
                         <div class="field-item">
                             <label>Nome Pai</label>
-                            <input type="text">
+                            <input type="text" id="nome-pai">
                         </div>
                         <div class="field-item">
                             <label>Nome Mãe</label>
-                            <input type="text">
+                            <input type="text" id="nome-mae">
                         </div>
                     </div>
                     <div class="field-group">
@@ -632,7 +650,7 @@
                         </div>
                         <div class="field-item hidden" id="regime-casamento-container">
                             <label>Regime de Casamento</label>
-                            <select>
+                            <select id="regime-casamento">
                                 <option value="">Selecione</option>
                                 <option value="Comunhão parcial de bens">Comunhão parcial de bens</option>
                                 <option value="Comunhão universal de bens">Comunhão universal de bens</option>
@@ -642,7 +660,7 @@
                         </div>
                         <div class="field-item">
                             <label>União Estável</label>
-                            <select>
+                            <select id="uniao-estavel">
                                 <option value="Não">Não</option>
                                 <option value="Sim">Sim</option>
                             </select>
@@ -651,7 +669,7 @@
                     <div class="field-group hidden" id="conjuge-info-container">
                         <div class="field-item">
                             <label>Nome do Cônjuge</label>
-                            <input type="text">
+                            <input type="text" id="nome-conjuge">
                         </div>
                         <div class="field-item">
                             <label>CPF do Cônjuge</label>
@@ -659,7 +677,7 @@
                         </div>
                         <div class="field-item">
                             <label>Sexo</label>
-                            <select>
+                            <select id="sexo-conjuge">
                                 <option value="">Selecione</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
@@ -667,7 +685,7 @@
                         </div>
                         <div class="field-item">
                             <label>Nacionalidade</label>
-                            <select>
+                            <select id="nacionalidade-conjuge">
                                 <option value="Brasil">Brasil</option>
                                 <option value="Estrangeiro">Estrangeiro</option>
                             </select>
@@ -676,49 +694,49 @@
                     <div class="field-group hidden" id="conjuge-info-container-2">
                          <div class="field-item">
                             <label>Naturalidade</label>
-                            <input type="text">
+                            <input type="text" id="naturalidade-conjuge">
                         </div>
                         <div class="field-item">
                             <label>UF Naturalidade</label>
-                            <select>
+                            <select id="uf-naturalidade-conjuge">
                                 <option value="">Selecione</option>
                                 <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
                             </select>
                         </div>
                         <div class="field-item">
                             <label>Tipo Documento</label>
-                            <select>
+                            <select id="tipo-documento-conjuge">
                                 <option value="RG">RG</option>
                                 <option value="CNH">CNH</option>
                             </select>
                         </div>
                         <div class="field-item">
                             <label>Nº Documento</label>
-                            <input type="number">
+                            <input type="number" id="numero-documento-conjuge">
                         </div>
                     </div>
                     <div class="field-group hidden" id="conjuge-info-container-3">
                          <div class="field-item">
                             <label>Data Emissão</label>
-                            <input type="date">
+                            <input type="date" id="data-emissao-conjuge">
                         </div>
                         <div class="field-item">
                             <label>Órgão Emissor</label>
-                            <input type="text">
+                            <input type="text" id="orgao-emissor-conjuge">
                         </div>
                     </div>
                     <div class="field-group">
                         <div class="field-item">
                             <label>Profissão</label>
-                            <input type="text">
+                            <input type="text" id="profissao">
                         </div>
                         <div class="field-item">
                             <label>Valor remuneração</label>
-                            <input type="text" class="valor-input" placeholder="R$ 0,00">
+                            <input type="text" id="valor-remuneracao" class="valor-input" placeholder="R$ 0,00">
                         </div>
                         <div class="field-item">
                             <label>Insc. Estadual</label>
-                            <input type="text">
+                            <input type="text" id="inscricao-estadual">
                         </div>
                     </div>
                 </div>
@@ -737,13 +755,13 @@
                         </div>
                         <div class="field-item" style="width: 80px;">
                             <label>Nº</label>
-                            <input type="number">
+                            <input type="number" id="numero-endereco">
                         </div>
                     </div>
                     <div class="field-group">
                         <div class="field-item" style="flex-grow: 2;">
                             <label>Complemento</label>
-                            <input type="text">
+                            <input type="text" id="complemento-endereco">
                         </div>
                         <div class="field-item">
                             <label>Bairro</label>
@@ -766,7 +784,7 @@
                     <div class="field-group">
                         <div class="field-item">
                             <label>Ano de Exercício do I.R.</label>
-                            <input type="number">
+                            <input type="number" id="ano-exercicio-ir">
                         </div>
                         <div class="field-item">
                             <label>Receita Bruta Agrícola</label>
@@ -789,14 +807,14 @@
                         <div class="field-group renda-safra-item">
                             <div class="field-item">
                                 <label>Ano safra</label>
-                                <select>
+                                <select class="ano-safra-renda">
                                     <option value="2024/2025">2024/2025</option>
                                     <option value="2025/2026">2025/2026</option>
                                 </select>
                             </div>
                             <div class="field-item">
                                 <label>Cultura</label>
-                                <input type="text">
+                                <input type="text" class="cultura-renda">
                             </div>
                             <div class="field-item">
                                 <label>Área (ha)</label>
@@ -825,14 +843,14 @@
                         <div class="field-group projecao-safra-item">
                             <div class="field-item">
                                 <label>Ano safra</label>
-                                <select>
+                                <select class="ano-safra-projecao">
                                     <option value="2024/2025">2024/2025</option>
                                     <option value="2025/2026">2025/2026</option>
                                 </select>
                             </div>
                             <div class="field-item">
                                 <label>Cultura</label>
-                                <input type="text">
+                                <input type="text" class="cultura-projecao">
                             </div>
                             <div class="field-item">
                                 <label>Área (ha)</label>
@@ -863,11 +881,11 @@
                         <div class="field-group outras-receitas-item">
                             <div class="field-item">
                                 <label>Origem</label>
-                                <input type="text">
+                                <input type="text" class="origem-outra-receita">
                             </div>
                             <div class="field-item">
                                 <label>Valor</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input valor-outra-receita" placeholder="R$ 0,00">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -882,7 +900,7 @@
                         <div class="field-group banco-item">
                             <div class="field-item">
                                 <label>Banco</label>
-                                <select>
+                                <select class="banco">
                                     <option value="">Selecione</option>
                                     <option value="TentosCap">TentosCap</option>
                                     <option value="Banco do Brasil">Banco do Brasil</option>
@@ -896,22 +914,22 @@
                             </div>
                             <div class="field-item">
                                 <label>Tipo de Conta</label>
-                                <select>
+                                <select class="tipo-conta">
                                     <option value="corrente">Conta Corrente</option>
                                     <option value="poupanca">Conta Poupança</option>
                                 </select>
                             </div>
                             <div class="field-item">
                                 <label>Agência</label>
-                                <input type="text">
+                                <input type="text" class="agencia">
                             </div>
                             <div class="field-item">
                                 <label>Conta</label>
-                                <input type="text">
+                                <input type="text" class="conta">
                             </div>
                             <div class="field-item field-small">
                                 <label>Dígito</label>
-                                <input type="text">
+                                <input type="text" class="digito">
                             </div>
                         </div>
                     </div>
@@ -925,7 +943,7 @@
                         <div class="field-group pecuaria-item">
                             <div class="field-item">
                                 <label>Atividade</label>
-                                <select>
+                                <select class="atividade-pecuaria">
                                     <option value="">Selecione</option>
                                     <option value="Gado de Corte - Cria">Gado de Corte - Cria</option>
                                     <option value="Gado de Corte - Recria/Engorda">Gado de Corte - Recria/Engorda</option>
@@ -939,15 +957,15 @@
                             </div>
                             <div class="field-item">
                                 <label>Quantidade</label>
-                                <input type="number">
+                                <input type="number" class="quantidade-pecuaria">
                             </div>
                             <div class="field-item">
                                 <label>Vr. Mercado</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input valor-mercado-pecuaria" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Obs.</label>
-                                <input type="text">
+                                <input type="text" class="obs-pecuaria">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -962,27 +980,27 @@
                         <div class="field-group veiculo-item">
                             <div class="field-item">
                                 <label>Ano de fabricação</label>
-                                <input type="number">
+                                <input type="number" class="ano-fabricacao-veiculo">
                             </div>
                             <div class="field-item">
                                 <label>Ano modelo</label>
-                                <input type="number">
+                                <input type="number" class="ano-modelo-veiculo">
                             </div>
                             <div class="field-item">
                                 <label>Valor de mercado</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input valor-mercado-veiculo" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Marca</label>
-                                <input type="text">
+                                <input type="text" class="marca-veiculo">
                             </div>
                             <div class="field-item">
                                 <label>Modelo</label>
-                                <input type="text">
+                                <input type="text" class="modelo-veiculo">
                             </div>
                             <div class="field-item">
                                 <label>Placa</label>
-                                <input type="text">
+                                <input type="text" class="placa-veiculo">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -994,27 +1012,27 @@
                         <div class="field-group maquina-item">
                             <div class="field-item">
                                 <label>Ano de fabricação</label>
-                                <input type="number">
+                                <input type="number" class="ano-fabricacao-maquina">
                             </div>
                             <div class="field-item">
                                 <label>Ano modelo</label>
-                                <input type="number">
+                                <input type="number" class="ano-modelo-maquina">
                             </div>
                             <div class="field-item">
                                 <label>Valor de mercado</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input valor-mercado-maquina" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Marca</label>
-                                <input type="text">
+                                <input type="text" class="marca-maquina">
                             </div>
                             <div class="field-item">
                                 <label>Modelo</label>
-                                <input type="text">
+                                <input type="text" class="modelo-maquina">
                             </div>
                             <div class="field-item">
                                 <label>Tipo de máquina</label>
-                                <input type="text">
+                                <input type="text" class="tipo-maquina">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -1032,35 +1050,35 @@
                         <div class="field-group area-propria-item">
                             <div class="field-item">
                                 <label>Proprietário</label>
-                                <input type="text">
+                                <input type="text" class="proprietario-area-propria">
                             </div>
                             <div class="field-item">
                                 <label>Área total (ha)</label>
-                                <input type="number">
+                                <input type="number" class="area-total-propria">
                             </div>
                             <div class="field-item">
                                 <label>Valor venal</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input valor-venal-propria" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Município</label>
-                                <input type="text">
+                                <input type="text" class="municipio-area-propria">
                             </div>
                             <div class="field-item">
                                 <label>Denominação</label>
-                                <input type="text">
+                                <input type="text" class="denominacao-area-propria">
                             </div>
                             <div class="field-item">
                                 <label>CAR</label>
-                                <input type="text">
+                                <input type="text" class="car-area-propria">
                             </div>
                             <div class="field-item">
                                 <label>Matrícula</label>
-                                <input type="text">
+                                <input type="text" class="matricula-area-propria">
                             </div>
                             <div class="field-item">
                                 <label>CEP</label>
-                                <input type="text" class="cep-input">
+                                <input type="text" class="cep-input cep-area-propria">
                             </div>
                             <div class="field-item">
                                 <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
@@ -1077,39 +1095,39 @@
                         <div class="field-group area-arrendada-item">
                             <div class="field-item">
                                 <label>Proprietário</label>
-                                <input type="text">
+                                <input type="text" class="proprietario-area-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>Área total (ha)</label>
-                                <input type="number">
+                                <input type="number" class="area-total-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>Área explorada (ha)</label>
-                                <input type="number">
+                                <input type="number" class="area-explorada-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>Fim da Vigencia.</label>
-                                <input type="date">
+                                <input type="date" class="fim-vigencia-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>Município</label>
-                                <input type="text">
+                                <input type="text" class="municipio-area-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>Denominação</label>
-                                <input type="text">
+                                <input type="text" class="denominacao-area-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>CAR</label>
-                                <input type="text">
+                                <input type="text" class="car-area-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>Matrícula</label>
-                                <input type="text">
+                                <input type="text" class="matricula-area-arrendada">
                             </div>
                             <div class="field-item">
                                 <label>CEP</label>
-                                <input type="text" class="cep-input">
+                                <input type="text" class="cep-input cep-area-arrendada">
                             </div>
                             <div class="field-item">
                                 <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
@@ -1129,19 +1147,19 @@
                         <div class="field-group funcionario-item">
                             <div class="field-item">
                                 <label>Qtde. funcionários fixos</label>
-                                <input type="number">
+                                <input type="number" id="qtde-funcionarios-fixos">
                             </div>
                             <div class="field-item">
                                 <label>Valor média folha fixos</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input" id="valor-media-folha-fixos" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Qtde. temporários</label>
-                                <input type="number">
+                                <input type="number" id="qtde-funcionarios-temporarios">
                             </div>
                             <div class="field-item">
                                 <label>Valor média folha temporários</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input" id="valor-media-folha-temporarios" placeholder="R$ 0,00">
                             </div>
                         </div>
                     </div>
@@ -1155,7 +1173,7 @@
                         <div class="field-group seguro-item">
                             <div class="field-item">
                                 <label>Modalidade</label>
-                                <select>
+                                <select class="modalidade-seguro">
                                     <option value="">Selecione</option>
                                     <option value="Lavoura">Lavoura</option>
                                     <option value="Veiculo">Veículo</option>
@@ -1165,15 +1183,15 @@
                             </div>
                             <div class="field-item">
                                 <label>Bem Segurado</label>
-                                <input type="text">
+                                <input type="text" class="bem-segurado">
                             </div>
                             <div class="field-item">
                                 <label>Vr. cobertura</label>
-                                <input type="text" class="valor-input" placeholder="R$ 0,00">
+                                <input type="text" class="valor-input valor-cobertura-seguro" placeholder="R$ 0,00">
                             </div>
                             <div class="field-item">
                                 <label>Vencimento</label>
-                                <input type="date">
+                                <input type="date" class="vencimento-seguro">
                             </div>
                             <button class="add-button" type="button">+ Adicionar</button>
                         </div>
@@ -1203,21 +1221,21 @@
                         <div class="field-group">
                             <div class="field-item">
                                 <label>Cargo ou Função</label>
-                                <input type="text">
+                                <input type="text" id="pep-cargo">
                             </div>
                             <div class="field-item">
                                 <label>Empresa e/ou Órgão Público</label>
-                                <input type="text">
+                                <input type="text" id="pep-empresa">
                             </div>
                         </div>
                         <div class="field-group">
                             <div class="field-item">
                                 <label>Data de início do exercício</label>
-                                <input type="date">
+                                <input type="date" id="pep-data-inicio">
                             </div>
                             <div class="field-item">
                                 <label>Data do fim do exercício</label>
-                                <input type="date">
+                                <input type="date" id="pep-data-fim">
                             </div>
                         </div>
                     </div>
@@ -1234,19 +1252,19 @@
                         <div class="field-group">
                             <div class="field-item">
                                 <label>Nome da pessoa</label>
-                                <input type="text">
+                                <input type="text" id="pep-rel-nome">
                             </div>
                             <div class="field-item">
                                 <label>Vínculo</label>
-                                <input type="text">
+                                <input type="text" id="pep-rel-vinculo">
                             </div>
                             <div class="field-item">
                                 <label>Cargo ou Função</label>
-                                <input type="text">
+                                <input type="text" id="pep-rel-cargo">
                             </div>
                             <div class="field-item">
                                 <label>Empresa e/ou Órgão Público</label>
-                                <input type="text">
+                                <input type="text" id="pep-rel-empresa">
                             </div>
                         </div>
                     </div>
@@ -1258,27 +1276,27 @@
                     </div>
                     <div style="margin-top: 10px;">
                         <div class="legal-item">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked id="auth-scr">
                             <p>I. Consultar os débitos e responsabilidades decorrentes de operações com características de crédito e demais informações e registros que em seu nome constem ou venham a contar do Sistema de Informações de Crédito (SCR), gerido pelo Banco Central do Brasil (BACEN), declarando estar ciente que os dados de suas respectivas operações contratadas com a Tentos S.A Crédito, Financiamento e Investimento também serão registradas no SCR;</p>
                         </div>
                         <div class="legal-item">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked id="auth-spc-serasa">
                             <p>II. consultar todas as organizações de cadastros de proteção ao crédito, incluindo mas não se limitando ao Serviço de Proteção ao Crédito (SPC), Serviço Central de Proteção ao Crédito (SCPC), Serasa Experian, SCI Brasil, e assemelhados sobre suas obrigações, bem como a divulgar seus dados, inclusive cadastrais, relativos às operações contratadas e aos débitos constituídos perante a Tentos S.A Crédito, Financiamento e Investimento decorrentes de operações com características de crédito, para constarem nos bancos dessas empresas, cuja finalidade será o compartilhamento com os contratantes das referidas entidades, que utilizarão esses dados para subsidiar suas decisões de crédito e negócios;</p>
                         </div>
                         <div class="legal-item">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked id="auth-ibama">
                             <p> Consultar as informações e processos em seu nome que constem nas bases informatizadas do Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis (IBAMA), do Instituto Chico Mendes de Conservação da Biodiversidade (ICM-Bio), além de outros órgãos ambientais federais, estaduais e municipais no âmbito de suas competências;</p>
                         </div>
                         <div class="legal-item">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked id="auth-share-partners">
                             <p>IV. compartilhar dados e informações com empresas do mesmo grupo econômico, bem como com parceiros comerciais, para fins de oferta de produtos e serviços e para análise de crédito;</p>
                         </div>
                         <div class="legal-item">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked id="auth-receita">
                             <p>V. realizar consultas e obter informações junto à Receita Federal do Brasil, a fim de confirmar dados cadastrais e fiscais, bem como a situação de regularidade fiscal;</p>
                         </div>
                         <div class="legal-item">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked id="auth-fraud">
                             <p>VI. utilizar os dados e informações coletados para fins de prevenção à fraude e à lavagem de dinheiro, em conformidade com a legislação vigente.</p>
                         </div>
                     </div>
@@ -1302,315 +1320,350 @@
             </div>
         </div>
     </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // --- Funções de formatação e máscara ---
+        
+        const formatarValor = (valor) => {
+            if (isNaN(valor)) valor = 0;
+            return "R$ " + valor.toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
+        };
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const tabButtons = document.querySelectorAll(".tab-button");
-            const tabContents = document.querySelectorAll(".tab-content");
-            const totalRendasInput = document.getElementById("total-rendas");
-
-            tabButtons.forEach(button => {
-                button.addEventListener("click", () => {
-                    tabButtons.forEach(btn => btn.classList.remove("active"));
-                    tabContents.forEach(content => content.classList.remove("active"));
-
-                    button.classList.add("active");
-                    const targetTab = document.querySelector(button.dataset.tabTarget);
-                    targetTab.classList.add("active");
-                });
-            });
-
-            // Máscaras de input
-            const applyMask = (input, mask) => {
-                input.addEventListener("input", (e) => {
-                    let value = e.target.value.replace(/\D/g, "");
-                    let maskedValue = "";
-                    let maskCharIndex = 0;
-                    for (let i = 0; i < value.length; i++) {
-                        while (maskCharIndex < mask.length && mask[maskCharIndex] !== "#") {
-                            maskedValue += mask[maskCharIndex];
-                            maskCharIndex++;
-                        }
-                        if (maskCharIndex < mask.length) {
-                            maskedValue += value[i];
-                            maskCharIndex++;
-                        }
-                    }
-                    e.target.value = maskedValue;
-                });
-            };
-
-            applyMask(document.getElementById("cpf"), "###.###.###-##");
-            applyMask(document.getElementById("cpf-conjuge"), "###.###.###-##");
-            applyMask(document.getElementById("telefone"), "(##) ####-####");
-            applyMask(document.getElementById("celular"), "(##) #####-####");
-            applyMask(document.getElementById("cep"), "#####-###");
-
-            document.querySelectorAll(".cep-input").forEach(input => {
-                applyMask(input, "#####-###");
-            });
-
-            // Preenchimento automático de endereço por CEP
-            document.getElementById("cep").addEventListener("blur", function() {
-                const cep = this.value.replace(/\D/g, "");
-                if (cep.length === 8) {
-                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (!data.erro) {
-                                document.getElementById("logradouro").value = data.logradouro;
-                                document.getElementById("bairro").value = data.bairro;
-                                document.getElementById("cidade").value = data.localidade;
-                                document.getElementById("uf").value = data.uf;
-                            } else {
-                                alert("CEP não encontrado.");
-                            }
-                        })
-                        .catch(error => console.error("Erro ao buscar CEP:", error));
-                }
-            });
-
-            // Lógica para campos de valor
-            const formatarValor = (valor) => {
-                return "R$ " + valor.toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
-            };
-
-            const parseValor = (texto) => {
-                return parseFloat(texto.replace("R$", "").replace(".", "").replace(",", ".")) || 0;
-            };
-
-            document.querySelectorAll(".valor-input").forEach(input => {
-                input.addEventListener("focus", (e) => {
-                    e.target.value = parseValor(e.target.value);
-                });
-                input.addEventListener("blur", (e) => {
-                    e.target.value = formatarValor(parseValor(e.target.value));
-                });
-            });
-
-            // Lógica para exibir/ocultar campos de cônjuge e regime de casamento
-            const estadoCivilSelect = document.getElementById("estado-civil");
-            const conjugeInfoContainer = document.getElementById("conjuge-info-container");
-            const conjugeInfoContainer2 = document.getElementById("conjuge-info-container-2");
-            const conjugeInfoContainer3 = document.getElementById("conjuge-info-container-3");
-            const regimeCasamentoContainer = document.getElementById("regime-casamento-container");
-
-            const toggleConjugeFields = () => {
-                if (estadoCivilSelect.value === "Casado") {
-                    conjugeInfoContainer.classList.remove("hidden");
-                    conjugeInfoContainer2.classList.remove("hidden");
-                    conjugeInfoContainer3.classList.remove("hidden");
-                    regimeCasamentoContainer.classList.remove("hidden");
+        const parseValor = (texto) => {
+            return parseFloat(String(texto).replace("R$ ", "").replace(/\./g, "").replace(",", ".")) || 0;
+        };
+        
+        const aplicarMascaraTexto = (valor, mascara) => {
+            let valorLimpo = String(valor).replace(/\D/g, "");
+            let valorMascarado = "";
+            let indexValor = 0;
+            for (let i = 0; i < mascara.length; i++) {
+                if (indexValor >= valorLimpo.length) break;
+                if (mascara[i] === "#") {
+                    valorMascarado += valorLimpo[indexValor];
+                    indexValor++;
                 } else {
-                    conjugeInfoContainer.classList.add("hidden");
-                    conjugeInfoContainer2.classList.add("hidden");
-                    conjugeInfoContainer3.classList.add("hidden");
-                    regimeCasamentoContainer.classList.add("hidden");
+                    valorMascarado += mascara[i];
                 }
-            };
+            }
+            return valorMascarado;
+        };
 
-            estadoCivilSelect.addEventListener("change", toggleConjugeFields);
-            toggleConjugeFields(); // Chama na inicialização para ajustar o estado inicial
+        // --- Delegação de Eventos para Máscaras (Solução para campos dinâmicos) ---
 
-            // Lógica para exibir/ocultar campos PEP
-            const pepSelect = document.getElementById("pep-select");
-            const pepDetailsContainer = document.getElementById("pep-details-container");
-            const pepRelacionamentoSelect = document.getElementById("pep-relacionamento-select");
-            const pepRelacionamentoDetailsContainer = document.getElementById("pep-relacionamento-details-container");
+        document.body.addEventListener('blur', function(event) {
+            if (event.target.matches('.valor-input')) {
+                event.target.value = formatarValor(parseValor(event.target.value));
+            }
+        }, true);
 
-            const togglePepFields = () => {
-                if (pepSelect.value === "Sim") {
-                    pepDetailsContainer.classList.remove("hidden");
-                } else {
-                    pepDetailsContainer.classList.add("hidden");
-                }
-            };
+        document.body.addEventListener('input', function(event) {
+            const target = event.target;
+            if (target.matches('#cpf, #cpf-conjuge')) {
+                target.value = aplicarMascaraTexto(target.value, "###.###.###-##");
+            }
+            if (target.matches('#telefone')) {
+                target.value = aplicarMascaraTexto(target.value, "(##) ####-####");
+            }
+            if (target.matches('#celular')) {
+                target.value = aplicarMascaraTexto(target.value, "(##) #####-####");
+            }
+            if (target.matches('#cep, .cep-input')) {
+                target.value = aplicarMascaraTexto(target.value, "#####-###");
+            }
+        });
 
-            const togglePepRelacionamentoFields = () => {
-                if (pepRelacionamentoSelect.value === "Sim") {
-                    pepRelacionamentoDetailsContainer.classList.remove("hidden");
-                } else {
-                    pepRelacionamentoDetailsContainer.classList.add("hidden");
-                }
-            };
+        // --- Lógica Principal do Formulário ---
+        
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-content");
 
-            pepSelect.addEventListener("change", togglePepFields);
-            pepRelacionamentoSelect.addEventListener("change", togglePepRelacionamentoFields);
+        tabButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                tabButtons.forEach(btn => btn.classList.remove("active"));
+                tabContents.forEach(content => content.classList.remove("active"));
+                button.classList.add("active");
+                document.querySelector(button.dataset.tabTarget).classList.add("active");
+            });
+        });
 
-            togglePepFields(); // Chama na inicialização
-            togglePepRelacionamentoFields(); // Chama na inicialização
-
-            // Lógica para cálculo de valor de produção
-            const calcularValorProducao = (item) => {
-                const area = parseFloat(item.querySelector(".renda-area, .projecao-area")?.value) || 0;
-                const produtividade = parseFloat(item.querySelector(".renda-produtividade, .projecao-produtividade")?.value) || 0;
-                const preco = parseValor(item.querySelector(".renda-preco, .projecao-preco")?.value || "R$ 0,00");
-                const valor = area * produtividade * preco;
-                const valorProducaoInput = item.querySelector(".renda-producao, .projecao-producao");
-                if (valorProducaoInput) {
-                    valorProducaoInput.value = formatarValor(valor);
-                } else {
-                    valorProducaoInput.value = 'R$ 0,00';
-                }
-            };
-
-            // Delegação de eventos para cálculo de renda
-            document.body.addEventListener('blur', (event) => {
-                const item = event.target.closest('.renda-safra-item, .projecao-safra-item');
-                if (item) {
-                    const target = event.target;
-                    if (target.classList.contains('renda-area') || target.classList.contains('projecao-area') ||
-                        target.classList.contains('renda-produtividade') || target.classList.contains('projecao-produtividade') ||
-                        target.classList.contains('renda-preco') || target.classList.contains('projecao-preco')) {
-                        calcularValorProducao(item);
-                    }
-                }
-            }, true);
-
-            const receitaAgricolaInput = document.getElementById('receita-agricola');
-            const demaisReceitasInput = document.getElementById('demais-receitas');
-
-
-            const calcularTotalRendas = () => {
-                const receitaAgricola = parseValor(receitaAgricolaInput.value);
-                const demaisReceitas = parseValor(demaisReceitasInput.value);
-                const totalRendas = receitaAgricola + demaisReceitas;
-                totalRendasInput.value = formatarValor(totalRendas);
-            };
-
-            receitaAgricolaInput.addEventListener('blur', calcularTotalRendas);
-            demaisReceitasInput.addEventListener('blur', calcularTotalRendas);
-
-            document.body.addEventListener('click', (event) => {
-                const button = event.target;
-
-                if (button.classList.contains('add-button')) {
-                    const item = button.closest('.field-group');
-                    const newItem = item.cloneNode(true);
-
-                    newItem.querySelectorAll('input, select, textarea').forEach(input => {
-                        if (input.type === 'checkbox') {
-                            input.checked = false;
+        document.getElementById("cep").addEventListener("blur", function() {
+            const cep = this.value.replace(/\D/g, "");
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById("logradouro").value = data.logradouro;
+                            document.getElementById("bairro").value = data.bairro;
+                            document.getElementById("cidade").value = data.localidade;
+                            document.getElementById("uf").value = data.uf;
                         } else {
-                            input.value = '';
+                            alert("CEP não encontrado.");
+                        }
+                    })
+                    .catch(error => console.error("Erro ao buscar CEP:", error));
+            }
+        });
+        
+        const estadoCivilSelect = document.getElementById("estado-civil");
+        const toggleConjugeFields = () => {
+            const isCasado = estadoCivilSelect.value === "Casado";
+            document.getElementById("conjuge-info-container").classList.toggle("hidden", !isCasado);
+            document.getElementById("conjuge-info-container-2").classList.toggle("hidden", !isCasado);
+            document.getElementById("conjuge-info-container-3").classList.toggle("hidden", !isCasado);
+            document.getElementById("regime-casamento-container").classList.toggle("hidden", !isCasado);
+        };
+        estadoCivilSelect.addEventListener("change", toggleConjugeFields);
+        toggleConjugeFields();
+
+        const pepSelect = document.getElementById("pep-select");
+        const pepRelacionamentoSelect = document.getElementById("pep-relacionamento-select");
+        const togglePepFields = () => document.getElementById("pep-details-container").classList.toggle("hidden", pepSelect.value !== "Sim");
+        const togglePepRelacionamentoFields = () => document.getElementById("pep-relacionamento-details-container").classList.toggle("hidden", pepRelacionamentoSelect.value !== "Sim");
+        pepSelect.addEventListener("change", togglePepFields);
+        pepRelacionamentoSelect.addEventListener("change", togglePepRelacionamentoFields);
+        togglePepFields();
+        togglePepRelacionamentoFields();
+
+        const calcularValorProducao = (item) => {
+            const area = parseFloat(item.querySelector(".renda-area, .projecao-area")?.value) || 0;
+            const produtividade = parseFloat(item.querySelector(".renda-produtividade, .projecao-produtividade")?.value) || 0;
+            const preco = parseValor(item.querySelector(".renda-preco, .projecao-preco")?.value || "R$ 0,00");
+            const valor = area * produtividade * preco;
+            const valorProducaoInput = item.querySelector(".renda-producao, .projecao-producao");
+            if (valorProducaoInput) {
+                valorProducaoInput.value = formatarValor(valor);
+            }
+        };
+
+        const calcularTotalRendas = () => {
+            const receitaAgricola = parseValor(document.getElementById('receita-agricola').value);
+            const demaisReceitas = parseValor(document.getElementById('demais-receitas').value);
+            document.getElementById("total-rendas").value = formatarValor(receitaAgricola + demaisReceitas);
+        };
+        
+        document.body.addEventListener('blur', (event) => {
+            if (event.target.closest('.renda-safra-item, .projecao-safra-item')) {
+                calcularValorProducao(event.target.closest('.field-group'));
+            }
+            if (event.target.matches('#receita-agricola, #demais-receitas')) {
+                calcularTotalRendas();
+            }
+        }, true);
+
+        document.body.addEventListener('click', (event) => {
+            if (event.target.matches('.add-button')) {
+                const container = event.target.closest('[id$="-container"]');
+                const item = event.target.closest('.field-group');
+                const newItem = item.cloneNode(true);
+                newItem.querySelectorAll('input, select, textarea').forEach(input => input.value = '');
+                const newButton = newItem.querySelector('.add-button');
+                newButton.textContent = '- Remover';
+                newButton.classList.replace('add-button', 'remove-button');
+                if (newItem.querySelector('.kml-area-display')) {
+                    newItem.querySelector('.kml-area-display').textContent = '';
+                }
+                container.appendChild(newItem);
+            } else if (event.target.matches('.remove-button')) {
+                event.target.closest('.field-group').remove();
+            }
+        });
+        
+        document.body.addEventListener('click', function(event) {
+            if (event.target.classList.contains('kml-button')) {
+                event.target.parentElement.querySelector('.kml-file-input').click();
+            }
+        });
+        
+        window.generatePdf = () => (updateDeclaracaoInfo(), window.print());
+        const setDataAtual = () => {
+            document.getElementById('data-cadastro').value = new Date().toISOString().slice(0, 10);
+        };
+        setDataAtual();
+
+        function updateDeclaracaoInfo() {
+            const unidade3T = document.getElementById('unidade-3t').value;
+            const dataCadastro = document.getElementById('data-cadastro').value;
+            const nomePf = document.getElementById('nome-pf').value;
+            const cpf = document.getElementById('cpf').value;
+
+            const unidadeElement = document.getElementById('assinatura-unidade-3t');
+            const dataElement = document.getElementById('assinatura-data-cadastro');
+            const nomeElement = document.getElementById('assinatura-nome');
+            const cpfElement = document.getElementById('assinatura-cpf');
+
+            let dataFormatada = '';
+            if (dataCadastro) {
+                const [ano, mes, dia] = dataCadastro.split('-');
+                dataFormatada = `${dia}/${mes}/${ano}`;
+            }
+
+            if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
+            if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
+            if (nomeElement) nomeElement.textContent = nomePf ? `Nome: ${nomePf}` : '';
+            if (cpfElement) cpfElement.textContent = cpf ? `CPF: ${cpf}` : '';
+        }
+        document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
+        document.getElementById('data-cadastro').addEventListener('change', updateDeclaracaoInfo);
+        document.getElementById('nome-pf').addEventListener('input', updateDeclaracaoInfo);
+        document.getElementById('cpf').addEventListener('input', updateDeclaracaoInfo);
+        updateDeclaracaoInfo();
+
+
+        // --- Funções para Salvar e Importar JSON (VERSÃO COMPLETA E CORRIGIDA) ---
+
+        const getUniqueKey = (field) => {
+            const ignoredClasses = ['valor-input', 'cep-input', 'kml-file-input', 'form-control'];
+            for (const cls of field.classList) {
+                if (!ignoredClasses.includes(cls)) {
+                    return cls;
+                }
+            }
+            return field.id || field.name;
+        };
+
+        const getDynamicItemsData = (containerId) => {
+            const container = document.getElementById(containerId);
+            const items = container.querySelectorAll('.field-group');
+            const data = [];
+            items.forEach(item => {
+                const itemData = {};
+                item.querySelectorAll('input, select').forEach(field => {
+                    const key = getUniqueKey(field);
+                    if (key) {
+                       itemData[key] = field.value;
+                    }
+                });
+                data.push(itemData);
+            });
+            return data;
+        };
+
+        window.saveDataAsJson = () => {
+            const formData = {};
+            
+            document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
+                if (field.type === 'checkbox') {
+                    formData[field.id] = field.checked;
+                } else {
+                    formData[field.id] = field.value;
+                }
+            });
+
+            formData.rendasSafra = getDynamicItemsData('renda-safra-container');
+            formData.projecoesSafra = getDynamicItemsData('projecao-safra-container');
+            formData.outrasReceitas = getDynamicItemsData('outras-receitas-container');
+            formData.bancos = getDynamicItemsData('bancos-container');
+            formData.pecuaria = getDynamicItemsData('pecuaria-container');
+            formData.veiculos = getDynamicItemsData('veiculos-container');
+            formData.maquinas = getDynamicItemsData('maquinas-container');
+            formData.areasProprias = getDynamicItemsData('areas-proprias-container');
+            formData.areasArrendadas = getDynamicItemsData('areas-arrendadas-container');
+            formData.seguros = getDynamicItemsData('seguros-container');
+
+            const jsonString = JSON.stringify(formData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        const populateDynamicItems = (containerId, data) => {
+            const container = document.getElementById(containerId);
+            const template = container.querySelector('.field-group');
+            container.innerHTML = ''; 
+            
+            if (data && data.length > 0) {
+                data.forEach((itemData, index) => {
+                    const newItem = template.cloneNode(true);
+                    newItem.querySelectorAll('input, select').forEach(field => {
+                        const key = getUniqueKey(field);
+                        if (itemData.hasOwnProperty(key)) {
+                            field.value = itemData[key];
                         }
                     });
-
-                    const newButton = newItem.querySelector('.add-button');
-                    if (newButton) {
-                        newButton.textContent = '- Remover';
-                        newButton.classList.remove('add-button');
-                        newButton.classList.add('remove-button');
+                    
+                    if(index > 0) { 
+                        const addButton = newItem.querySelector('.add-button');
+                        if(addButton){
+                            addButton.textContent = '- Remover';
+                            addButton.classList.replace('add-button', 'remove-button');
+                        }
                     }
-
-                    const kmlDisplay = newItem.querySelector('.kml-area-display');
-                    if (kmlDisplay) {
-                        kmlDisplay.textContent = '';
-                    }
-
-                    button.closest('.form-section').appendChild(newItem);
-                } else if (button.classList.contains('remove-button')) {
-                    const itemToRemove = button.closest('.field-group');
-                    if (itemToRemove) {
-                        itemToRemove.remove();
-                    }
-                }
-            });
-
-            const kmlButtons = document.querySelectorAll('.kml-button');
-            kmlButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const fileInput = button.parentElement.querySelector('.kml-file-input');
-                    fileInput.click();
+                    container.appendChild(newItem);
                 });
+            } else {
+                container.appendChild(template);
+            }
+        };
+
+        const reapplyAllMasks = () => {
+            document.querySelectorAll('.valor-input').forEach(field => {
+                field.dispatchEvent(new Event('blur', { bubbles: true }));
             });
+            document.querySelectorAll('#cpf, #cpf-conjuge').forEach(f => f.value = aplicarMascaraTexto(f.value, "###.###.###-##"));
+            document.querySelectorAll('#telefone').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) ####-####"));
+            document.querySelectorAll('#celular').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) #####-####"));
+            document.querySelectorAll('#cep, .cep-input').forEach(f => f.value = aplicarMascaraTexto(f.value, "#####-###"));
+        };
 
-            const kmlFileInputs = document.querySelectorAll('.kml-file-input');
-            kmlFileInputs.forEach(input => {
-                input.addEventListener('change', (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            try {
-                                const kmlText = e.target.result;
-                                const parser = new DOMParser();
-                                const kmlDoc = parser.parseFromString(kmlText, "text/xml");
-                                const coordinatesText = kmlDoc.querySelector('coordinates').textContent;
-
-                                const coords = coordinatesText.trim().split(/\s+/).map(c => c.split(',').map(Number));
-                                if (coords.length > 2) {
-                                    let area = 0;
-                                    for (let i = 0; i < coords.length - 1; i++) {
-                                        area += coords[i][0] * coords[i+1][1] - coords[i+1][0] * coords[i][1];
-                                    }
-                                    area = Math.abs(area / 2);
-
-                                    const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
-                                    areaDisplay.textContent = `Área calculada: ${area.toFixed(2)} ha`;
-
-                                    const areaTotalInput = event.target.closest('.field-group').querySelector('[aria-label="Área total (ha)"]');
-                                    if (areaTotalInput) {
-                                        areaTotalInput.value = area.toFixed(2);
+        window.importDataFromJson = () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = event => {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            for (const key in data) {
+                                if (data.hasOwnProperty(key)) {
+                                    const field = document.getElementById(key);
+                                    if (field) {
+                                        field.type === 'checkbox' ? field.checked = data[key] : field.value = data[key];
                                     }
                                 }
-                            } catch (err) {
-                                console.error("Erro ao processar KML:", err);
-                                const areaDisplay = event.target.parentElement.querySelector('.kml-area-display');
-                                areaDisplay.textContent = 'Erro ao processar KML.';
                             }
-                        };
-                        reader.readAsText(file);
-                    }
-                });
-            });
+                            
+                            if(data.rendasSafra) populateDynamicItems('renda-safra-container', data.rendasSafra);
+                            if(data.projecoesSafra) populateDynamicItems('projecao-safra-container', data.projecoesSafra);
+                            if(data.outrasReceitas) populateDynamicItems('outras-receitas-container', data.outrasReceitas);
+                            if(data.bancos) populateDynamicItems('bancos-container', data.bancos);
+                            if(data.pecuaria) populateDynamicItems('pecuaria-container', data.pecuaria);
+                            if(data.veiculos) populateDynamicItems('veiculos-container', data.veiculos);
+                            if(data.maquinas) populateDynamicItems('maquinas-container', data.maquinas);
+                            if(data.areasProprias) populateDynamicItems('areas-proprias-container', data.areasProprias);
+                            if(data.areasArrendadas) populateDynamicItems('areas-arrendadas-container', data.areasArrendadas);
+                            if(data.seguros) populateDynamicItems('seguros-container', data.seguros);
 
-            window.generatePdf = () => {
-                // Atualiza os campos da declaração antes de imprimir
-                updateDeclaracaoInfo();
-                window.print();
-            };
-
-            // Função para preencher a data atual
-            const setDataAtual = () => {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months start at 0!
-                const dd = String(today.getDate()).padStart(2, '0');
-                document.getElementById('data-cadastro').value = `${yyyy}-${mm}-${dd}`;
-            };
-
-            setDataAtual(); // Chama a função para preencher a data ao carregar a página
-
-            document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
-            document.getElementById('data-cadastro').addEventListener('change', updateDeclaracaoInfo);
-            document.getElementById('nome-pf').addEventListener('input', updateDeclaracaoInfo); // Adicionado listener para nome
-            document.getElementById('cpf').addEventListener('input', updateDeclaracaoInfo);     // Adicionado listener para CPF
-
-            function updateDeclaracaoInfo() {
-                const unidade3T = document.getElementById('unidade-3t').value;
-                const dataCadastro = document.getElementById('data-cadastro').value;
-                const nomePf = document.getElementById('nome-pf').value;
-                const cpf = document.getElementById('cpf').value;
-
-                const unidadeElement = document.getElementById('assinatura-unidade-3t');
-                const dataElement = document.getElementById('assinatura-data-cadastro');
-                const nomeElement = document.getElementById('assinatura-nome');
-                const cpfElement = document.getElementById('assinatura-cpf');
-
-                let dataFormatada = '';
-                if (dataCadastro) {
-                    const [ano, mes, dia] = dataCadastro.split('-');
-                    dataFormatada = `${dia}/${mes}/${ano}`;
+                            reapplyAllMasks();
+                            document.querySelectorAll('.renda-safra-item, .projecao-safra-item').forEach(item => calcularValorProducao(item));
+                            calcularTotalRendas();
+                            toggleConjugeFields();
+                            togglePepFields();
+                            togglePepRelacionamentoFields();
+                            
+                            alert('Dados importados com sucesso!');
+                        } catch (error) {
+                            alert('Erro ao ler o arquivo JSON.');
+                            console.error('Erro de parsing do JSON:', error);
+                        }
+                    };
+                    reader.readAsText(file);
                 }
+            };
+            input.click();
+        };
+    });
+</script>
 
-                if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
-                if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
-                if (nomeElement) nomeElement.textContent = nomePf ? `Nome: ${nomePf}` : '';
-                if (cpfElement) cpfElement.textContent = cpf ? `CPF: ${cpf}` : '';
-            }
-            updateDeclaracaoInfo(); // Chama na inicialização para preencher os campos se já houver dados
-        });
-    </script>  </body>
+       </body>
 </html>
-
