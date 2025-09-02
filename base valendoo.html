@@ -423,7 +423,9 @@
             <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
             <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
             <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
-        </div>
+            <button class="tab-button section-title" data-tab-target="#conglomerado">Conglomerado</button>
+
+</div>
         
         <div class="tab-content-container">
             <div id="identificacao" class="tab-content active">
@@ -1302,8 +1304,29 @@
                     </div>
                 </div>
             </div>
-
-            <div id="declaracao" class="tab-content">
+<div id="conglomerado" class="tab-content">
+    <div class="form-section">
+        <div class="section-title">Conglomerado</div>
+        <div id="conglomerado-container">
+            <div class="field-group conglomerado-item">
+                <div class="field-item">
+                    <label>Nome</label>
+                    <input type="text" class="nome-conglomerado">
+                </div>
+                <div class="field-item">
+                    <label>CPF</label>
+                    <input type="text" class="cpf-conglomerado">
+                </div>
+                <div class="field-item">
+                    <label>Vínculo</label>
+                    <input type="text" class="vinculo-conglomerado">
+                </div>
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+           <div id="declaracao" class="tab-content">
                 <div class="form-section">
                     <div class="section-title">Declaração</div>
                     <div class="legal-text">
@@ -1359,9 +1382,10 @@
 
         document.body.addEventListener('input', function(event) {
             const target = event.target;
-            if (target.matches('#cpf, #cpf-conjuge')) {
-                target.value = aplicarMascaraTexto(target.value, "###.###.###-##");
-            }
+            if (target.matches('#cpf, #cpf-conjuge, .cpf-conglomerado')) {
+    target.value = aplicarMascaraTexto(target.value, "###.###.###-##");
+}
+
             if (target.matches('#telefone')) {
                 target.value = aplicarMascaraTexto(target.value, "(##) ####-####");
             }
@@ -1561,6 +1585,8 @@
             formData.areasProprias = getDynamicItemsData('areas-proprias-container');
             formData.areasArrendadas = getDynamicItemsData('areas-arrendadas-container');
             formData.seguros = getDynamicItemsData('seguros-container');
+	    formData.conglomerado = getDynamicItemsData('conglomerado-container');
+
 
             const jsonString = JSON.stringify(formData, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json' });
@@ -1607,7 +1633,9 @@
             document.querySelectorAll('.valor-input').forEach(field => {
                 field.dispatchEvent(new Event('blur', { bubbles: true }));
             });
-            document.querySelectorAll('#cpf, #cpf-conjuge').forEach(f => f.value = aplicarMascaraTexto(f.value, "###.###.###-##"));
+           document.querySelectorAll('#cpf, #cpf-conjuge, .cpf-conglomerado').forEach(f => 
+    f.value = aplicarMascaraTexto(f.value, "###.###.###-##"));
+
             document.querySelectorAll('#telefone').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) ####-####"));
             document.querySelectorAll('#celular').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) #####-####"));
             document.querySelectorAll('#cep, .cep-input').forEach(f => f.value = aplicarMascaraTexto(f.value, "#####-###"));
@@ -1643,6 +1671,8 @@
                             if(data.areasProprias) populateDynamicItems('areas-proprias-container', data.areasProprias);
                             if(data.areasArrendadas) populateDynamicItems('areas-arrendadas-container', data.areasArrendadas);
                             if(data.seguros) populateDynamicItems('seguros-container', data.seguros);
+			    if(data.conglomerado) populateDynamicItems('conglomerado-container', data.conglomerado);
+
 
                             reapplyAllMasks();
                             document.querySelectorAll('.renda-safra-item, .projecao-safra-item').forEach(item => calcularValorProducao(item));
@@ -1667,3 +1697,4 @@
 
        </body>
 </html>
+
