@@ -2301,6 +2301,56 @@
  input.click();
  };
  });
+
+// Função para buscar CEP e preencher campos existentes e futuros
+function buscarCep(inputCep) {
+    const cep = inputCep.value.replace(/\D/g, "");
+    if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.erro) {
+                const fieldGroup = inputCep.closest(".field-group");
+                if (fieldGroup) {
+                    const municipio = fieldGroup.querySelector("input[class*='municipio']");
+                    const bairro = fieldGroup.querySelector("input[class*='bairro']");
+                    if (municipio) municipio.value = data.localidade;
+                    if (bairro) bairro.value = data.bairro;
+                }
+            } else {
+                alert("CEP não encontrado.");
+                limparCampos(inputCep);
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao buscar CEP:", error);
+            limparCampos(inputCep);
+        });
+    } else {
+        limparCampos(inputCep);
+    }
+}
+
+function limparCampos(inputCep) {
+    const fieldGroup = inputCep.closest(".field-group");
+    if (fieldGroup) {
+        const campos = fieldGroup.querySelectorAll("input");
+        campos.forEach(campo => {
+            if (campo !== inputCep && !campo.type.includes("file") && campo.type !== "number") {
+                campo.value = "";
+            }
+        });
+    }
+}
+
+// Event delegation: captura blur em qualquer campo cep-input, inclusive os criados depois
+document.addEventListener("blur", function(event) {
+    if (event.target.classList.contains("cep-input")) {
+        buscarCep(event.target);
+    }
+}, true); // o true faz o listener ser no "capture phase", necessário para blur
+
+
 </script>
 
  </body>
