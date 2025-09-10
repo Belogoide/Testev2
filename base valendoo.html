@@ -419,11 +419,12 @@
             <button class="tab-button section-title" data-tab-target="#pecuaria">Pecuária</button>
             <button class="tab-button section-title" data-tab-target="#bens-moveis">Bens Móveis</button>
             <button class="tab-button section-title" data-tab-target="#bens-imoveis">Bens Imóveis</button>
-            <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
+            <button class="tab-button section-title" data-tab-target="#conglomerado">Conglomerado</button>
+	    <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
             <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
             <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
             <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
-            <button class="tab-button section-title" data-tab-target="#conglomerado">Conglomerado</button>
+            
 
 </div>
         
@@ -1241,267 +1242,405 @@
             </div>
 
             <div id="pecuaria" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Atividades de Pecuária</div>
-                    <div id="pecuaria-container">
-                        <div class="field-group pecuaria-item">
-                            <div class="field-item">
-                                <label>Atividade</label>
-                                <select class="atividade-pecuaria">
-                                    <option value="">Selecione</option>
-                                    <option value="Gado de Corte - Cria">Gado de Corte - Cria</option>
-                                    <option value="Gado de Corte - Recria/Engorda">Gado de Corte - Recria/Engorda</option>
-                                    <option value="Gado de Corte - Cria/Recria/Engorda">Gado de Corte - Cria/Recria/Engorda</option>
-                                    <option value="Gado de Corte - Confinamento">Gado de Corte - Confinamento</option>
-                                    <option value="Gado de Corte - Semi-confinamento">Gado de Corte - Semi-confinamento</option>
-                                    <option value="Gado de Leite à Pasto">Gado de Leite à Pasto</option>
-                                    <option value="Gado de Leite Confinado">Gado de Leite Confinado</option>
-                                    <option value="Gado de Leite Semi-confinado">Gado de Leite Semi-confinado</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Quantidade</label>
-                                <input type="number" class="quantidade-pecuaria">
-                            </div>
-                            <div class="field-item">
-                                <label>Vr. Mercado</label>
-                                <input type="text" class="valor-input valor-mercado-pecuaria" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Obs.</label>
-                                <input type="text" class="obs-pecuaria">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Atividades de Pecuária
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre as atividades de pecuária, incluindo tipo de atividade, quantidade, valor de mercado e observações</span>
+        </div>
+        <div id="pecuaria-container">
+            <div class="field-group pecuaria-item">
+                <div class="field-item">
+                    <label>Atividade</label>
+                    <select class="atividade-pecuaria">
+                        <option value="">Selecione</option>
+                        <option value="Gado de Corte - Cria">Gado de Corte - Cria</option>
+                        <option value="Gado de Corte - Recria/Engorda">Gado de Corte - Recria/Engorda</option>
+                        <option value="Gado de Corte - Cria/Recria/Engorda">Gado de Corte - Cria/Recria/Engorda</option>
+                        <option value="Gado de Corte - Confinamento">Gado de Corte - Confinamento</option>
+                        <option value="Gado de Corte - Semi-confinamento">Gado de Corte - Semi-confinamento</option>
+                        <option value="Gado de Leite à Pasto">Gado de Leite à Pasto</option>
+                        <option value="Gado de Leite Confinado">Gado de Leite Confinado</option>
+                        <option value="Gado de Leite Semi-confinado">Gado de Leite Semi-confinado</option>
+                    </select>
                 </div>
+                <div class="field-item">
+                    <label>Quantidade</label>
+                    <input type="number" class="quantidade-pecuaria">
+                </div>
+                <div class="field-item">
+                    <label>Vr. Mercado</label>
+                    <input type="text" class="valor-input valor-mercado-pecuaria" placeholder="R$ 0,00">
+                </div>
+                <div class="field-item">
+                    <label>Obs.</label>
+                    <input type="text" class="obs-pecuaria">
+                </div>
+                <button class="add-button" type="button">+ Adicionar</button>
             </div>
+        </div>
+    </div>
+</div>
 
-            <div id="bens-moveis" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Veículos</div>
-                    <div id="veiculos-container">
-                        <div class="field-group veiculo-item">
-                            <div class="field-item">
-                                <label>Ano de fabricação</label>
-                                <input type="number" class="ano-fabricacao-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Ano modelo</label>
-                                <input type="number" class="ano-modelo-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor de mercado</label>
-                                <input type="text" class="valor-input valor-mercado-veiculo" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Marca</label>
-                                <input type="text" class="marca-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Modelo</label>
-                                <input type="text" class="modelo-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Placa</label>
-                                <input type="text" class="placa-veiculo">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Máquinas e Implementos</div>
-                    <div id="maquinas-container">
-                        <div class="field-group maquina-item">
-                            <div class="field-item">
-                                <label>Ano de fabricação</label>
-                                <input type="number" class="ano-fabricacao-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Ano modelo</label>
-                                <input type="number" class="ano-modelo-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor de mercado</label>
-                                <input type="text" class="valor-input valor-mercado-maquina" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Marca</label>
-                                <input type="text" class="marca-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Modelo</label>
-                                <input type="text" class="modelo-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Tipo de máquina</label>
-                                <input type="text" class="tipo-maquina">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                    
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div id="bens-imoveis" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Áreas Próprias</div>
-                    <div id="areas-proprias-container">
-                        <div class="field-group area-propria-item">
-                            <div class="field-item">
-                                <label>Proprietário</label>
-                                <input type="text" class="proprietario-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Área total (ha)</label>
-                                <input type="number" class="area-total-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor venal</label>
-                                <input type="text" class="valor-input valor-venal-propria" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Município</label>
-                                <input type="text" class="municipio-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Denominação</label>
-                                <input type="text" class="denominacao-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>CAR</label>
-                                <input type="text" class="car-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Matrícula</label>
-                                <input type="text" class="matricula-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>CEP</label>
-                                <input type="text" class="cep-input cep-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
-                                <button class="kml-button" type="button">Importar KML</button>
-                                <div class="kml-area-display"></div>
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Áreas de Teceiros</div>
-                    <div id="areas-arrendadas-container">
-                        <div class="field-group area-arrendada-item">
-                            <div class="field-item">
-                                <label>Proprietário</label>
-                                <input type="text" class="proprietario-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Área total (ha)</label>
-                                <input type="number" class="area-total-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Área explorada (ha)</label>
-                                <input type="number" class="area-explorada-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Fim da Vigencia.</label>
-                                <input type="date" class="fim-vigencia-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Município</label>
-                                <input type="text" class="municipio-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Denominação</label>
-                                <input type="text" class="denominacao-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>CAR</label>
-                                <input type="text" class="car-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Matrícula</label>
-                                <input type="text" class="matricula-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>CEP</label>
-                                <input type="text" class="cep-input cep-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
-                                <button class="kml-button" type="button">Importar KML</button>
-                                <div class="kml-area-display"></div>
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div id="funcionarios" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Funcionários</div>
-                    <div id="funcionarios-container">
-                        <div class="field-group funcionario-item">
-                            <div class="field-item">
-                                <label>Qtde. funcionários fixos</label>
-                                <input type="number" id="qtde-funcionarios-fixos">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor média folha fixos</label>
-                                <input type="text" class="valor-input" id="valor-media-folha-fixos" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Qtde. temporários</label>
-                                <input type="number" id="qtde-funcionarios-temporarios">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor média folha temporários</label>
-                                <input type="text" class="valor-input" id="valor-media-folha-temporarios" placeholder="R$ 0,00">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div id="seguros" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Seguros</div>
-                    <div id="seguros-container">
-                        <div class="field-group seguro-item">
-                            <div class="field-item">
-                                <label>Modalidade</label>
-                                <select class="modalidade-seguro">
-                                    <option value="">Selecione</option>
-                                    <option value="Lavoura">Lavoura</option>
-                                    <option value="Veiculo">Veículo</option>
-                                    <option value="Maquina">Máquina</option>
-                                    <option value="Vida">Vida</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Bem Segurado</label>
-                                <input type="text" class="bem-segurado">
-                            </div>
-                            <div class="field-item">
-                                <label>Vr. cobertura</label>
-                                <input type="text" class="valor-input valor-cobertura-seguro" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Vencimento</label>
-                                <input type="date" class="vencimento-seguro">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
+
+
+
+           <div id="bens-moveis" class="tab-content">
+
+    <!-- Veículos -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Veículos
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre veículos, incluindo ano, modelo, marca, valor de mercado e placa</span>
+        </div>
+        <div id="veiculos-container">
+            <div class="field-group veiculo-item">
+                <div class="field-item">
+                    <label>Ano de fabricação</label>
+                    <input type="number" class="ano-fabricacao-veiculo">
+                </div>
+                <div class="field-item">
+                    <label>Ano modelo</label>
+                    <input type="number" class="ano-modelo-veiculo">
+                </div>
+                <div class="field-item">
+                    <label>Valor de mercado</label>
+                    <input type="text" class="valor-input valor-mercado-veiculo" placeholder="R$ 0,00">
+                </div>
+                <div class="field-item">
+                    <label>Marca</label>
+                    <input type="text" class="marca-veiculo">
+                </div>
+                <div class="field-item">
+                    <label>Modelo</label>
+                    <input type="text" class="modelo-veiculo">
+                </div>
+                <div class="field-item">
+                    <label>Placa</label>
+                    <input type="text" class="placa-veiculo">
+                </div>
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Máquinas e Implementos -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Máquinas e Implementos
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre máquinas e implementos agrícolas, incluindo ano, modelo, marca, tipo e valor de mercado</span>
+        </div>
+        <div id="maquinas-container">
+            <div class="field-group maquina-item">
+                <div class="field-item">
+                    <label>Ano de fabricação</label>
+                    <input type="number" class="ano-fabricacao-maquina">
+                </div>
+                <div class="field-item">
+                    <label>Ano modelo</label>
+                    <input type="number" class="ano-modelo-maquina">
+                </div>
+                <div class="field-item">
+                    <label>Valor de mercado</label>
+                    <input type="text" class="valor-input valor-mercado-maquina" placeholder="R$ 0,00">
+                </div>
+                <div class="field-item">
+                    <label>Marca</label>
+                    <input type="text" class="marca-maquina">
+                </div>
+                <div class="field-item">
+                    <label>Modelo</label>
+                    <input type="text" class="modelo-maquina">
+                </div>
+                <div class="field-item">
+                    <label>Tipo de máquina</label>
+                    <input type="text" class="tipo-maquina">
+                </div>
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="bens-imoveis" class="tab-content">
+
+    <!-- Áreas Próprias -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Áreas Próprias
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre áreas de propriedade do cliente, incluindo área total, valor venal, município, denominação, CAR, matrícula e CEP</span>
+        </div>
+        <div id="areas-proprias-container">
+            <div class="field-group area-propria-item">
+
+                <div class="field-item">
+                    <label>Área total (ha)</label>
+                    <input type="number" class="area-total-propria">
+                </div>
+
+                <div class="field-item">
+                    <label>Valor venal</label>
+                    <input type="text" class="valor-input valor-venal-propria" placeholder="R$ 0,00">
+                </div>
+
+                <div class="field-item">
+                    <label>CEP</label>
+                    <input type="text" class="cep-input cep-area-propria">
+                </div>
+
+                <div class="field-item">
+                    <label>Município</label>
+                    <input type="text" class="municipio-area-propria">
+                </div>
+
+                <div class="field-item">
+                    <label>Denominação</label>
+                    <input type="text" class="denominacao-area-propria">
+                </div>
+
+                <div class="field-item">
+                    <label>CAR</label>
+                    <input type="text" class="car-area-propria">
+                </div>
+
+                <div class="field-item">
+                    <label>Matrícula</label>
+                    <input type="text" class="matricula-area-propria">
+                </div>
+
+                <div class="field-item">
+                    <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
+                    <button class="kml-button" type="button">Importar KML</button>
+                    <div class="kml-area-display"></div>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Áreas de Terceiros -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Áreas de Terceiros
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre áreas arrendadas, incluindo área total, área explorada, vigência, município, denominação, CAR, matrícula e CEP</span>
+        </div>
+        <div id="areas-arrendadas-container">
+            <div class="field-group area-arrendada-item">
+
+                <div class="field-item">
+                    <label>Proprietário</label>
+                    <input type="text" class="proprietario-area-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>Área total (ha)</label>
+                    <input type="number" class="area-total-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>Área explorada (ha)</label>
+                    <input type="number" class="area-explorada-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>Fim da Vigência.</label>
+                    <input type="date" class="fim-vigencia-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>CEP</label>
+                    <input type="text" class="cep-input cep-area-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>Município</label>
+                    <input type="text" class="municipio-area-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>Denominação</label>
+                    <input type="text" class="denominacao-area-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>CAR</label>
+                    <input type="text" class="car-area-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <label>Matrícula</label>
+                    <input type="text" class="matricula-area-arrendada">
+                </div>
+
+                <div class="field-item">
+                    <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
+                    <button class="kml-button" type="button">Importar KML</button>
+                    <div class="kml-area-display"></div>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="conglomerado" class="tab-content">
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Conglomerado
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre integrantes do conglomerado familiar, incluindo nome, CPF e vínculo</span>
+        </div>
+        <div id="conglomerado-container">
+            <div class="field-group conglomerado-item">
+                <div class="field-item">
+                    <label>Nome</label>
+                    <input type="text" class="nome-conglomerado">
+                </div>
+                <div class="field-item">
+                    <label>CPF</label>
+                    <input type="text" class="cpf-conglomerado">
+                </div>
+                <div class="field-item">
+                    <label>Vínculo</label>
+                    <select class="vinculo-conglomerado">
+                        <option value="Outro">Outro</option>
+                        <option value="Líder">Líder</option>
+                        <option value="Sócio">Sócio</option>
+                        <option value="Marido">Marido</option>
+                        <option value="Esposa">Esposa</option>
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Filho">Filho</option>
+                        <option value="Filha">Filha</option>
+                        <option value="Irmão">Irmão</option>
+                        <option value="Irmã">Irmã</option>
+                        <option value="Padrasto">Padrasto</option>
+                        <option value="Madrasta">Madrasta</option>
+                        <option value="Enteado">Enteado</option>
+                        <option value="Enteada">Enteada</option>
+                        <option value="Genro">Genro</option>
+                        <option value="Nora">Nora</option>
+                        <option value="Sogro">Sogro</option>
+                        <option value="Sogra">Sogra</option>
+                        <option value="Tio">Tio</option>
+                        <option value="Tia">Tia</option>
+                        <option value="Sobrinho">Sobrinho</option>
+                        <option value="Sobrinha">Sobrinha</option>
+                        <option value="Primo">Primo</option>
+                        <option value="Prima">Prima</option>
+                        <option value="Avô">Avô</option>
+                        <option value="Avó">Avó</option>
+                        <option value="Neto">Neto</option>
+                        <option value="Neta">Neta</option>
+                        <option value="Bisavô">Bisavô</option>
+                        <option value="Bisavó">Bisavó</option>
+                        <option value="Bisneto">Bisneto</option>
+                        <option value="Bisneta">Bisneta</option>
+                    </select>
+                </div>
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="funcionarios" class="tab-content">
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Funcionários
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre a quantidade de funcionários fixos e temporários e a média da folha de pagamento</span>
+        </div>
+        <div id="funcionarios-container">
+            <div class="field-group funcionario-item">
+                <div class="field-item">
+                    <label>Qtde. funcionários fixos</label>
+                    <input type="number" id="qtde-funcionarios-fixos">
+                </div>
+                <div class="field-item">
+                    <label>Valor média folha fixos</label>
+                    <input type="text" class="valor-input" id="valor-media-folha-fixos" placeholder="R$ 0,00">
+                </div>
+                <div class="field-item">
+                    <label>Qtde. temporários</label>
+                    <input type="number" id="qtde-funcionarios-temporarios">
+                </div>
+                <div class="field-item">
+                    <label>Valor média folha temporários</label>
+                    <input type="text" class="valor-input" id="valor-media-folha-temporarios" placeholder="R$ 0,00">
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="seguros" class="tab-content">
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Seguros
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre seguros contratados, incluindo modalidade, bem segurado, valor da cobertura e vencimento</span>
+        </div>
+        <div id="seguros-container">
+            <div class="field-group seguro-item">
+                <div class="field-item">
+                    <label>Modalidade</label>
+                    <select class="modalidade-seguro">
+                        <option value="">Selecione</option>
+                        <option value="Lavoura">Lavoura</option>
+                        <option value="Veiculo">Veículo</option>
+                        <option value="Maquina">Máquina</option>
+                        <option value="Vida">Vida</option>
+                    </select>
+                </div>
+                <div class="field-item">
+                    <label>Bem Segurado</label>
+                    <input type="text" class="bem-segurado">
+                </div>
+                <div class="field-item">
+                    <label>Vr. cobertura</label>
+                    <input type="text" class="valor-input valor-cobertura-seguro" placeholder="R$ 0,00">
+                </div>
+                <div class="field-item">
+                    <label>Vencimento</label>
+                    <input type="date" class="vencimento-seguro">
+                </div>
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+           
+
+
+
+
 
             <div id="aceites" class="tab-content">
                 <div class="form-section">
@@ -1606,28 +1745,23 @@
                     </div>
                 </div>
             </div>
-<div id="conglomerado" class="tab-content">
-    <div class="form-section">
-        <div class="section-title">Conglomerado</div>
-        <div id="conglomerado-container">
-            <div class="field-group conglomerado-item">
-                <div class="field-item">
-                    <label>Nome</label>
-                    <input type="text" class="nome-conglomerado">
-                </div>
-                <div class="field-item">
-                    <label>CPF</label>
-                    <input type="text" class="cpf-conglomerado">
-                </div>
-                <div class="field-item">
-                    <label>Vínculo</label>
-                    <input type="text" class="vinculo-conglomerado">
-                </div>
-                <button class="add-button" type="button">+ Adicionar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
            <div id="declaracao" class="tab-content">
                 <div class="form-section">
                     <div class="section-title">Declaração</div>
