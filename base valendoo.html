@@ -782,24 +782,40 @@
             </div>
 
             <div id="rendas" class="tab-content">
-                <div class="form-section">
-                    <div class="field-group">
+    <div class="form-section">
+        <div class="field-group">
+            <div class="field-item">
+                <label class="tooltip-container">
+                    Ano de Exercício do I.R.
+                    <i class="tooltip-icon">i</i>
+                    <span class="tooltip-text">Informe o ano de exercício do Imposto de Renda</span>
+                </label>
+                <input type="number" id="ano-exercicio-ir">
+            </div>
+                        < <div class="field-item">
+                <label class="tooltip-container">
+                    Receita Bruta Agrícola
+                    <i class="tooltip-icon">i</i>
+                    <span class="tooltip-text">Valor total da receita proveniente da atividade agrícola</span>
+                </label>
+                <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
+            </div>
                         <div class="field-item">
-                            <label>Ano de Exercício do I.R.</label>
-                            <input type="number" id="ano-exercicio-ir">
-                        </div>
+                <label class="tooltip-container">
+                    Demais Receitas
+                    <i class="tooltip-icon">i</i>
+                    <span class="tooltip-text">Outras receitas não relacionadas diretamente à atividade agrícola</span>
+                </label>
+                <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
+            </div>
                         <div class="field-item">
-                            <label>Receita Bruta Agrícola</label>
-                            <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
-                        </div>
-                        <div class="field-item">
-                            <label>Demais Receitas</label>
-                            <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
-                        </div>
-                        <div class="field-item">
-                            <label>Total Rendas</label>
-                            <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
-                        </div>
+                <label class="tooltip-container">
+                    Total Rendas
+                    <i class="tooltip-icon">i</i>
+                    <span class="tooltip-text">Soma das receitas brutas agrícolas e demais receitas</span>
+                </label>
+                <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
+            </div>
                     </div>
                 </div>
 
