@@ -1901,7 +1901,208 @@
  }
  });
  
- window.generatePdf = () => (updateDeclaracaoInfo(), window.print());
+ // Função de validação dos campos obrigatórios
+ const validarCamposObrigatorios = () => {
+ const erros = [];
+ 
+ // Validação da aba Informações P.F.
+ const camposInfoPF = [
+ { id: 'nome-pf', nome: 'Nome' },
+ { id: 'cpf', nome: 'CPF' },
+ { id: 'data-nascimento', nome: 'Data de Nascimento' },
+ { id: 'sexo', nome: 'Sexo' },
+ { id: 'nacionalidade', nome: 'Nacionalidade' },
+ { id: 'naturalidade', nome: 'Naturalidade' },
+ { id: 'uf-naturalidade', nome: 'UF Naturalidade' },
+ { id: 'tipo-documento', nome: 'Tipo Documento' },
+ { id: 'numero-documento', nome: 'Nº Documento' },
+ { id: 'orgao-emissor', nome: 'Órgão Emissor' },
+ { id: 'data-emissao', nome: 'Data Emissão' },
+ { id: 'grau-instrucao', nome: 'Grau de Instrução' },
+ { id: 'dependentes', nome: 'Nº de Dependentes' },
+ { id: 'analfabeto', nome: 'Analfabeto?' },
+ { id: 'telefone', nome: 'Telefone' },
+ { id: 'celular', nome: 'Celular' },
+ { id: 'email', nome: 'Email' },
+ { id: 'nome-pai', nome: 'Nome Pai' },
+ { id: 'nome-mae', nome: 'Nome Mãe' },
+ { id: 'estado-civil', nome: 'Estado Civil' },
+ { id: 'uniao-estavel', nome: 'União Estável' },
+ { id: 'profissao', nome: 'Profissão' },
+ { id: 'valor-remuneracao', nome: 'Valor remuneração' },
+ { id: 'inscricao-estadual', nome: 'Insc. Estadual' }
+ ];
+ 
+ camposInfoPF.forEach(campo => {
+ const elemento = document.getElementById(campo.id);
+ if (!elemento || !elemento.value.trim()) {
+ erros.push(`Informações P.F. - ${campo.nome} é obrigatório`);
+ }
+ });
+ 
+ // Validação específica para cônjuge se estado civil for "Casado"
+ const estadoCivil = document.getElementById('estado-civil');
+ if (estadoCivil && estadoCivil.value === 'Casado') {
+ const camposConjuge = [
+ { id: 'regime-casamento', nome: 'Regime de Casamento' },
+ { id: 'nome-conjuge', nome: 'Nome do Cônjuge' },
+ { id: 'cpf-conjuge', nome: 'CPF do Cônjuge' },
+ { id: 'sexo-conjuge', nome: 'Sexo do Cônjuge' },
+ { id: 'nacionalidade-conjuge', nome: 'Nacionalidade do Cônjuge' },
+ { id: 'naturalidade-conjuge', nome: 'Naturalidade do Cônjuge' },
+ { id: 'uf-naturalidade-conjuge', nome: 'UF Naturalidade do Cônjuge' },
+ { id: 'tipo-documento-conjuge', nome: 'Tipo Documento do Cônjuge' },
+ { id: 'numero-documento-conjuge', nome: 'Nº Documento do Cônjuge' },
+ { id: 'data-emissao-conjuge', nome: 'Data Emissão do Cônjuge' },
+ { id: 'orgao-emissor-conjuge', nome: 'Órgão Emissor do Cônjuge' }
+ ];
+ 
+ camposConjuge.forEach(campo => {
+ const elemento = document.getElementById(campo.id);
+ if (!elemento || !elemento.value.trim()) {
+ erros.push(`Informações P.F. - ${campo.nome} é obrigatório`);
+ }
+ });
+ }
+ 
+ // Validação da aba Rendas
+ const camposRendas = [
+ { id: 'ano-exercicio-ir', nome: 'Ano de Exercício do I.R.' },
+ { id: 'receita-agricola', nome: 'Receita Bruta Agrícola' },
+ { id: 'demais-receitas', nome: 'Demais Receitas' },
+ { id: 'total-rendas', nome: 'Total Rendas' }
+ ];
+ 
+ camposRendas.forEach(campo => {
+ const elemento = document.getElementById(campo.id);
+ if (!elemento || !elemento.value.trim()) {
+ erros.push(`Rendas - ${campo.nome} é obrigatório`);
+ }
+ });
+ 
+ // Validação das Rendas da Última Safra (pelo menos um item completo)
+ const rendasSafra = document.querySelectorAll('#renda-safra-container .renda-safra-item');
+ let temRendaSafraCompleta = false;
+ rendasSafra.forEach(item => {
+ const anoSafra = item.querySelector('.ano-safra-renda')?.value;
+ const cultura = item.querySelector('.cultura-renda')?.value;
+ const area = item.querySelector('.renda-area')?.value;
+ const produtividade = item.querySelector('.renda-produtividade')?.value;
+ const preco = item.querySelector('.renda-preco')?.value;
+ const producao = item.querySelector('.renda-producao')?.value;
+ 
+ if (anoSafra && cultura && area && produtividade && preco && producao) {
+ temRendaSafraCompleta = true;
+ }
+ });
+ if (!temRendaSafraCompleta) {
+ erros.push('Rendas - É necessário preencher completamente pelo menos um item de Rendas da Última Safra');
+ }
+ 
+ // Validação das Projeções da Próxima Safra (pelo menos um item completo)
+ const projecoesSafra = document.querySelectorAll('#projecao-safra-container .projecao-safra-item');
+ let temProjecaoSafraCompleta = false;
+ projecoesSafra.forEach(item => {
+ const anoSafra = item.querySelector('.ano-safra-projecao')?.value;
+ const cultura = item.querySelector('.cultura-projecao')?.value;
+ const area = item.querySelector('.projecao-area')?.value;
+ const produtividade = item.querySelector('.projecao-produtividade')?.value;
+ const preco = item.querySelector('.projecao-preco')?.value;
+ const producao = item.querySelector('.projecao-producao')?.value;
+ 
+ if (anoSafra && cultura && area && produtividade && preco && producao) {
+ temProjecaoSafraCompleta = true;
+ }
+ });
+ if (!temProjecaoSafraCompleta) {
+ erros.push('Rendas - É necessário preencher completamente pelo menos um item de Projeção da Próxima Safra');
+ }
+ 
+ // Validação da aba Endereço P.F.
+ const camposEndereco = [
+ { id: 'cep', nome: 'CEP' },
+ { id: 'logradouro', nome: 'Endereço (Logradouro, Rua, Av.)' },
+ { id: 'numero-endereco', nome: 'Nº' },
+ { id: 'complemento-endereco', nome: 'Complemento' },
+ { id: 'bairro', nome: 'Bairro' },
+ { id: 'cidade', nome: 'Cidade' },
+ { id: 'uf', nome: 'UF' }
+ ];
+ 
+ camposEndereco.forEach(campo => {
+ const elemento = document.getElementById(campo.id);
+ if (!elemento || !elemento.value.trim()) {
+ erros.push(`Endereço P.F. - ${campo.nome} é obrigatório`);
+ }
+ });
+ 
+ // Validação da aba Dados Financeiros (pelo menos um banco completo)
+ const bancos = document.querySelectorAll('#bancos-container .banco-item');
+ let temBancoCompleto = false;
+ bancos.forEach(item => {
+ const banco = item.querySelector('.banco')?.value;
+ const tipoConta = item.querySelector('.tipo-conta')?.value;
+ const agencia = item.querySelector('.agencia')?.value;
+ const conta = item.querySelector('.conta')?.value;
+ const digito = item.querySelector('.digito')?.value;
+ 
+ if (banco && tipoConta && agencia && conta && digito) {
+ temBancoCompleto = true;
+ }
+ });
+ if (!temBancoCompleto) {
+ erros.push('Dados Financeiros - É necessário preencher completamente pelo menos um banco');
+ }
+ 
+ // Validação da aba Bens Imóveis (pelo menos uma área própria OU arrendada completa)
+ const areasProprias = document.querySelectorAll('#areas-proprias-container .area-propria-item');
+ let temAreaPropriaCompleta = false;
+ areasProprias.forEach(item => {
+ const areaTotal = item.querySelector('.area-total-propria')?.value;
+ const valorVenal = item.querySelector('.valor-venal-propria')?.value;
+ const cep = item.querySelector('.cep-area-propria')?.value;
+ const municipio = item.querySelector('.municipio-area-propria')?.value;
+ const denominacao = item.querySelector('.denominacao-area-propria')?.value;
+ const car = item.querySelector('.car-area-propria')?.value;
+ const matricula = item.querySelector('.matricula-area-propria')?.value;
+ 
+ if (areaTotal && valorVenal && cep && municipio && denominacao && car && matricula) {
+ temAreaPropriaCompleta = true;
+ }
+ });
+ 
+ const areasArrendadas = document.querySelectorAll('#areas-arrendadas-container .area-arrendada-item');
+ let temAreaArrendadaCompleta = false;
+ areasArrendadas.forEach(item => {
+ const proprietario = item.querySelector('.proprietario-area-arrendada')?.value;
+ const areaTotal = item.querySelector('.area-total-arrendada')?.value;
+ const areaExplorada = item.querySelector('.area-explorada-arrendada')?.value;
+ const fimVigencia = item.querySelector('.fim-vigencia-arrendada')?.value;
+ const cep = item.querySelector('.cep-area-arrendada')?.value;
+ const municipio = item.querySelector('.municipio-area-arrendada')?.value;
+ const denominacao = item.querySelector('.denominacao-area-arrendada')?.value;
+ const car = item.querySelector('.car-area-arrendada')?.value;
+ const matricula = item.querySelector('.matricula-area-arrendada')?.value;
+ 
+ if (proprietario && areaTotal && areaExplorada && fimVigencia && cep && municipio && denominacao && car && matricula) {
+ temAreaArrendadaCompleta = true;
+ }
+ });
+ 
+ if (!temAreaPropriaCompleta && !temAreaArrendadaCompleta) {
+ erros.push('Bens Imóveis - É necessário preencher completamente pelo menos uma área própria OU uma área arrendada');
+ }
+ 
+ return erros;
+ };
+
+ window.generatePdf = () => {
+ const erros = validarCamposObrigatorios();
+ if (erros.length > 0) {
+ alert('Por favor, preencha todos os campos obrigatórios antes de gerar o PDF:\n\n' + erros.join('\n'));
+ return;
+ }
+ updateDeclaracaoInfo(); window.print(); };
  const setDataAtual = () => {
  document.getElementById('data-cadastro').value = new Date().toISOString().slice(0, 10);
  };
@@ -1966,6 +2167,12 @@
  };
 
  window.saveDataAsJson = () => {
+ const erros = validarCamposObrigatorios();
+ if (erros.length > 0) {
+ alert('Por favor, preencha todos os campos obrigatórios antes de salvar os dados:\n\n' + erros.join('\n'));
+ return;
+ }
+ 
  const formData = {};
  
  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
