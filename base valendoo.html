@@ -781,174 +781,403 @@
                 </div>
             </div>
 
-            <div id="rendas" class="tab-content">
+         <div id="rendas" class="tab-content">
+
+    <!-- Ano Civil -->
     <div class="form-section">
+        <div class="section-title tooltip-container">
+            Ano Civil
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Campos referentes ao ano de exercício do Imposto de Renda e receitas</span>
+        </div>
+        
         <div class="field-group">
             <div class="field-item">
-                <label class="tooltip-container">
-                    Ano de Exercício do I.R.
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe o ano de exercício do Imposto de Renda</span>
-                </label>
+                <label>Ano de Exercício do I.R.</label>
                 <input type="number" id="ano-exercicio-ir">
             </div>
-                        < <div class="field-item">
-                <label class="tooltip-container">
-                    Receita Bruta Agrícola
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Valor total da receita proveniente da atividade agrícola</span>
-                </label>
+
+            <div class="field-item">
+                <label>Receita Bruta Agrícola</label>
                 <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
             </div>
-                        <div class="field-item">
-                <label class="tooltip-container">
-                    Demais Receitas
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Outras receitas não relacionadas diretamente à atividade agrícola</span>
-                </label>
+
+            <div class="field-item">
+                <label>Demais Receitas</label>
                 <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
             </div>
-                        <div class="field-item">
-                <label class="tooltip-container">
-                    Total Rendas
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Soma das receitas brutas agrícolas e demais receitas</span>
-                </label>
+
+            <div class="field-item">
+                <label>Total Rendas</label>
                 <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
             </div>
-                    </div>
+        </div>
+    </div>
+
+    <!-- Rendas da Última Safra -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Rendas do Último Ano Safra
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre o ano safra anterior, incluindo área, cultura, produtividade e preço</span>
+        </div>
+        <div id="renda-safra-container">
+            <div class="field-group renda-safra-item">
+
+                <div class="field-item">
+                    <label>Ano safra</label>
+                    <select class="ano-safra-renda">
+                        <option value="2024/2025">2024/2025</option>
+                        <option value="2025/2026">2025/2026</option>
+                    </select>
                 </div>
 
-               <div class="form-section">
-    <div class="section-title">Rendas da Última Safra</div>
-    <div id="renda-safra-container">
-        <div class="field-group renda-safra-item">
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Ano safra
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Selecione o ano da safra correspondente</span>
-                </label>
-                <select class="ano-safra-renda">
-                    <option value="2024/2025">2024/2025</option>
-                    <option value="2025/2026">2025/2026</option>
-                </select>
-            </div>
-                           <div class="field-item">
-                <label class="tooltip-container">
-                    Cultura
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe a cultura plantada (ex.: soja, trigo)</span>
-                </label>
-                <input type="text" class="cultura-renda">
-            </div>
+                <div class="field-item">
+                    <label>Cultura</label>
+                    <input type="text" class="cultura-renda">
+                </div>
 
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Área (ha)
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe a área cultivada em hectares</span>
-                </label>
-                <input type="number" class="renda-area">
-            </div>
+                <div class="field-item">
+                    <label>Área (ha)</label>
+                    <input type="number" class="renda-area">
+                </div>
 
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Produtividade (sc/ha)
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe a produtividade esperada em sacas por hectare</span>
-                </label>
-                <input type="number" class="renda-produtividade">
-            </div>
+                <div class="field-item">
+                    <label>Produtividade (sc/ha)</label>
+                    <input type="number" class="renda-produtividade">
+                </div>
 
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Preço (R$/sc)
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe o preço da saca em reais</span>
-                </label>
-                <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
-            </div>
+                <div class="field-item">
+                    <label>Preço (R$/sc)</label>
+                    <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
+                </div>
 
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Valor da Produção
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Cálculo automático: área x produtividade x preço</span>
-                </label>
-                <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
-            </div>
+                <div class="field-item">
+                    <label>Valor da Produção</label>
+                    <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
+                </div>
 
-            <button class="add-button" type="button">+ Adicionar</button>
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="form-section">
-    <div class="section-title">Projeção da Próxima Safra</div>
-    <div id="projecao-safra-container">
-        <div class="field-group projecao-safra-item">
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Ano safra
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Selecione o ano da safra projetada</span>
-                </label>
-                <select class="ano-safra-projecao">
-                    <option value="2024/2025">2024/2025</option>
-                    <option value="2025/2026">2025/2026</option>
-                </select>
+    <!-- Projeção da Próxima Safra -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Projeção do Próximo Ano Safra
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Estimativa de produção, área, cultura, produtividade e preço para o próximo ano safra</span>
+        </div>
+        <div id="projecao-safra-container">
+            <div class="field-group projecao-safra-item">
+
+                <div class="field-item">
+                    <label>Ano safra</label>
+                    <select class="ano-safra-projecao">
+                        <option value="2024/2025">2024/2025</option>
+                        <option value="2025/2026">2025/2026</option>
+                    </select>
+                </div>
+
+                <div class="field-item">
+                    <label>Cultura</label>
+                    <input type="text" class="cultura-projecao">
+                </div>
+
+                <div class="field-item">
+                    <label>Área (ha)</label>
+                    <input type="number" class="projecao-area">
+                </div>
+
+                <div class="field-item">
+                    <label>Produtividade (sc/ha)</label>
+                    <input type="number" class="projecao-produtividade">
+                </div>
+
+                <div class="field-item">
+                    <label>Preço (R$/sc)</label>
+                    <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
+                </div>
+
+                <div class="field-item">
+                    <label>Valor da Produção</label>
+                    <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
             </div>
-
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Cultura
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe a cultura projetada para a próxima safra</span>
-                </label>
-                <input type="text" class="cultura-projecao">
-            </div>
-
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Área (ha)
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe a área que será cultivada em hectares</span>
-                </label>
-                <input type="number" class="projecao-area">
-            </div>
-
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Produtividade (sc/ha)
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe a produtividade estimada em sacas por hectare</span>
-                </label>
-                <input type="number" class="projecao-produtividade">
-            </div>
-
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Preço (R$/sc)
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Informe o preço estimado da saca em reais</span>
-                </label>
-                <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
-            </div>
-
-            <div class="field-item">
-                <label class="tooltip-container">
-                    Valor da Produção
-                    <i class="tooltip-icon">i</i>
-                    <span class="tooltip-text">Cálculo automático: área x produtividade x preço</span>
-                </label>
-                <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
-            </div>
-
-            <button class="add-button" type="button">+ Adicionar</button>
         </div>
     </div>
+
 </div>
+<div id="rendas" class="tab-content">
+
+    <!-- Ano Civil -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Ano Civil
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Campos referentes ao ano de exercício do Imposto de Renda e receitas</span>
+        </div>
+        
+        <div class="field-group">
+            <div class="field-item">
+                <label>Ano de Exercício do I.R.</label>
+                <input type="number" id="ano-exercicio-ir">
+            </div>
+
+            <div class="field-item">
+                <label>Receita Bruta Agrícola</label>
+                <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
+            </div>
+
+            <div class="field-item">
+                <label>Demais Receitas</label>
+                <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
+            </div>
+
+            <div class="field-item">
+                <label>Total Rendas</label>
+                <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rendas da Última Safra -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Rendas da Última Safra
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre a safra anterior, incluindo área, cultura, produtividade e preço</span>
+        </div>
+        <div id="renda-safra-container">
+            <div class="field-group renda-safra-item">
+
+                <div class="field-item">
+                    <label>Ano safra</label>
+                    <select class="ano-safra-renda">
+                        <option value="2024/2025">2024/2025</option>
+                        <option value="2025/2026">2025/2026</option>
+                    </select>
+                </div>
+
+                <div class="field-item">
+                    <label>Cultura</label>
+                    <input type="text" class="cultura-renda">
+                </div>
+
+                <div class="field-item">
+                    <label>Área (ha)</label>
+                    <input type="number" class="renda-area">
+                </div>
+
+                <div class="field-item">
+                    <label>Produtividade (sc/ha)</label>
+                    <input type="number" class="renda-produtividade">
+                </div>
+
+                <div class="field-item">
+                    <label>Preço (R$/sc)</label>
+                    <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
+                </div>
+
+                <div class="field-item">
+                    <label>Valor da Produção</label>
+                    <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projeção da Próxima Safra -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Projeção da Próxima Safra
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Estimativa de produção, área, cultura, produtividade e preço para a próxima safra</span>
+        </div>
+        <div id="projecao-safra-container">
+            <div class="field-group projecao-safra-item">
+
+                <div class="field-item">
+                    <label>Ano safra</label>
+                    <select class="ano-safra-projecao">
+                        <option value="2024/2025">2024/2025</option>
+                        <option value="2025/2026">2025/2026</option>
+                    </select>
+                </div>
+
+                <div class="field-item">
+                    <label>Cultura</label>
+                    <input type="text" class="cultura-projecao">
+                </div>
+
+                <div class="field-item">
+                    <label>Área (ha)</label>
+                    <input type="number" class="projecao-area">
+                </div>
+
+                <div class="field-item">
+                    <label>Produtividade (sc/ha)</label>
+                    <input type="number" class="projecao-produtividade">
+                </div>
+
+                <div class="field-item">
+                    <label>Preço (R$/sc)</label>
+                    <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
+                </div>
+
+                <div class="field-item">
+                    <label>Valor da Produção</label>
+                    <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="rendas" class="tab-content">
+
+    <!-- Ano Civil -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Ano Civil
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Campos referentes ao ano de exercício do Imposto de Renda e receitas</span>
+        </div>
+        
+        <div class="field-group">
+            <div class="field-item">
+                <label>Ano de Exercício do I.R.</label>
+                <input type="number" id="ano-exercicio-ir">
+            </div>
+
+            <div class="field-item">
+                <label>Receita Bruta Agrícola</label>
+                <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
+            </div>
+
+            <div class="field-item">
+                <label>Demais Receitas</label>
+                <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
+            </div>
+
+            <div class="field-item">
+                <label>Total Rendas</label>
+                <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rendas da Última Safra -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Rendas da Última Safra
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Informações sobre a safra anterior, incluindo área, cultura, produtividade e preço</span>
+        </div>
+        <div id="renda-safra-container">
+            <div class="field-group renda-safra-item">
+
+                <div class="field-item">
+                    <label>Ano safra</label>
+                    <select class="ano-safra-renda">
+                        <option value="2024/2025">2024/2025</option>
+                        <option value="2025/2026">2025/2026</option>
+                    </select>
+                </div>
+
+                <div class="field-item">
+                    <label>Cultura</label>
+                    <input type="text" class="cultura-renda">
+                </div>
+
+                <div class="field-item">
+                    <label>Área (ha)</label>
+                    <input type="number" class="renda-area">
+                </div>
+
+                <div class="field-item">
+                    <label>Produtividade (sc/ha)</label>
+                    <input type="number" class="renda-produtividade">
+                </div>
+
+                <div class="field-item">
+                    <label>Preço (R$/sc)</label>
+                    <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
+                </div>
+
+                <div class="field-item">
+                    <label>Valor da Produção</label>
+                    <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projeção da Próxima Safra -->
+    <div class="form-section">
+        <div class="section-title tooltip-container">
+            Projeção da Próxima Safra
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">Estimativa de produção, área, cultura, produtividade e preço para a próxima safra</span>
+        </div>
+        <div id="projecao-safra-container">
+            <div class="field-group projecao-safra-item">
+
+                <div class="field-item">
+                    <label>Ano safra</label>
+                    <select class="ano-safra-projecao">
+                        <option value="2024/2025">2024/2025</option>
+                        <option value="2025/2026">2025/2026</option>
+                    </select>
+                </div>
+
+                <div class="field-item">
+                    <label>Cultura</label>
+                    <input type="text" class="cultura-projecao">
+                </div>
+
+                <div class="field-item">
+                    <label>Área (ha)</label>
+                    <input type="number" class="projecao-area">
+                </div>
+
+                <div class="field-item">
+                    <label>Produtividade (sc/ha)</label>
+                    <input type="number" class="projecao-produtividade">
+                </div>
+
+                <div class="field-item">
+                    <label>Preço (R$/sc)</label>
+                    <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
+                </div>
+
+                <div class="field-item">
+                    <label>Valor da Produção</label>
+                    <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
+                </div>
+
+                <button class="add-button" type="button">+ Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
             <div id="outras-receitas" class="tab-content">
                 <div class="form-section">
                     <div class="section-title">Outras Receitas</div>
