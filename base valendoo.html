@@ -1,1700 +1,857 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha Cadastral</title>
-    <style>
-        /* CSS INALTERADO */ 
-        @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Cadastral</title>
+    <style>
+        /* CSS INALTERADO */ 
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            width: 800px;
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
 
-        /* ESTILOS CORRIGIDOS DO CABEÇALHO */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #000;
-            color: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
+        /* ESTILOS CORRIGIDOS DO CABEÇALHO */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-        .header-logo {
-            width: 100px;
-            height: 50px;
-            border: 1px dashed #ccc;
-            text-align: center;
-            line-height: 50px;
-            font-size: 10px;
-        }
-        
-        .header-title {
-            text-align: center;
-            flex-grow: 1;
-        }
-        
-        .header-title h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            text-align: center;
-            color: #fff;
-            margin: 0;
-            font-size: 16px;
-        }
-        
-        .header-date {
-            width: 150px;
-            font-size: 10px;
-        }
-        
-        /* ESTILOS CORRIGIDOS DOS BOTÕES DE ABA */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            border-bottom: 2px solid #ccc;
-            margin-bottom: 20px;
-        }
-        
-        .tab-button {
-            padding: 10px 20px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            border-bottom: none;
-            background-color: #f1f1f1;
-            margin-bottom: -2px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            transition: background-color 0.3s;
-            font-size: 10px;
-            font-weight: bold;
-            color: #000;
-        }
-        
-        .tab-button:hover {
-            background-color: #e2e2e2;
-        }
-        
-        .tab-button.active {
-            background-color: #000;
-            color: #fff;
-            border-color: #000;
-            border-bottom-color: #fff;
-            border-radius: 8px 8px 0 0;
-        }
-        
-        /* ESTILOS INALTERADOS */
-        .tooltip-container {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .tooltip-icon {
-            font-weight: bold;
-            color: #007BFF;
-            cursor: pointer;
-            border: 1px solid #007BFF;
-            border-radius: 50%;
-            width: 14px;
-            height: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-style: normal;
-            font-size: 10px;
-        }
-        .tooltip-text {
-            visibility: hidden;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 8px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -75px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            width: 150px;
-            font-weight: normal;
-            font-size: 10px;
-        }
-        .tooltip-text::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        .form-section {
-            border: 1px solid #000;
-            margin-bottom: 15px;
-            padding: 5px;
-        }
-        .section-title {
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #000; /* Removido o fundo preto para os títulos de seção internos */
-        }
-        .field-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-        .field-item {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-width: 150px;
-        }
-        .field-small {
-            flex: 0 0 50px;
-            min-width: 50px;
-        }
-        .field-item label {
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-        .field-item input[type="text"],
-        .field-item input[type="number"],
-        .field-item input[type="date"],
-        .field-item select,
-        .field-item textarea {
-            border: none;
-            border-bottom: 1px solid #000;
-            padding: 2px;
-            font-size: 11px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .checkbox-container input {
-            margin-right: 5px;
-        }
-        .checkbox-container label {
-            font-weight: normal;
-        }
-        .field-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-        .field-row .field-item {
-            flex: 1;
-        }
-        .field-row-full {
-            flex: 1;
-        }
-        .full-width {
-            width: 100%;
-        }
-        .hidden {
-            display: none;
-        }
-        .legal-text {
-            font-size: 9px;
-            text-align: justify;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        .signature-line {
-            display: inline-block;
-            width: 100%;
-            border-bottom: 1px solid #000;
-            margin-top: 50px;
-        }
-        .signature-text {
-            text-align: center;
-            font-size: 10px;
-            margin-top: 5px;
-        }
-        .add-button, .kml-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 10px;
-            cursor: pointer;
-            border-radius: 3px;
-            margin-left: 10px;
-        }
-        .remove-button {
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 10px;
-            cursor: pointer;
-            border-radius: 3px;
-            margin-left: 10px;
-        }
-        .kml-area-display {
-            font-size: 10px;
-            margin-top: 5px;
-            color: #555;
-            padding-left: 10px;
-        }
-        .save-button, .save-data-button, .import-data-button {
-            position: fixed;
-            top: 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-        .save-button {
-            right: 20px;
-        }
-        .save-data-button {
-            right: 150px;
-            background-color: #28a745;
-        }
-        .import-data-button {
-            right: 290px;
-            background-color: #17a2b8;
-        }
-        .save-button:hover {
-            background-color: #0056b3;
-        }
-        .save-data-button:hover {
-            background-color: #218838;
-        }
-        .import-data-button:hover {
-            background-color: #138496;
-        }
-        .tab-content {
-            display: none;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .legal-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-        .legal-item input[type="checkbox"] {
-            margin-right: 10px;
-            margin-top: 5px;
-        }
-        .legal-item p {
-            margin: 0;
-            font-size: 10px;
-        }
-        /* Estilos para impressão / PDF */
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-                border: none;
-            }
-            .header, .tabs, .save-button, .save-data-button, .import-data-button {
-                display: none !important;
-            }
-            .tab-content-container {
-                border: none !important;
-            }
-            .tab-content {
-                display: block !important;
-                border: 1px solid #000;
-                padding: 5px;
-            }
-            .form-section {
-                border: none;
-                margin-bottom: 10px;
-                padding: 0;
-                page-break-inside: avoid;
-            }
-            #form-content {
-                width: 100%;
-                margin: 0;
-                padding: 10px;
-            }
-            .print-only {
-                display: block !important;
-            }
-            .tab-button[data-tab-target="#declaracao"] {
-                display: none !important; /* Oculta o botão da aba Declaração no PDF */
-            }
-            .add-button, .remove-button, .kml-button {
-                display: none !important; /* Oculta os botões de adicionar/remover no PDF */
-            }
-        }
-        .print-only {
-            display: none;
-        }
+        .header-logo {
+            width: 100px;
+            height: 50px;
+            border: 1px dashed #ccc;
+            text-align: center;
+            line-height: 50px;
+            font-size: 10px;
+        }
+        
+        .header-title {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .header-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .header-date {
+            width: 150px;
+            font-size: 10px;
+        }
+        
+        /* ESTILOS CORRIGIDOS DOS BOTÕES DE ABA */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            background-color: #f1f1f1;
+            margin-bottom: -2px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 10px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .tab-button:hover {
+            background-color: #e2e2e2;
+        }
+        
+        .tab-button.active {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+            border-bottom-color: #fff;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        /* ESTILOS INALTERADOS */
+        .tooltip-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tooltip-icon {
+            font-weight: bold;
+            color: #007BFF;
+            cursor: pointer;
+            border: 1px solid #007BFF;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: normal;
+            font-size: 10px;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            width: 150px;
+            font-weight: normal;
+            font-size: 10px;
+        }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .form-section {
+            border: 1px solid #000;
+            margin-bottom: 15px;
+            padding: 5px;
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000; /* Removido o fundo preto para os títulos de seção internos */
+        }
+        .field-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .field-item {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 150px;
+        }
+        .field-small {
+            flex: 0 0 50px;
+            min-width: 50px;
+        }
+        .field-item label {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .field-item input[type="text"],
+        .field-item input[type="number"],
+        .field-item input[type="date"],
+        .field-item select,
+        .field-item textarea {
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 2px;
+            font-size: 11px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .checkbox-container input {
+            margin-right: 5px;
+        }
+        .checkbox-container label {
+            font-weight: normal;
+        }
+        .field-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .field-row .field-item {
+            flex: 1;
+        }
+        .field-row-full {
+            flex: 1;
+        }
+        .full-width {
+            width: 100%;
+        }
+        .hidden {
+            display: none;
+        }
+        .legal-text {
+            font-size: 9px;
+            text-align: justify;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        .signature-line {
+            display: inline-block;
+            width: 100%;
+            border-bottom: 1px solid #000;
+            margin-top: 50px;
+        }
+        .signature-text {
+            text-align: center;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .add-button, .kml-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .remove-button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .kml-area-display {
+            font-size: 10px;
+            margin-top: 5px;
+            color: #555;
+            padding-left: 10px;
+        }
+        .save-button, .save-data-button, .import-data-button {
+            position: fixed;
+            top: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .save-button {
+            right: 20px;
+        }
+        .save-data-button {
+            right: 150px;
+            background-color: #28a745;
+        }
+        .import-data-button {
+            right: 290px;
+            background-color: #17a2b8;
+        }
+        .save-button:hover {
+            background-color: #0056b3;
+        }
+        .save-data-button:hover {
+            background-color: #218838;
+        }
+        .import-data-button:hover {
+            background-color: #138496;
+        }
+        .tab-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .legal-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .legal-item input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        .legal-item p {
+            margin: 0;
+            font-size: 10px;
+        }
+        /* Estilos para impressão / PDF */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+            .header, .tabs, .save-button, .save-data-button, .import-data-button {
+                display: none !important;
+            }
+            .tab-content-container {
+                border: none !important;
+            }
+            .tab-content {
+                display: block !important;
+                border: 1px solid #000;
+                padding: 5px;
+            }
+            .form-section {
+                border: none;
+                margin-bottom: 10px;
+                padding: 0;
+                page-break-inside: avoid;
+            }
+            #form-content {
+                width: 100%;
+                margin: 0;
+                padding: 10px;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .tab-button[data-tab-target="#declaracao"] {
+                display: none !important; /* Oculta o botão da aba Declaração no PDF */
+            }
+            .add-button, .remove-button, .kml-button {
+                display: none !important; /* Oculta os botões de adicionar/remover no PDF */
+            }
+        }
+        .print-only {
+            display: none;
+        }
 
-        /* Novo estilo para a assinatura */
-        .signature-block {
-            margin-top: 80px;
-            text-align: center;
-        }
-        .signature-block .line {
-            width: 50%;
-            margin: 0 auto;
-            border-bottom: 1px solid #000;
-        }
-        .signature-block .info-text {
-            font-size: 10px;
-            margin-top: 5px;
-        }
-        .flex-row-signature {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 20px;
-        }
-        .flex-row-signature .signature-item {
-            text-align: center;
-        }
-        /* Oculta a aba Declaração no site */
-        .tab-button[data-tab-target="#declaracao"] {
-            display: none;
-        }
-    </style>
+        /* Novo estilo para a assinatura */
+        .signature-block {
+            margin-top: 80px;
+            text-align: center;
+        }
+        .signature-block .line {
+            width: 50%;
+            margin: 0 auto;
+            border-bottom: 1px solid #000;
+        }
+        .signature-block .info-text {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .flex-row-signature {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+        .flex-row-signature .signature-item {
+            text-align: center;
+        }
+        /* Oculta a aba Declaração no site */
+        .tab-button[data-tab-target="#declaracao"] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <button class="save-button" onclick="generatePdf()">Salvar PDF</button>
-    <button class="save-data-button" onclick="saveDataAsJson()">Salvar Dados</button>
-    <button class="import-data-button" onclick="importDataFromJson()">Importar Dados</button>
+    <button class="save-button" onclick="generatePdf()">Salvar PDF</button>
+    <button class="save-data-button" onclick="saveDataAsJson()">Salvar Dados</button>
+    <button class="import-data-button" onclick="importDataFromJson()">Importar Dados</button>
 
-    <div id="form-content">
-        <div class="header">
-            <img src="https://tentoscapwebmanagerproduction.azurewebsites.net/brand/logo.svg" 
-           alt="Logo TentosCap" style="height:100px;">
-            <div class="header-title">
-                <h1>FICHA CADASTRO</h1>
-            </div>
-            <div class="header-date">
-                Data do Cadastro<br>
-                <input type="date" class="full-width" id="data-cadastro">
-            </div>
-        </div>
+    <div id="form-content">
+        <div class="header">
+            <img src="https://tentoscapwebmanagerproduction.azurewebsites.net/brand/logo.svg" 
+           alt="Logo TentosCap" style="height:100px;">
+            <div class="header-title">
+                <h1>FICHA CADASTRO</h1>
+            </div>
+            <div class="header-date">
+                <label class="tooltip-container">
+                    Data do Cadastro
+                    <i class="tooltip-icon">i</i>
+                    <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                </label>
+                <input type="date" class="full-width" id="data-cadastro">
+            </div>
+        </div>
 
-        <div class="tabs">
-            <button class="tab-button active section-title" data-tab-target="#identificacao">Identificação</button>
-            <button class="tab-button section-title" data-tab-target="#info-pf">Informações P.F.</button>
-            <button class="tab-button section-title" data-tab-target="#endereco-pf">Endereço P.F.</button>
-            <button class="tab-button section-title" data-tab-target="#rendas">Rendas</button>
-            <button class="tab-button section-title" data-tab-target="#outras-receitas">Outras Receitas</button>
-            <button class="tab-button section-title" data-tab-target="#dados-financeiros">Dados Financeiros</button>
-            <button class="tab-button section-title" data-tab-target="#pecuaria">Pecuária</button>
-            <button class="tab-button section-title" data-tab-target="#bens-moveis">Bens Móveis</button>
-            <button class="tab-button section-title" data-tab-target="#bens-imoveis">Bens Imóveis</button>
-            <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
-            <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
-            <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
-            <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
-            <button class="tab-button section-title" data-tab-target="#conglomerado">Conglomerado</button>
+        <div class="tabs">
+            <button class="tab-button active section-title" data-tab-target="#identificacao">Identificação</button>
+            <button class="tab-button section-title" data-tab-target="#info-pf">Informações P.F.</button>
+            <button class="tab-button section-title" data-tab-target="#endereco-pf">Endereço P.F.</button>
+            <button class="tab-button section-title" data-tab-target="#rendas">Rendas</button>
+            <button class="tab-button section-title" data-tab-target="#outras-receitas">Outras Receitas</button>
+            <button class="tab-button section-title" data-tab-target="#dados-financeiros">Dados Financeiros</button>
+            <button class="tab-button section-title" data-tab-target="#pecuaria">Pecuária</button>
+            <button class="tab-button section-title" data-tab-target="#bens-moveis">Bens Móveis</button>
+            <button class="tab-button section-title" data-tab-target="#bens-imoveis">Bens Imóveis</button>
+            <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
+            <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
+            <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
+            <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
+            <button class="tab-button section-title" data-tab-target="#conglomerado">Conglomerado</button>
 
 </div>
-        
-        <div class="tab-content-container">
-            <div id="identificacao" class="tab-content active">
-                <div class="form-section">
-                    <div class="field-group">
-                        <div class="field-item full-width">
-                            <label>Código Cliente</label>
-                            <input type="text" id="codigo-cliente">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label class="tooltip-container">
-                                Unidade 3T
-                                <i class="tooltip-icon">i</i>
-                                <span class="tooltip-text">Unidade com a qual o cliente tem relacionamento</span>
-                            </label>
-                            <select id="unidade-3t">
-                                <option value="">Selecione</option>
-                                <option value="Água Boa">Água Boa</option>
-                                <option value="Ajuricaba">Ajuricaba</option>
-                                <option value="Alegrete">Alegrete</option>
-                                <option value="Alta Floresta">Alta Floresta</option>
-                                <option value="Arroio Grande">Arroio Grande</option>
-                                <option value="Augusto Pestana">Augusto Pestana</option>
-                                <option value="Bagé">Bagé</option>
-                                <option value="Boa Vista do Cadeado">Boa Vista do Cadeado</option>
-                                <option value="Cachoeira do Sul">Cachoeira do Sul</option>
-                                <option value="Camaquã">Camaquã</option>
-                                <option value="Campo Novo">Campo Novo</option>
-                                <option value="Canguçu">Canguçu</option>
-                                <option value="Capão do Cipó">Capão do Cipó</option>
-                                <option value="Capivari">Capivari</option>
-                                <option value="Catuípe">Catuípe</option>
-                                <option value="Colorado">Colorado</option>
-                                <option value="Condor">Condor</option>
-                                <option value="Confresa">Confresa</option>
-                                <option value="Coronel Barros">Coronel Barros</option>
-                                <option value="Cruz Alta">Cruz Alta</option>
-                                <option value="Dom Pedrito">Dom Pedrito</option>
-                                <option value="Entre-Ijuís">Entre-Ijuís</option>
-                                <option value="Erechim">Erechim</option>
-                                <option value="Espumoso">Espumoso</option>
-                                <option value="Eugênio de Castro">Eugênio de Castro</option>
-                                <option value="Fortaleza dos Valos">Fortaleza dos Valos</option>
-                                <option value="Giruá">Giruá</option>
-                                <option value="Horizontina">Horizontina</option>
-                                <option value="Ibirubá">Ibirubá</option>
-                                <option value="Ijuí">Ijuí</option>
-                                <option value="Jóia">Jóia</option>
-                                <option value="Lagoa Vermelha">Lagoa Vermelha</option>
-                                <option value="Lucas do Rio Verde">Lucas do Rio Verde</option>
-                                <option value="Matupá">Matupá</option>
-                                <option value="Mauá">Mauá</option>
-                                <option value="Nonoai">Nonoai</option>
-                                <option value="Nova Mutum">Nova Mutum</option>
-                                <option value="Nova Ubiratã">Nova Ubiratã</option>
-                                <option value="Palmeira das Missões">Palmeira das Missões</option>
-                                <option value="Panambi">Panambi</option>
-                                <option value="Passo Fundo">Passo Fundo</option>
-                                <option value="Pejuçara">Pejuçara</option>
-                                <option value="Pelotas">Pelotas</option>
-                                <option value="Porto dos Gaúchos">Porto dos Gaúchos</option>
-                                <option value="Querência">Querência</option>
-                                <option value="Redentora">Redentora</option>
-                                <option value="Rio Grande">Rio Grande</option>
-                                <option value="Santa Bárbara do Sul">Santa Bárbara do Sul</option>
-                                <option value="Santa Maria">Santa Maria</option>
-                                <option value="Santa Rosa">Santa Rosa</option>
-                                <option value="Santiago">Santiago</option>
-                                <option value="Santo Ângelo">Santo Ângelo</option>
-                                <option value="São Borja">São Borja</option>
-                                <option value="São Gabriel">São Gabriel</option>
-                                <option value="São Luiz Gonzaga">São Luiz Gonzaga</option>
-                                <option value="Sarandi">Sarandi</option>
-                                <option value="Selbach">Selbach</option>
-                                <option value="Sinop">Sinop</option>
-                                <option value="Tapejara">Tapejara</option>
-                                <option value="Tapera">Tapera</option>
-                                <option value="Tenente Portela">Tenente Portela</option>
-                                <option value="Tupanciretã">Tupanciretã</option>
-                                <option value="Uruguaiana">Uruguaiana</option>
-                                <option value="Vera">Vera</option>
-                                <option value="Victor Graeff">Victor Graeff</option>
-                                <option value="Vitória das Missões">Vitória das Missões</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Tipo de Pessoa</label>
-                            <select id="tipo-pessoa">
-                                <option value="PF">Pessoa Física</option>
-                                <option value="PJ">Pessoa Jurídica</option>
-                            </select>
-                        </div>
-                                          </div>
-                </div>
-            </div>
+        
+        <div class="tab-content-container">
+            <div id="identificacao" class="tab-content active">
+                <div class="form-section">
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Código Cliente
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="codigo-cliente">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Unidade 3T
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Unidade com a qual o cliente tem relacionamento</span>
+                            </label>
+                            <select id="unidade-3t">
+                                <option value="">Selecione</option>
+                                <option value="Água Boa">Água Boa</option>
+                                <option value="Ajuricaba">Ajuricaba</option>
+                                <option value="Alegrete">Alegrete</option>
+                                <option value="Alta Floresta">Alta Floresta</option>
+                                <option value="Arroio Grande">Arroio Grande</option>
+                                <option value="Augusto Pestana">Augusto Pestana</option>
+                                <option value="Bagé">Bagé</option>
+                                <option value="Boa Vista do Cadeado">Boa Vista do Cadeado</option>
+                                <option value="Cachoeira do Sul">Cachoeira do Sul</option>
+                                <option value="Camaquã">Camaquã</option>
+                                <option value="Campo Novo">Campo Novo</option>
+                                <option value="Canguçu">Canguçu</option>
+                                <option value="Capão do Cipó">Capão do Cipó</option>
+                                <option value="Capivari">Capivari</option>
+                                <option value="Catuípe">Catuípe</option>
+                                <option value="Colorado">Colorado</option>
+                                <option value="Condor">Condor</option>
+                                <option value="Confresa">Confresa</option>
+                                <option value="Coronel Barros">Coronel Barros</option>
+                                <option value="Cruz Alta">Cruz Alta</option>
+                                <option value="Dom Pedrito">Dom Pedrito</option>
+                                <option value="Entre-Ijuís">Entre-Ijuís</option>
+                                <option value="Erechim">Erechim</option>
+                                <option value="Espumoso">Espumoso</option>
+                                <option value="Eugênio de Castro">Eugênio de Castro</option>
+                                <option value="Fortaleza dos Valos">Fortaleza dos Valos</option>
+                                <option value="Giruá">Giruá</option>
+                                <option value="Horizontina">Horizontina</option>
+                                <option value="Ibirubá">Ibirubá</option>
+                                <option value="Ijuí">Ijuí</option>
+                                <option value="Jóia">Jóia</option>
+                                <option value="Lagoa Vermelha">Lagoa Vermelha</option>
+                                <option value="Lucas do Rio Verde">Lucas do Rio Verde</option>
+                                <option value="Matupá">Matupá</option>
+                                <option value="Mauá">Mauá</option>
+                                <option value="Nonoai">Nonoai</option>
+                                <option value="Nova Mutum">Nova Mutum</option>
+                                <option value="Nova Ubiratã">Nova Ubiratã</option>
+                                <option value="Palmeira das Missões">Palmeira das Missões</option>
+                                <option value="Panambi">Panambi</option>
+                                <option value="Passo Fundo">Passo Fundo</option>
+                                <option value="Pejuçara">Pejuçara</option>
+                                <option value="Pelotas">Pelotas</option>
+                                <option value="Porto dos Gaúchos">Porto dos Gaúchos</option>
+                                <option value="Querência">Querência</option>
+                                <option value="Redentora">Redentora</option>
+                                <option value="Rio Grande">Rio Grande</option>
+                                <option value="Santa Bárbara do Sul">Santa Bárbara do Sul</option>
+                                <option value="Santa Maria">Santa Maria</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
+                                <option value="Santiago">Santiago</option>
+                                <option value="Santo Ângelo">Santo Ângelo</option>
+                                <option value="São Borja">São Borja</option>
+                                <option value="São Gabriel">São Gabriel</option>
+                                <option value="São Luiz Gonzaga">São Luiz Gonzaga</option>
+                                <option value="Sarandi">Sarandi</option>
+                                <option value="Selbach">Selbach</option>
+                                <option value="Sinop">Sinop</option>
+                                <option value="Tapejara">Tapejara</option>
+                                <option value="Tapera">Tapera</option>
+                                <option value="Tenente Portela">Tenente Portela</option>
+                                <option value="Tupanciretã">Tupanciretã</option>
+                                <option value="Uruguaiana">Uruguaiana</option>
+                                <option value="Vera">Vera</option>
+                                <option value="Victor Graeff">Victor Graeff</option>
+                                <option value="Vitória das Missões">Vitória das Missões</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo de Pessoa
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="tipo-pessoa">
+                                <option value="PF">Pessoa Física</option>
+                                <option value="PJ">Pessoa Jurídica</option>
+                            </select>
+                        </div>
+                                          </div>
+                </div>
+            </div>
 
-            <div id="info-pf" class="tab-content">
-                <div class="form-section">
-                    <div class="field-group">
-                        <div class="field-item full-width">
-                            <label>Nome</label>
-                            <input type="text" id="nome-pf">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>CPF</label>
-                            <input type="text" id="cpf">
-                        </div>
-                        <div class="field-item">
-                            <label>Data de Nasc.</label>
-                            <input type="date" id="data-nascimento">
-                        </div>
-                        <div class="field-item">
-                            <label>Sexo</label>
-                            <select id="sexo">
-                                <option value="">Selecione</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feminino">Feminino</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Nacionalidade</label>
-                            <select id="nacionalidade">
-                                <option value="Brasil">Brasil</option>
-                                <option value="Estrangeiro">Estrangeiro</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Naturalidade</label>
-                            <input type="text" id="naturalidade">
-                        </div>
-                        <div class="field-item">
-                            <label>UF Naturalidade</label>
-                            <select id="uf-naturalidade">
-                                <option value="">Selecione</option>
-                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Tipo Documento</label>
-                            <select id="tipo-documento">
-                                <option value="RG">RG</option>
-                                <option value="CNH">CNH</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Nº Documento</label>
-                            <input type="number" id="numero-documento">
-                        </div>
-                        <div class="field-item">
-                            <label>Órgão Emissor</label>
-                            <input type="text" id="orgao-emissor">
-                        </div>
-                        <div class="field-item">
-                            <label>Data Emissão</label>
-                            <input type="date" id="data-emissao">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Grau de Instrução</label>
-                            <select id="grau-instrucao">
-                                <option value="">Selecione</option>
-                                <option value="fundamental_inc">Ensino Fundamental Incompleto</option>
-                                <option value="fundamental_comp">Ensino Fundamental Completo</option>
-                                <option value="medio_inc">Ensino Médio Incompleto</option>
-                                <option value="medio_comp">Ensino Médio Completo</option>
-                                <option value="superior_inc">Ensino Superior Incompleto</option>
-                                <option value="superior_comp">Ensino Superior Completo</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Nº de Dependentes</label>
-                            <select id="dependentes">
-                                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Analfabeto?</label>
-                            <select id="analfabeto">
-                                <option value="nao">Não</option>
-                                <option value="sim">Sim</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Telefone</label>
-                            <input type="text" id="telefone">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Celular</label>
-                            <input type="text" id="celular">
-                        </div>
-                        <div class="field-item">
-                            <label>Email</label>
-                            <input type="text" id="email">
-                        </div>
-                        <div class="field-item">
-                            <label>Nome Pai</label>
-                            <input type="text" id="nome-pai">
-                        </div>
-                        <div class="field-item">
-                            <label>Nome Mãe</label>
-                            <input type="text" id="nome-mae">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Estado Civil</label>
-                            <select id="estado-civil">
-                                <option value="Solteiro">Solteiro</option>
-                                <option value="Casado">Casado</option>
-                                <option value="Divorciado">Divorciado</option>
-                                <option value="Viúvo">Viúvo</option>
-                            </select>
-                        </div>
-                        <div class="field-item hidden" id="regime-casamento-container">
-                            <label>Regime de Casamento</label>
-                            <select id="regime-casamento">
-                                <option value="">Selecione</option>
-                                <option value="Comunhão parcial de bens">Comunhão parcial de bens</option>
-                                <option value="Comunhão universal de bens">Comunhão universal de bens</option>
-                                <option value="Separação total de bens">Separação total de bens</option>
-                                <option value="Participação final nos aquestos">Participação final nos aquestos</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>União Estável</label>
-                            <select id="uniao-estavel">
-                                <option value="Não">Não</option>
-                                <option value="Sim">Sim</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-group hidden" id="conjuge-info-container">
-                        <div class="field-item">
-                            <label>Nome do Cônjuge</label>
-                            <input type="text" id="nome-conjuge">
-                        </div>
-                        <div class="field-item">
-                            <label>CPF do Cônjuge</label>
-                            <input type="text" id="cpf-conjuge">
-                        </div>
-                        <div class="field-item">
-                            <label>Sexo</label>
-                            <select id="sexo-conjuge">
-                                <option value="">Selecione</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feminino">Feminino</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Nacionalidade</label>
-                            <select id="nacionalidade-conjuge">
-                                <option value="Brasil">Brasil</option>
-                                <option value="Estrangeiro">Estrangeiro</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-group hidden" id="conjuge-info-container-2">
-                         <div class="field-item">
-                            <label>Naturalidade</label>
-                            <input type="text" id="naturalidade-conjuge">
-                        </div>
-                        <div class="field-item">
-                            <label>UF Naturalidade</label>
-                            <select id="uf-naturalidade-conjuge">
-                                <option value="">Selecione</option>
-                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Tipo Documento</label>
-                            <select id="tipo-documento-conjuge">
-                                <option value="RG">RG</option>
-                                <option value="CNH">CNH</option>
-                            </select>
-                        </div>
-                        <div class="field-item">
-                            <label>Nº Documento</label>
-                            <input type="number" id="numero-documento-conjuge">
-                        </div>
-                    </div>
-                    <div class="field-group hidden" id="conjuge-info-container-3">
-                         <div class="field-item">
-                            <label>Data Emissão</label>
-                            <input type="date" id="data-emissao-conjuge">
-                        </div>
-                        <div class="field-item">
-                            <label>Órgão Emissor</label>
-                            <input type="text" id="orgao-emissor-conjuge">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Profissão</label>
-                            <input type="text" id="profissao">
-                        </div>
-                        <div class="field-item">
-                            <label>Valor remuneração</label>
-                            <input type="text" id="valor-remuneracao" class="valor-input" placeholder="R$ 0,00">
-                        </div>
-                        <div class="field-item">
-                            <label>Insc. Estadual</label>
-                            <input type="text" id="inscricao-estadual">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="endereco-pf" class="tab-content">
-                <div class="form-section">
-                    <div class="field-group">
-                        <div class="field-item" style="width: 150px;">
-                            <label>CEP</label>
-                            <input type="text" id="cep">
-                        </div>
-                        <div class="field-item" style="flex-grow: 2;">
-                            <label>Endereço (Logradouro, Rua, Av.)</label>
-                            <input type="text" id="logradouro">
-                        </div>
-                        <div class="field-item" style="width: 80px;">
-                            <label>Nº</label>
-                            <input type="number" id="numero-endereco">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item" style="flex-grow: 2;">
-                            <label>Complemento</label>
-                            <input type="text" id="complemento-endereco">
-                        </div>
-                        <div class="field-item">
-                            <label>Bairro</label>
-                            <input type="text" id="bairro">
-                        </div>
-                        <div class="field-item">
-                            <label>Cidade</label>
-                            <input type="text" id="cidade" readonly>
-                        </div>
-                        <div class="field-item" style="width: 80px;">
-                            <label>UF</label>
-                            <input type="text" id="uf" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="rendas" class="tab-content">
-                <div class="form-section">
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Ano de Exercício do I.R.</label>
-                            <input type="number" id="ano-exercicio-ir">
-                        </div>
-                        <div class="field-item">
-                            <label>Receita Bruta Agrícola</label>
-                            <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
-                        </div>
-                        <div class="field-item">
-                            <label>Demais Receitas</label>
-                            <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
-                        </div>
-                        <div class="field-item">
-                            <label>Total Rendas</label>
-                            <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <div class="section-title">Rendas da Última Safra</div>
-                    <div id="renda-safra-container">
-                        <div class="field-group renda-safra-item">
-                            <div class="field-item">
-                                <label>Ano safra</label>
-                                <select class="ano-safra-renda">
-                                    <option value="2024/2025">2024/2025</option>
-                                    <option value="2025/2026">2025/2026</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Cultura</label>
-                                <input type="text" class="cultura-renda">
-                            </div>
-                            <div class="field-item">
-                                <label>Área (ha)</label>
-                                <input type="number" class="renda-area">
-                            </div>
-                            <div class="field-item">
-                                <label>Produtividade (sc/ha)</label>
-                                <input type="number" class="renda-produtividade">
-                            </div>
-                            <div class="field-item">
-                                <label>Preço (R$/sc)</label>
-                                <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor da Produção</label>
-                                <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <div class="section-title">Projeção da Próxima Safra</div>
-                    <div id="projecao-safra-container">
-                        <div class="field-group projecao-safra-item">
-                            <div class="field-item">
-                                <label>Ano safra</label>
-                                <select class="ano-safra-projecao">
-                                    <option value="2024/2025">2024/2025</option>
-                                    <option value="2025/2026">2025/2026</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Cultura</label>
-                                <input type="text" class="cultura-projecao">
-                            </div>
-                            <div class="field-item">
-                                <label>Área (ha)</label>
-                                <input type="number" class="projecao-area">
-                            </div>
-                            <div class="field-item">
-                                <label>Produtividade (sc/ha)</label>
-                                <input type="number" class="projecao-produtividade">
-                            </div>
-                            <div class="field-item">
-                                <label>Preço (R$/sc)</label>
-                                <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor da Produção</label>
-                                <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="outras-receitas" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Outras Receitas</div>
-                    <div id="outras-receitas-container">
-                        <div class="field-group outras-receitas-item">
-                            <div class="field-item">
-                                <label>Origem</label>
-                                <input type="text" class="origem-outra-receita">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor</label>
-                                <input type="text" class="valor-input valor-outra-receita" placeholder="R$ 0,00">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="dados-financeiros" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Bancos</div>
-                    <div id="bancos-container">
-                        <div class="field-group banco-item">
-                            <div class="field-item">
-                                <label>Banco</label>
-                                <select class="banco">
-                                    <option value="">Selecione</option>
-                                    <option value="TentosCap">TentosCap</option>
-                                    <option value="Banco do Brasil">Banco do Brasil</option>
-                                    <option value="Bradesco">Bradesco</option>
-                                    <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
-                                    <option value="Itaú">Itaú</option>
-                                    <option value="Santander">Santander</option>
-                                    <option value="Sicoob">Sicoob</option>
-                                    <option value="Sicredi">Sicredi</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Tipo de Conta</label>
-                                <select class="tipo-conta">
-                                    <option value="corrente">Conta Corrente</option>
-                                    <option value="poupanca">Conta Poupança</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Agência</label>
-                                <input type="text" class="agencia">
-                            </div>
-                            <div class="field-item">
-                                <label>Conta</label>
-                                <input type="text" class="conta">
-                            </div>
-                            <div class="field-item field-small">
-                                <label>Dígito</label>
-                                <input type="text" class="digito">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="pecuaria" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Atividades de Pecuária</div>
-                    <div id="pecuaria-container">
-                        <div class="field-group pecuaria-item">
-                            <div class="field-item">
-                                <label>Atividade</label>
-                                <select class="atividade-pecuaria">
-                                    <option value="">Selecione</option>
-                                    <option value="Gado de Corte - Cria">Gado de Corte - Cria</option>
-                                    <option value="Gado de Corte - Recria/Engorda">Gado de Corte - Recria/Engorda</option>
-                                    <option value="Gado de Corte - Cria/Recria/Engorda">Gado de Corte - Cria/Recria/Engorda</option>
-                                    <option value="Gado de Corte - Confinamento">Gado de Corte - Confinamento</option>
-                                    <option value="Gado de Corte - Semi-confinamento">Gado de Corte - Semi-confinamento</option>
-                                    <option value="Gado de Leite à Pasto">Gado de Leite à Pasto</option>
-                                    <option value="Gado de Leite Confinado">Gado de Leite Confinado</option>
-                                    <option value="Gado de Leite Semi-confinado">Gado de Leite Semi-confinado</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Quantidade</label>
-                                <input type="number" class="quantidade-pecuaria">
-                            </div>
-                            <div class="field-item">
-                                <label>Vr. Mercado</label>
-                                <input type="text" class="valor-input valor-mercado-pecuaria" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Obs.</label>
-                                <input type="text" class="obs-pecuaria">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="bens-moveis" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Veículos</div>
-                    <div id="veiculos-container">
-                        <div class="field-group veiculo-item">
-                            <div class="field-item">
-                                <label>Ano de fabricação</label>
-                                <input type="number" class="ano-fabricacao-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Ano modelo</label>
-                                <input type="number" class="ano-modelo-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor de mercado</label>
-                                <input type="text" class="valor-input valor-mercado-veiculo" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Marca</label>
-                                <input type="text" class="marca-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Modelo</label>
-                                <input type="text" class="modelo-veiculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Placa</label>
-                                <input type="text" class="placa-veiculo">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Máquinas e Implementos</div>
-                    <div id="maquinas-container">
-                        <div class="field-group maquina-item">
-                            <div class="field-item">
-                                <label>Ano de fabricação</label>
-                                <input type="number" class="ano-fabricacao-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Ano modelo</label>
-                                <input type="number" class="ano-modelo-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor de mercado</label>
-                                <input type="text" class="valor-input valor-mercado-maquina" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Marca</label>
-                                <input type="text" class="marca-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Modelo</label>
-                                <input type="text" class="modelo-maquina">
-                            </div>
-                            <div class="field-item">
-                                <label>Tipo de máquina</label>
-                                <input type="text" class="tipo-maquina">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                    
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="bens-imoveis" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Áreas Próprias</div>
-                    <div id="areas-proprias-container">
-                        <div class="field-group area-propria-item">
-                            <div class="field-item">
-                                <label>Proprietário</label>
-                                <input type="text" class="proprietario-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Área total (ha)</label>
-                                <input type="number" class="area-total-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor venal</label>
-                                <input type="text" class="valor-input valor-venal-propria" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Município</label>
-                                <input type="text" class="municipio-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Denominação</label>
-                                <input type="text" class="denominacao-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>CAR</label>
-                                <input type="text" class="car-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>Matrícula</label>
-                                <input type="text" class="matricula-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <label>CEP</label>
-                                <input type="text" class="cep-input cep-area-propria">
-                            </div>
-                            <div class="field-item">
-                                <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
-                                <button class="kml-button" type="button">Importar KML</button>
-                                <div class="kml-area-display"></div>
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Áreas de Teceiros</div>
-                    <div id="areas-arrendadas-container">
-                        <div class="field-group area-arrendada-item">
-                            <div class="field-item">
-                                <label>Proprietário</label>
-                                <input type="text" class="proprietario-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Área total (ha)</label>
-                                <input type="number" class="area-total-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Área explorada (ha)</label>
-                                <input type="number" class="area-explorada-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Fim da Vigencia.</label>
-                                <input type="date" class="fim-vigencia-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Município</label>
-                                <input type="text" class="municipio-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Denominação</label>
-                                <input type="text" class="denominacao-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>CAR</label>
-                                <input type="text" class="car-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>Matrícula</label>
-                                <input type="text" class="matricula-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <label>CEP</label>
-                                <input type="text" class="cep-input cep-area-arrendada">
-                            </div>
-                            <div class="field-item">
-                                <input type="file" accept=".kml" class="kml-file-input" style="display: none;">
-                                <button class="kml-button" type="button">Importar KML</button>
-                                <div class="kml-area-display"></div>
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="funcionarios" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Funcionários</div>
-                    <div id="funcionarios-container">
-                        <div class="field-group funcionario-item">
-                            <div class="field-item">
-                                <label>Qtde. funcionários fixos</label>
-                                <input type="number" id="qtde-funcionarios-fixos">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor média folha fixos</label>
-                                <input type="text" class="valor-input" id="valor-media-folha-fixos" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Qtde. temporários</label>
-                                <input type="number" id="qtde-funcionarios-temporarios">
-                            </div>
-                            <div class="field-item">
-                                <label>Valor média folha temporários</label>
-                                <input type="text" class="valor-input" id="valor-media-folha-temporarios" placeholder="R$ 0,00">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="seguros" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Seguros</div>
-                    <div id="seguros-container">
-                        <div class="field-group seguro-item">
-                            <div class="field-item">
-                                <label>Modalidade</label>
-                                <select class="modalidade-seguro">
-                                    <option value="">Selecione</option>
-                                    <option value="Lavoura">Lavoura</option>
-                                    <option value="Veiculo">Veículo</option>
-                                    <option value="Maquina">Máquina</option>
-                                    <option value="Vida">Vida</option>
-                                </select>
-                            </div>
-                            <div class="field-item">
-                                <label>Bem Segurado</label>
-                                <input type="text" class="bem-segurado">
-                            </div>
-                            <div class="field-item">
-                                <label>Vr. cobertura</label>
-                                <input type="text" class="valor-input valor-cobertura-seguro" placeholder="R$ 0,00">
-                            </div>
-                            <div class="field-item">
-                                <label>Vencimento</label>
-                                <input type="date" class="vencimento-seguro">
-                            </div>
-                            <button class="add-button" type="button">+ Adicionar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="aceites" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Declaração de PEP</div>
-                    <div class="legal-text">
-                        Conforme estabelece a Lei 9.613/1998, alterada pela 12.683/2012 e Resolução 29/2017 do COAF, as Instituições Financeiras devem identificar as pessoas que desempenham ou tenham desempenhado, nos últimos 5 (cinco) anos, no Brasil ou em outros países, cargos, empregos ou funções públicas relevantes, assim como seus representantes, familiares e pessoas de seu relacionamento, ou seja: pais, filhos, cônjuge, companheiro(a) e enteado(a).
-                    </div>
-                    <div class="legal-text">
-                        Para cumprimento desta determinação legal, favor nos fornecer as seguintes informações:
-                    </div>
-                    <div class="field-group">
-                        <div class="field-item">
-                            <label>Exerce ou exerceu nos últimos 5 (cinco) anos algum cargo, emprego ou função pública relevante?</label>
-                            <select id="pep-select">
-                                <option value="Sim">Sim</option>
-                                <option value="Não" selected>Não</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="pep-details-container" class="hidden">
-                        <div class="field-group">
-                            <div class="field-item">
-                                <label>Cargo ou Função</label>
-                                <input type="text" id="pep-cargo">
-                            </div>
-                            <div class="field-item">
-                                <label>Empresa e/ou Órgão Público</label>
-                                <input type="text" id="pep-empresa">
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <div class="field-item">
-                                <label>Data de início do exercício</label>
-                                <input type="date" id="pep-data-inicio">
-                            </div>
-                            <div class="field-item">
-                                <label>Data do fim do exercício</label>
-                                <input type="date" id="pep-data-fim">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field-group" style="margin-top: 15px;">
-                        <div class="field-item">
-                            <label>Possui relacionamento e/ou ligação com pessoa que exerce ou exerceu algum cargo, emprego, ou função pública nos últimos 5 (cinco) anos?</label>
-                            <select id="pep-relacionamento-select">
-                                <option value="Sim">Sim</option>
-                                <option value="Não" selected>Não</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="pep-relacionamento-details-container" class="hidden">
-                        <div class="field-group">
-                            <div class="field-item">
-                                <label>Nome da pessoa</label>
-                                <input type="text" id="pep-rel-nome">
-                            </div>
-                            <div class="field-item">
-                                <label>Vínculo</label>
-                                <input type="text" id="pep-rel-vinculo">
-                            </div>
-                            <div class="field-item">
-                                <label>Cargo ou Função</label>
-                                <input type="text" id="pep-rel-cargo">
-                            </div>
-                            <div class="field-item">
-                                <label>Empresa e/ou Órgão Público</label>
-                                <input type="text" id="pep-rel-empresa">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Autorizações</div>
-                    <div class="legal-text">
-                        O cliente, acima qualificado, AUTORIZA por este instrumento a Tentos S.A Crédito, Financiamento e Investimento, em atenção à Resolução nº 5.037/22 do Conselho Monetário Nacional (CMN) e as normas constantes no Manual do Crédito Rural, em caráter irrevogável e irretratável a:
-                    </div>
-                    <div style="margin-top: 10px;">
-                        <div class="legal-item">
-                            <input type="checkbox" checked id="auth-scr">
-                            <p>I. Consultar os débitos e responsabilidades decorrentes de operações com características de crédito e demais informações e registros que em seu nome constem ou venham a contar do Sistema de Informações de Crédito (SCR), gerido pelo Banco Central do Brasil (BACEN), declarando estar ciente que os dados de suas respectivas operações contratadas com a Tentos S.A Crédito, Financiamento e Investimento também serão registradas no SCR;</p>
-                        </div>
-                        <div class="legal-item">
-                            <input type="checkbox" checked id="auth-spc-serasa">
-                            <p>II. consultar todas as organizações de cadastros de proteção ao crédito, incluindo mas não se limitando ao Serviço de Proteção ao Crédito (SPC), Serviço Central de Proteção ao Crédito (SCPC), Serasa Experian, SCI Brasil, e assemelhados sobre suas obrigações, bem como a divulgar seus dados, inclusive cadastrais, relativos às operações contratadas e aos débitos constituídos perante a Tentos S.A Crédito, Financiamento e Investimento decorrentes de operações com características de crédito, para constarem nos bancos dessas empresas, cuja finalidade será o compartilhamento com os contratantes das referidas entidades, que utilizarão esses dados para subsidiar suas decisões de crédito e negócios;</p>
-                        </div>
-                        <div class="legal-item">
-                            <input type="checkbox" checked id="auth-ibama">
-                            <p> Consultar as informações e processos em seu nome que constem nas bases informatizadas do Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis (IBAMA), do Instituto Chico Mendes de Conservação da Biodiversidade (ICM-Bio), além de outros órgãos ambientais federais, estaduais e municipais no âmbito de suas competências;</p>
-                        </div>
-                        <div class="legal-item">
-                            <input type="checkbox" checked id="auth-share-partners">
-                            <p>IV. compartilhar dados e informações com empresas do mesmo grupo econômico, bem como com parceiros comerciais, para fins de oferta de produtos e serviços e para análise de crédito;</p>
-                        </div>
-                        <div class="legal-item">
-                            <input type="checkbox" checked id="auth-receita">
-                            <p>V. realizar consultas e obter informações junto à Receita Federal do Brasil, a fim de confirmar dados cadastrais e fiscais, bem como a situação de regularidade fiscal;</p>
-                        </div>
-                        <div class="legal-item">
-                            <input type="checkbox" checked id="auth-fraud">
-                            <p>VI. utilizar os dados e informações coletados para fins de prevenção à fraude e à lavagem de dinheiro, em conformidade com a legislação vigente.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<div id="conglomerado" class="tab-content">
-    <div class="form-section">
-        <div class="section-title">Conglomerado</div>
-        <div id="conglomerado-container">
-            <div class="field-group conglomerado-item">
-                <div class="field-item">
-                    <label>Nome</label>
-                    <input type="text" class="nome-conglomerado">
-                </div>
-                <div class="field-item">
-                    <label>CPF</label>
-                    <input type="text" class="cpf-conglomerado">
-                </div>
-                <div class="field-item">
-                    <label>Vínculo</label>
-                    <input type="text" class="vinculo-conglomerado">
-                </div>
-                <button class="add-button" type="button">+ Adicionar</button>
-            </div>
-        </div>
-    </div>
-</div>
-           <div id="declaracao" class="tab-content">
-                <div class="form-section">
-                    <div class="section-title">Declaração</div>
-                    <div class="legal-text">
-                        Declaro, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e completas, assumindo total responsabilidade pelas mesmas.
-                    </div>
-                    <div class="signature-block print-only">
-                        <div class="line"></div>
-                        <div class="info-text" id="assinatura-nome"></div>
-                        <div class="info-text" id="assinatura-cpf"></div>
-                        <div class="info-text" id="assinatura-unidade-3t"></div>
-                        <div class="info-text" id="assinatura-data-cadastro"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // --- Funções de formatação e máscara ---
-        
-        const formatarValor = (valor) => {
-            if (isNaN(valor)) valor = 0;
-            return "R$ " + valor.toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
-        };
-
-        const parseValor = (texto) => {
-            return parseFloat(String(texto).replace("R$ ", "").replace(/\./g, "").replace(",", ".")) || 0;
-        };
-        
-        const aplicarMascaraTexto = (valor, mascara) => {
-            let valorLimpo = String(valor).replace(/\D/g, "");
-            let valorMascarado = "";
-            let indexValor = 0;
-            for (let i = 0; i < mascara.length; i++) {
-                if (indexValor >= valorLimpo.length) break;
-                if (mascara[i] === "#") {
-                    valorMascarado += valorLimpo[indexValor];
-                    indexValor++;
-                } else {
-                    valorMascarado += mascara[i];
-                }
-            }
-            return valorMascarado;
-        };
-
-        // --- Delegação de Eventos para Máscaras (Solução para campos dinâmicos) ---
-
-        document.body.addEventListener('blur', function(event) {
-            if (event.target.matches('.valor-input')) {
-                event.target.value = formatarValor(parseValor(event.target.value));
-            }
-        }, true);
-
-        document.body.addEventListener('input', function(event) {
-            const target = event.target;
-            if (target.matches('#cpf, #cpf-conjuge, .cpf-conglomerado')) {
-    target.value = aplicarMascaraTexto(target.value, "###.###.###-##");
-}
-
-            if (target.matches('#telefone')) {
-                target.value = aplicarMascaraTexto(target.value, "(##) ####-####");
-            }
-            if (target.matches('#celular')) {
-                target.value = aplicarMascaraTexto(target.value, "(##) #####-####");
-            }
-            if (target.matches('#cep, .cep-input')) {
-                target.value = aplicarMascaraTexto(target.value, "#####-###");
-            }
-        });
-
-        // --- Lógica Principal do Formulário ---
-        
-        const tabButtons = document.querySelectorAll(".tab-button");
-        const tabContents = document.querySelectorAll(".tab-content");
-
-        tabButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                tabButtons.forEach(btn => btn.classList.remove("active"));
-                tabContents.forEach(content => content.classList.remove("active"));
-                button.classList.add("active");
-                document.querySelector(button.dataset.tabTarget).classList.add("active");
-            });
-        });
-
-        document.getElementById("cep").addEventListener("blur", function() {
-            const cep = this.value.replace(/\D/g, "");
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.erro) {
-                            document.getElementById("logradouro").value = data.logradouro;
-                            document.getElementById("bairro").value = data.bairro;
-                            document.getElementById("cidade").value = data.localidade;
-                            document.getElementById("uf").value = data.uf;
-                        } else {
-                            alert("CEP não encontrado.");
-                        }
-                    })
-                    .catch(error => console.error("Erro ao buscar CEP:", error));
-            }
-        });
-        
-        const estadoCivilSelect = document.getElementById("estado-civil");
-        const toggleConjugeFields = () => {
-            const isCasado = estadoCivilSelect.value === "Casado";
-            document.getElementById("conjuge-info-container").classList.toggle("hidden", !isCasado);
-            document.getElementById("conjuge-info-container-2").classList.toggle("hidden", !isCasado);
-            document.getElementById("conjuge-info-container-3").classList.toggle("hidden", !isCasado);
-            document.getElementById("regime-casamento-container").classList.toggle("hidden", !isCasado);
-        };
-        estadoCivilSelect.addEventListener("change", toggleConjugeFields);
-        toggleConjugeFields();
-
-        const pepSelect = document.getElementById("pep-select");
-        const pepRelacionamentoSelect = document.getElementById("pep-relacionamento-select");
-        const togglePepFields = () => document.getElementById("pep-details-container").classList.toggle("hidden", pepSelect.value !== "Sim");
-        const togglePepRelacionamentoFields = () => document.getElementById("pep-relacionamento-details-container").classList.toggle("hidden", pepRelacionamentoSelect.value !== "Sim");
-        pepSelect.addEventListener("change", togglePepFields);
-        pepRelacionamentoSelect.addEventListener("change", togglePepRelacionamentoFields);
-        togglePepFields();
-        togglePepRelacionamentoFields();
-
-        const calcularValorProducao = (item) => {
-            const area = parseFloat(item.querySelector(".renda-area, .projecao-area")?.value) || 0;
-            const produtividade = parseFloat(item.querySelector(".renda-produtividade, .projecao-produtividade")?.value) || 0;
-            const preco = parseValor(item.querySelector(".renda-preco, .projecao-preco")?.value || "R$ 0,00");
-            const valor = area * produtividade * preco;
-            const valorProducaoInput = item.querySelector(".renda-producao, .projecao-producao");
-            if (valorProducaoInput) {
-                valorProducaoInput.value = formatarValor(valor);
-            }
-        };
-
-        const calcularTotalRendas = () => {
-            const receitaAgricola = parseValor(document.getElementById('receita-agricola').value);
-            const demaisReceitas = parseValor(document.getElementById('demais-receitas').value);
-            document.getElementById("total-rendas").value = formatarValor(receitaAgricola + demaisReceitas);
-        };
-        
-        document.body.addEventListener('blur', (event) => {
-            if (event.target.closest('.renda-safra-item, .projecao-safra-item')) {
-                calcularValorProducao(event.target.closest('.field-group'));
-            }
-            if (event.target.matches('#receita-agricola, #demais-receitas')) {
-                calcularTotalRendas();
-            }
-        }, true);
-
-        document.body.addEventListener('click', (event) => {
-            if (event.target.matches('.add-button')) {
-                const container = event.target.closest('[id$="-container"]');
-                const item = event.target.closest('.field-group');
-                const newItem = item.cloneNode(true);
-                newItem.querySelectorAll('input, select, textarea').forEach(input => input.value = '');
-                const newButton = newItem.querySelector('.add-button');
-                newButton.textContent = '- Remover';
-                newButton.classList.replace('add-button', 'remove-button');
-                if (newItem.querySelector('.kml-area-display')) {
-                    newItem.querySelector('.kml-area-display').textContent = '';
-                }
-                container.appendChild(newItem);
-            } else if (event.target.matches('.remove-button')) {
-                event.target.closest('.field-group').remove();
-            }
-        });
-        
-        document.body.addEventListener('click', function(event) {
-            if (event.target.classList.contains('kml-button')) {
-                event.target.parentElement.querySelector('.kml-file-input').click();
-            }
-        });
-        
-        window.generatePdf = () => (updateDeclaracaoInfo(), window.print());
-        const setDataAtual = () => {
-            document.getElementById('data-cadastro').value = new Date().toISOString().slice(0, 10);
-        };
-        setDataAtual();
-
-        function updateDeclaracaoInfo() {
-            const unidade3T = document.getElementById('unidade-3t').value;
-            const dataCadastro = document.getElementById('data-cadastro').value;
-            const nomePf = document.getElementById('nome-pf').value;
-            const cpf = document.getElementById('cpf').value;
-
-            const unidadeElement = document.getElementById('assinatura-unidade-3t');
-            const dataElement = document.getElementById('assinatura-data-cadastro');
-            const nomeElement = document.getElementById('assinatura-nome');
-            const cpfElement = document.getElementById('assinatura-cpf');
-
-            let dataFormatada = '';
-            if (dataCadastro) {
-                const [ano, mes, dia] = dataCadastro.split('-');
-                dataFormatada = `${dia}/${mes}/${ano}`;
-            }
-
-            if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
-            if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
-            if (nomeElement) nomeElement.textContent = nomePf ? `Nome: ${nomePf}` : '';
-            if (cpfElement) cpfElement.textContent = cpf ? `CPF: ${cpf}` : '';
-        }
-        document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
-        document.getElementById('data-cadastro').addEventListener('change', updateDeclaracaoInfo);
-        document.getElementById('nome-pf').addEventListener('input', updateDeclaracaoInfo);
-        document.getElementById('cpf').addEventListener('input', updateDeclaracaoInfo);
-        updateDeclaracaoInfo();
-
-
-        // --- Funções para Salvar e Importar JSON (VERSÃO COMPLETA E CORRIGIDA) ---
-
-        const getUniqueKey = (field) => {
-            const ignoredClasses = ['valor-input', 'cep-input', 'kml-file-input', 'form-control'];
-            for (const cls of field.classList) {
-                if (!ignoredClasses.includes(cls)) {
-                    return cls;
-                }
-            }
-            return field.id || field.name;
-        };
-
-        const getDynamicItemsData = (containerId) => {
-            const container = document.getElementById(containerId);
-            const items = container.querySelectorAll('.field-group');
-            const data = [];
-            items.forEach(item => {
-                const itemData = {};
-                item.querySelectorAll('input, select').forEach(field => {
-                    const key = getUniqueKey(field);
-                    if (key) {
-                       itemData[key] = field.value;
-                    }
-                });
-                data.push(itemData);
-            });
-            return data;
-        };
-
-        window.saveDataAsJson = () => {
-            const formData = {};
-            
-            document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
-                if (field.type === 'checkbox') {
-                    formData[field.id] = field.checked;
-                } else {
-                    formData[field.id] = field.value;
-                }
-            });
-
-            formData.rendasSafra = getDynamicItemsData('renda-safra-container');
-            formData.projecoesSafra = getDynamicItemsData('projecao-safra-container');
-            formData.outrasReceitas = getDynamicItemsData('outras-receitas-container');
-            formData.bancos = getDynamicItemsData('bancos-container');
-            formData.pecuaria = getDynamicItemsData('pecuaria-container');
-            formData.veiculos = getDynamicItemsData('veiculos-container');
-            formData.maquinas = getDynamicItemsData('maquinas-container');
-            formData.areasProprias = getDynamicItemsData('areas-proprias-container');
-            formData.areasArrendadas = getDynamicItemsData('areas-arrendadas-container');
-            formData.seguros = getDynamicItemsData('seguros-container');
-	    formData.conglomerado = getDynamicItemsData('conglomerado-container');
-
-
-            const jsonString = JSON.stringify(formData, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        };
-
-        const populateDynamicItems = (containerId, data) => {
-            const container = document.getElementById(containerId);
-            const template = container.querySelector('.field-group');
-            container.innerHTML = ''; 
-            
-            if (data && data.length > 0) {
-                data.forEach((itemData, index) => {
-                    const newItem = template.cloneNode(true);
-                    newItem.querySelectorAll('input, select').forEach(field => {
-                        const key = getUniqueKey(field);
-                        if (itemData.hasOwnProperty(key)) {
-                            field.value = itemData[key];
-                        }
-                    });
-                    
-                    if(index > 0) { 
-                        const addButton = newItem.querySelector('.add-button');
-                        if(addButton){
-                            addButton.textContent = '- Remover';
-                            addButton.classList.replace('add-button', 'remove-button');
-                        }
-                    }
-                    container.appendChild(newItem);
-                });
-            } else {
-                container.appendChild(template);
-            }
-        };
-
-        const reapplyAllMasks = () => {
-            document.querySelectorAll('.valor-input').forEach(field => {
-                field.dispatchEvent(new Event('blur', { bubbles: true }));
-            });
-           document.querySelectorAll('#cpf, #cpf-conjuge, .cpf-conglomerado').forEach(f => 
-    f.value = aplicarMascaraTexto(f.value, "###.###.###-##"));
-
-            document.querySelectorAll('#telefone').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) ####-####"));
-            document.querySelectorAll('#celular').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) #####-####"));
-            document.querySelectorAll('#cep, .cep-input').forEach(f => f.value = aplicarMascaraTexto(f.value, "#####-###"));
-        };
-
-        window.importDataFromJson = () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = e => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = event => {
-                        try {
-                            const data = JSON.parse(event.target.result);
-                            for (const key in data) {
-                                if (data.hasOwnProperty(key)) {
-                                    const field = document.getElementById(key);
-                                    if (field) {
-                                        field.type === 'checkbox' ? field.checked = data[key] : field.value = data[key];
-                                    }
-                                }
-                            }
-                            
-                            if(data.rendasSafra) populateDynamicItems('renda-safra-container', data.rendasSafra);
-                            if(data.projecoesSafra) populateDynamicItems('projecao-safra-container', data.projecoesSafra);
-                            if(data.outrasReceitas) populateDynamicItems('outras-receitas-container', data.outrasReceitas);
-                            if(data.bancos) populateDynamicItems('bancos-container', data.bancos);
-                            if(data.pecuaria) populateDynamicItems('pecuaria-container', data.pecuaria);
-                            if(data.veiculos) populateDynamicItems('veiculos-container', data.veiculos);
-                            if(data.maquinas) populateDynamicItems('maquinas-container', data.maquinas);
-                            if(data.areasProprias) populateDynamicItems('areas-proprias-container', data.areasProprias);
-                            if(data.areasArrendadas) populateDynamicItems('areas-arrendadas-container', data.areasArrendadas);
-                            if(data.seguros) populateDynamicItems('seguros-container', data.seguros);
-			    if(data.conglomerado) populateDynamicItems('conglomerado-container', data.conglomerado);
-
-
-                            reapplyAllMasks();
-                            document.querySelectorAll('.renda-safra-item, .projecao-safra-item').forEach(item => calcularValorProducao(item));
-                            calcularTotalRendas();
-                            toggleConjugeFields();
-                            togglePepFields();
-                            togglePepRelacionamentoFields();
-                            
-                            alert('Dados importados com sucesso!');
-                        } catch (error) {
-                            alert('Erro ao ler o arquivo JSON.');
-                            console.error('Erro de parsing do JSON:', error);
-                        }
-                    };
-                    reader.readAsText(file);
-                }
-            };
-            input.click();
-        };
-    });
-</script>
-
-       </body>
+            <div id="info-pf" class="tab-content">
+                <div class="form-section">
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Nome
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="nome-pf">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                CPF
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="cpf">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Data de Nasc.
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="date" id="data-nascimento">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Sexo
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="sexo">
+                                <option value="">Selecione</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nacionalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="nacionalidade">
+                                <option value="Brasil">Brasil</option>
+                                <option value="Estrangeiro">Estrangeiro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="naturalidade">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                UF Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="uf-naturalidade">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="tipo-documento">
+                                <option value="RG">RG</option>
+                                <option value="CNH">CNH</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nº Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="number" id="numero-documento">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Órgão Emissor
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="orgao-emissor">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Data Emissão
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="date" id="data-emissao">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Grau de Instrução
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="grau-instrucao">
+                                <option value="">Selecione</option>
+                                <option value="fundamental_inc">Ensino Fundamental Incompleto</option>
+                                <option value="fundamental_comp">Ensino Fundamental Completo</option>
+                                <option value="medio_inc">Ensino Médio Incompleto</option>
+                                <option value="medio_comp">Ensino Médio Completo</option>
+                                <option value="superior_inc">Ensino Superior Incompleto</option>
+                                <option value="superior_comp">Ensino Superior Completo</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nº de Dependentes
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="dependentes">
+                                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Analfabeto?
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="analfabeto">
+                                <option value="nao">Não</option>
+                                <option value="sim">Sim</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Telefone
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="telefone">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Celular
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="celular">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Email
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="email">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nome Pai
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="nome-pai">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nome Mãe
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="nome-mae">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Estado Civil
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="estado-civil">
+                                <option value="Solteiro">Solteiro</option>
+                                <option value="Casado">Casado</option>
+                                <option value="Divorciado">Divorciado</option>
+                                <option value="Viúvo">Viúvo</option>
+                            </select>
+                        </div>
+                        <div class="field-item hidden" id="regime-casamento-container">
+                            <label class="tooltip-container">
+                                Regime de Casamento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="regime-casamento">
+                                <option value="">Selecione</option>
+                                <option value="Comunhão parcial de bens">Comunhão parcial de bens</option>
+                                <option value="Comunhão universal de bens">Comunhão universal de bens</option>
+                                <option value="Separação total de bens">Separação total de bens</option>
+                                <option value="Participação final nos aquestos">Participação final nos aquestos</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                União Estável
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="uniao-estavel">
+                                <option value="Não">Não</option>
+                                <option value="Sim">Sim</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group hidden" id="conjuge-info-container">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nome do Cônjuge
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="nome-conjuge">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                CPF do Cônjuge
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="cpf-conjuge">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Sexo
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="sexo-conjuge">
+                                <option value="">Selecione</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nacionalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="nacionalidade-conjuge">
+                                <option value="Brasil">Brasil</option>
+                                <option value="Estrangeiro">Estrangeiro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group hidden" id="conjuge-info-container-2">
+                         <div class="field-item">
+                            <label class="tooltip-container">
+                                Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="text" id="naturalidade-conjuge">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                UF Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="uf-naturalidade-conjuge">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <select id="tipo-documento-conjuge">
+                                <option value="RG">RG</option>
+                                <option value="CNH">CNH</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nº Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Esta é uma dica de informação para este campo.</span>
+                            </label>
+                            <input type="number" id="numero-documento-conjuge">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-
