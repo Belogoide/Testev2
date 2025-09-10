@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha Cadastral</title>
     <style>
-        /* CSS INALTERADO */
+        /* CSS INALTERADO - MANTIDO CONFORME FORNECIDO */
         @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
         @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
@@ -30,744 +30,1330 @@
             margin-bottom: 20px;
         }
 
-        .header h1 {
-            font-size: 18px;
-            margin: 0;
+        .header-logo {
+            width: 100px;
+            height: 50px;
+            border: 1px dashed #ccc;
+            text-align: center;
+            line-height: 50px;
+            font-size: 10px;
+        }
+
+        .header-title {
+            text-align: center;
             flex-grow: 1;
         }
 
-        .header .logo {
-            height: 50px;
-            margin-right: 15px;
-        }
-
-        .header .info {
-            font-size: 10px;
-            text-align: right;
-        }
-
-        .header .info p {
+        .header-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
             margin: 0;
+            font-size: 16px;
         }
 
-        /* ESTILOS DE FORMATAÇÃO E INPUTS */
-        h2 {
-            border-bottom: 2px solid #000;
-            padding-bottom: 5px;
-            margin-top: 20px;
-            font-size: 14px;
+        .header-date {
+            width: 150px;
+            font-size: 10px;
         }
 
-        h3 {
-            font-size: 12px;
-            margin-top: 15px;
-            margin-bottom: 5px;
-        }
-
-        .form-section {
+        /* ESTILOS CORRIGIDOS DOS BOTÕES DE ABA */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            border-bottom: 2px solid #ccc;
             margin-bottom: 20px;
         }
 
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-            align-items: center;
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            background-color: #f1f1f1;
+            margin-bottom: -2px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 10px;
+            font-weight: bold;
+            color: #000;
         }
 
-        .form-item {
+        .tab-button:hover {
+            background-color: #e2e2e2;
+        }
+
+        .tab-button.active {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+            border-bottom-color: #fff;
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* ESTILOS INALTERADOS */
+        .tooltip-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tooltip-icon {
+            font-weight: bold;
+            color: #007BFF;
+            cursor: pointer;
+            border: 1px solid #007BFF;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: normal;
+            font-size: 10px;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            width: 150px;
+            font-weight: normal;
+            font-size: 10px;
+        }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .form-section {
+            border: 1px solid #000;
+            margin-bottom: 15px;
+            padding: 5px;
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000; /* Removido o fundo preto para os títulos de seção internos */
+        }
+        .field-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .field-item {
             display: flex;
             flex-direction: column;
-            margin-right: 20px;
-            position: relative;
+            flex: 1;
+            min-width: 150px;
         }
-
-        .form-item label {
+        .field-small {
+            flex: 0 0 50px;
+            min-width: 50px;
+        }
+        .field-item label {
             font-weight: bold;
-            font-size: 10px;
             margin-bottom: 3px;
         }
-
-        .form-item input[type="text"],
-        .form-item input[type="number"],
-        .form-item input[type="date"],
-        .form-item select {
-            width: 200px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 11px;
-        }
-
-        .form-item.full-width {
-            width: 100%;
-        }
-
-        .form-item.full-width input,
-        .form-item.full-width select {
-            width: 100%;
-        }
-
-        .form-item.large-input {
-            width: 300px;
-        }
-
-        .form-item.large-input input {
-            width: 300px;
-        }
-
-        .form-item.medium-input {
-            width: 250px;
-        }
-
-        .form-item.medium-input input {
-            width: 250px;
-        }
-
-        .form-item.small-input {
-            width: 100px;
-        }
-
-        .form-item.small-input input {
-            width: 100px;
-        }
-
-        .add-button, .remove-button {
-            padding: 5px 10px;
+        .field-item input[type="text"],
+        .field-item input[type="number"],
+        .field-item input[type="date"],
+        .field-item select,
+        .field-item textarea {
             border: none;
-            cursor: pointer;
-            border-radius: 5px;
+            border-bottom: 1px solid #000;
+            padding: 2px;
             font-size: 11px;
-            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
         }
-
-        .add-button {
-            background-color: #4CAF50;
-            color: white;
-            margin-left: 10px;
-        }
-
-        .remove-button {
-            background-color: #f44336;
-            color: white;
-            margin-left: 10px;
-        }
-        
-        .dynamic-list {
-            border: 1px dashed #ccc;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        .list-item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 5px;
+        .checkbox-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .list-item .form-item {
-            margin-right: 10px;
-            margin-bottom: 5px;
-        }
-
-        .list-item .remove-button {
-            align-self: flex-start;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 10px;
-            text-align: center;
-        }
-
-        .footer span {
-            display: block;
-            margin-top: 5px;
-        }
-
-        .form-item input[type="checkbox"] {
+            align-items: center;
             margin-top: 10px;
         }
-
-        .form-item.checkbox-item {
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .form-item.checkbox-item input {
-            width: auto;
+        .checkbox-container input {
             margin-right: 5px;
         }
-
-        .form-item.checkbox-item label {
+        .checkbox-container label {
             font-weight: normal;
         }
-
-        .button-group {
+        .field-row {
             display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
+            gap: 10px;
+            margin-bottom: 5px;
         }
-        
-        .button-group button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .field-row .field-item {
+            flex: 1;
         }
-        
-        .button-group #saveBtn {
+        .field-row-full {
+            flex: 1;
+        }
+        .full-width {
+            width: 100%;
+        }
+        .hidden {
+            display: none;
+        }
+        .legal-text {
+            font-size: 9px;
+            text-align: justify;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        .signature-line {
+            display: inline-block;
+            width: 100%;
+            border-bottom: 1px solid #000;
+            margin-top: 50px;
+        }
+        .signature-text {
+            text-align: center;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .add-button, .kml-button {
             background-color: #4CAF50;
             color: white;
-        }
-        
-        .button-group #loadBtn {
-            background-color: #008CBA;
-            color: white;
-        }
-        
-        /* ADICIONADO: ESTILO PARA O ÍCONE DE INFORMAÇÃO */
-        .info-icon {
-            color: #008CBA;
-            font-size: 12px;
-            margin-left: 5px;
+            border: none;
+            padding: 5px 10px;
+            font-size: 10px;
             cursor: pointer;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .remove-button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .kml-area-display {
+            font-size: 10px;
+            margin-top: 5px;
+            color: #555;
+            padding-left: 10px;
+        }
+        .save-button, .save-data-button, .import-data-button {
+            position: fixed;
+            top: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .save-button {
+            right: 20px;
+        }
+        .save-data-button {
+            right: 150px;
+            background-color: #28a745;
+        }
+        .import-data-button {
+            right: 290px;
+            background-color: #17a2b8;
+        }
+        .save-button:hover {
+            background-color: #0056b3;
+        }
+        .save-data-button:hover {
+            background-color: #218838;
+        }
+        .import-data-button:hover {
+            background-color: #138496;
+        }
+        .tab-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .legal-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .legal-item input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        .legal-item p {
+            margin: 0;
+            font-size: 10px;
+        }
+        /* Estilos para impressão / PDF */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+            .header, .tabs, .save-button, .save-data-button, .import-data-button {
+                display: none !important;
+            }
+            .tab-content-container {
+                border: none !important;
+            }
+            .tab-content {
+                display: block !important;
+                border: 1px solid #000;
+                padding: 5px;
+            }
+            .form-section {
+                border: none;
+                margin-bottom: 10px;
+                padding: 0;
+                page-break-inside: avoid;
+            }
+            #form-content {
+                width: 100%;
+                margin: 0;
+                padding: 10px;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .tab-button[data-tab-target="#declaracao"] {
+                display: none !important; /* Oculta o botão da aba Declaração no PDF */
+            }
+            .add-button, .remove-button, .kml-button {
+                display: none !important; /* Oculta os botões de adicionar/remover no PDF */
+            }
+        }
+        .print-only {
+            display: none;
+        }
+
+        /* Novo estilo para a assinatura */
+        .signature-block {
+            margin-top: 80px;
+            text-align: center;
+        }
+        .signature-block .line {
+            width: 50%;
+            margin: 0 auto;
+            border-bottom: 1px solid #000;
+        }
+        .signature-block .info-text {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .flex-row-signature {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+        .flex-row-signature .signature-item {
+            text-align: center;
+        }
+        /* Oculta a aba Declaração no site */
+        .tab-button[data-tab-target="#declaracao"] {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="https://i.ibb.co/6P6Ym90/logo.png" alt="logo" border="0" class="logo">
-        <h1>Ficha Cadastral</h1>
-        <div class="info">
-            <p>Data de Emissão: <span id="dataEmissao"></span></p>
-        </div>
-    </div>
-    <form id="fichaCadastralForm">
-        <div class="form-section">
-            <h2>Dados do Cliente</h2>
-            <div class="form-row">
-                <div class="form-item large-input">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" name="nome" title="Informe o nome completo do cliente." required>
-                    <i class="info-icon" title="Informe o nome completo do cliente.">i</i>
-                </div>
-                <div class="form-item medium-input">
-                    <label for="cpf">CPF</label>
-                    <input type="text" id="cpf" name="cpf" class="cpf-mask" title="Informe o CPF do cliente.">
-                    <i class="info-icon" title="Informe o CPF do cliente.">i</i>
-                </div>
-                <div class="form-item medium-input">
-                    <label for="rg">RG</label>
-                    <input type="text" id="rg" name="rg" title="Informe o RG do cliente.">
-                    <i class="info-icon" title="Informe o RG do cliente.">i</i>
-                </div>
-                <div class="form-item small-input">
-                    <label for="dataNascimento">Data de Nascimento</label>
-                    <input type="date" id="dataNascimento" name="dataNascimento" title="Informe a data de nascimento do cliente.">
-                    <i class="info-icon" title="Informe a data de nascimento do cliente.">i</i>
-                </div>
-                <div class="form-item medium-input">
-                    <label for="estadoCivil">Estado Civil</label>
-                    <select id="estadoCivil" name="estadoCivil" title="Informe o estado civil do cliente.">
-                        <option value="">Selecione</option>
-                        <option value="solteiro">Solteiro(a)</option>
-                        <option value="casado">Casado(a)</option>
-                        <option value="divorciado">Divorciado(a)</option>
-                        <option value="viuvo">Viúvo(a)</option>
-                        <option value="uniao_estavel">União Estável</option>
-                    </select>
-                    <i class="info-icon" title="Informe o estado civil do cliente.">i</i>
-                </div>
-                <div class="form-item large-input" id="conjugeFields" style="display: none;">
-                    <label for="nomeConjuge">Nome do Cônjuge</label>
-                    <input type="text" id="nomeConjuge" name="nomeConjuge" title="Informe o nome completo do cônjuge.">
-                    <i class="info-icon" title="Informe o nome completo do cônjuge.">i</i>
-                </div>
-                <div class="form-item large-input" id="conjugeCpfFields" style="display: none;">
-                    <label for="cpfConjuge">CPF do Cônjuge</label>
-                    <input type="text" id="cpfConjuge" name="cpfConjuge" class="cpf-mask" title="Informe o CPF do cônjuge.">
-                    <i class="info-icon" title="Informe o CPF do cônjuge.">i</i>
-                </div>
-                <div class="form-item large-input">
-                    <label for="endereco">Endereço Completo</label>
-                    <input type="text" id="endereco" name="endereco" title="Informe o endereço completo do cliente.">
-                    <i class="info-icon" title="Informe o endereço completo do cliente.">i</i>
-                </div>
-                <div class="form-item medium-input">
-                    <label for="cidade">Cidade</label>
-                    <input type="text" id="cidade" name="cidade" title="Informe a cidade do cliente.">
-                    <i class="info-icon" title="Informe a cidade do cliente.">i</i>
-                </div>
-                <div class="form-item small-input">
-                    <label for="estado">Estado</label>
-                    <input type="text" id="estado" name="estado" title="Informe o estado do cliente.">
-                    <i class="info-icon" title="Informe o estado do cliente.">i</i>
-                </div>
-                <div class="form-item medium-input">
-                    <label for="telefone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" class="phone-mask" title="Informe o telefone do cliente.">
-                    <i class="info-icon" title="Informe o telefone do cliente.">i</i>
-                </div>
-                <div class="form-item medium-input">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" title="Informe o email do cliente.">
-                    <i class="info-icon" title="Informe o email do cliente.">i</i>
-                </div>
-                <div class="form-item full-width">
-                    <label for="atividade">Atividade Principal</label>
-                    <input type="text" id="atividade" name="atividade" title="Informe a principal atividade econômica do cliente.">
-                    <i class="info-icon" title="Informe a principal atividade econômica do cliente.">i</i>
-                </div>
-                <div class="form-item checkbox-item">
-                    <label for="pep">O cliente é uma Pessoa Exposta Politicamente (PEP)?</label>
-                    <input type="checkbox" id="pep" name="pep" title="Marque se o cliente é uma Pessoa Exposta Politicamente.">
-                    <i class="info-icon" title="Marque se o cliente é uma Pessoa Exposta Politicamente.">i</i>
-                </div>
-                <div class="form-item medium-input" id="pepRelacionamentoFields" style="display: none;">
-                    <label for="pepRelacionamento">Qual o relacionamento?</label>
-                    <input type="text" id="pepRelacionamento" name="pepRelacionamento" title="Especifique o relacionamento com a PEP.">
-                    <i class="info-icon" title="Especifique o relacionamento com a PEP.">i</i>
+    <button class="save-button" onclick="generatePdf()">Salvar PDF</button>
+    <button class="save-data-button" onclick="saveDataAsJson()">Salvar Dados</button>
+    <button class="import-data-button" onclick="importDataFromJson()">Importar Dados</button>
+
+    <div id="form-content">
+        <div class="header">
+            <img src="https://tentoscapwebmanagerproduction.azurewebsites.net/brand/logo.svg"
+                 alt="Logo TentosCap" style="height:100px;">
+            <div class="header-title">
+                <h1>FICHA CADASTRO</h1>
+            </div>
+            <div class="header-date">
+                Data do Cadastro<br>
+                <div class="tooltip-container">
+                    <input type="date" class="full-width" id="data-cadastro">
+                    <span class="tooltip-text">Selecione a data em que este cadastro foi realizado.</span>
                 </div>
             </div>
         </div>
-        <div class="form-section">
-            <h2>Rendas e Patrimônios</h2>
-            <div class="form-row">
-                <div class="form-item">
-                    <label for="rendaTotalMensal">Renda Total Mensal (R$)</label>
-                    <input type="text" id="rendaTotalMensal" name="rendaTotalMensal" class="money-mask" title="Informe a renda mensal total do cliente.">
-                    <i class="info-icon" title="Informe a renda mensal total do cliente.">i</i>
+
+        <div class="tabs">
+            <button class="tab-button active section-title" data-tab-target="#identificacao">Identificação</button>
+            <button class="tab-button section-title" data-tab-target="#info-pf">Informações P.F.</button>
+            <button class="tab-button section-title" data-tab-target="#endereco-pf">Endereço P.F.</button>
+            <button class="tab-button section-title" data-tab-target="#rendas">Rendas</button>
+            <button class="tab-button section-title" data-tab-target="#outras-receitas">Outras Receitas</button>
+            <button class="tab-button section-title" data-tab-target="#dados-financeiros">Dados Financeiros</button>
+            <button class="tab-button section-title" data-tab-target="#pecuaria">Pecuária</button>
+            <button class="tab-button section-title" data-tab-target="#bens-moveis">Bens Móveis</button>
+            <button class="tab-button section-title" data-tab-target="#bens-imoveis">Bens Imóveis</button>
+            <button class="tab-button section-title" data-tab-target="#funcionarios">Funcionários</button>
+            <button class="tab-button section-title" data-tab-target="#seguros">Seguros</button>
+            <button class="tab-button section-title" data-tab-target="#aceites">Aceites</button>
+            <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
+            <button class="tab-button section-title" data-tab-target="#conglomerado">Conglomerado</button>
+        </div>
+
+        <div class="tab-content-container">
+            <div id="identificacao" class="tab-content active">
+                <div class="form-section">
+                    <div class="section-title">Dados de Identificação</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Código Cliente
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Campo para preencher o código único do cliente, se já existente.</span>
+                            </label>
+                            <input type="text" id="codigo-cliente">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Unidade 3T
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Unidade com a qual o cliente tem relacionamento</span>
+                            </label>
+                            <select id="unidade-3t">
+                                <option value="">Selecione</option>
+                                <option value="Água Boa">Água Boa</option>
+                                <option value="Ajuricaba">Ajuricaba</option>
+                                <option value="Alegrete">Alegrete</option>
+                                <option value="Alta Floresta">Alta Floresta</option>
+                                <option value="Arroio Grande">Arroio Grande</option>
+                                <option value="Augusto Pestana">Augusto Pestana</option>
+                                <option value="Bagé">Bagé</option>
+                                <option value="Boa Vista do Cadeado">Boa Vista do Cadeado</option>
+                                <option value="Cachoeira do Sul">Cachoeira do Sul</option>
+                                <option value="Camaquã">Camaquã</option>
+                                <option value="Campo Novo">Campo Novo</option>
+                                <option value="Canguçu">Canguçu</option>
+                                <option value="Capão do Cipó">Capão do Cipó</option>
+                                <option value="Capivari">Capivari</option>
+                                <option value="Catuípe">Catuípe</option>
+                                <option value="Colorado">Colorado</option>
+                                <option value="Condor">Condor</option>
+                                <option value="Confresa">Confresa</option>
+                                <option value="Coronel Barros">Coronel Barros</option>
+                                <option value="Cruz Alta">Cruz Alta</option>
+                                <option value="Dom Pedrito">Dom Pedrito</option>
+                                <option value="Entre-Ijuís">Entre-Ijuís</option>
+                                <option value="Erechim">Erechim</option>
+                                <option value="Espumoso">Espumoso</option>
+                                <option value="Eugênio de Castro">Eugênio de Castro</option>
+                                <option value="Fortaleza dos Valos">Fortaleza dos Valos</option>
+                                <option value="Giruá">Giruá</option>
+                                <option value="Horizontina">Horizontina</option>
+                                <option value="Ibirubá">Ibirubá</option>
+                                <option value="Ijuí">Ijuí</option>
+                                <option value="Jóia">Jóia</option>
+                                <option value="Lagoa Vermelha">Lagoa Vermelha</option>
+                                <option value="Lucas do Rio Verde">Lucas do Rio Verde</option>
+                                <option value="Matupá">Matupá</option>
+                                <option value="Mauá">Mauá</option>
+                                <option value="Nonoai">Nonoai</option>
+                                <option value="Nova Mutum">Nova Mutum</option>
+                                <option value="Nova Ubiratã">Nova Ubiratã</option>
+                                <option value="Palmeira das Missões">Palmeira das Missões</option>
+                                <option value="Panambi">Panambi</option>
+                                <option value="Passo Fundo">Passo Fundo</option>
+                                <option value="Pejuçara">Pejuçara</option>
+                                <option value="Pelotas">Pelotas</option>
+                                <option value="Porto dos Gaúchos">Porto dos Gaúchos</option>
+                                <option value="Querência">Querência</option>
+                                <option value="Redentora">Redentora</option>
+                                <option value="Rio Grande">Rio Grande</option>
+                                <option value="Santa Bárbara do Sul">Santa Bárbara do Sul</option>
+                                <option value="Santa Maria">Santa Maria</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
+                                <option value="Santiago">Santiago</option>
+                                <option value="Santo Ângelo">Santo Ângelo</option>
+                                <option value="São Borja">São Borja</option>
+                                <option value="São Gabriel">São Gabriel</option>
+                                <option value="São Luiz Gonzaga">São Luiz Gonzaga</option>
+                                <option value="Sarandi">Sarandi</option>
+                                <option value="Selbach">Selbach</option>
+                                <option value="Sinop">Sinop</option>
+                                <option value="Tapejara">Tapejara</option>
+                                <option value="Tapera">Tapera</option>
+                                <option value="Tenente Portela">Tenente Portela</option>
+                                <option value="Tupanciretã">Tupanciretã</option>
+                                <option value="Uruguaiana">Uruguaiana</option>
+                                <option value="Vera">Vera</option>
+                                <option value="Victor Graeff">Victor Graeff</option>
+                                <option value="Vitória das Missões">Vitória das Missões</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo de Pessoa
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Indique se o cadastro é de Pessoa Física (PF) ou Pessoa Jurídica (PJ).</span>
+                            </label>
+                            <select id="tipo-pessoa">
+                                <option value="PF">Pessoa Física</option>
+                                <option value="PJ">Pessoa Jurídica</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-item">
-                    <label for="patrimonioTotal">Patrimônio Total (R$)</label>
-                    <input type="text" id="patrimonioTotal" name="patrimonioTotal" class="money-mask" title="Informe o patrimônio total do cliente.">
-                    <i class="info-icon" title="Informe o patrimônio total do cliente.">i</i>
+            </div>
+
+            <div id="info-pf" class="tab-content">
+                <div class="form-section">
+                    <div class="section-title">Informações da Pessoa Física</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Nome
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome completo do cliente.</span>
+                            </label>
+                            <input type="text" id="nome-pf">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                CPF
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número do Cadastro de Pessoa Física (CPF).</span>
+                            </label>
+                            <input type="text" id="cpf">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Data de Nasc.
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Data de nascimento do cliente.</span>
+                            </label>
+                            <input type="date" id="data-nascimento">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Sexo
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Sexo biológico do cliente.</span>
+                            </label>
+                            <select id="sexo">
+                                <option value="">Selecione</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nacionalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">País de origem do cliente.</span>
+                            </label>
+                            <select id="nacionalidade">
+                                <option value="Brasil">Brasil</option>
+                                <option value="Estrangeiro">Estrangeiro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Cidade onde o cliente nasceu.</span>
+                            </label>
+                            <input type="text" id="naturalidade">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                UF Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Unidade Federativa (Estado) de nascimento do cliente.</span>
+                            </label>
+                            <select id="uf-naturalidade">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Selecione o tipo de documento de identificação principal (RG, CNH, etc.).</span>
+                            </label>
+                            <select id="tipo-documento">
+                                <option value="RG">RG</option>
+                                <option value="CNH">CNH</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nº Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número do documento de identificação principal.</span>
+                            </label>
+                            <input type="number" id="numero-documento">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Órgão Emissor
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Órgão responsável pela emissão do documento de identificação.</span>
+                            </label>
+                            <input type="text" id="orgao-emissor">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Data Emissão
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Data em que o documento de identificação foi emitido.</span>
+                            </label>
+                            <input type="date" id="data-emissao">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Grau de Instrução
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nível de escolaridade mais alto concluído pelo cliente.</span>
+                            </label>
+                            <select id="grau-instrucao">
+                                <option value="">Selecione</option>
+                                <option value="fundamental_inc">Ensino Fundamental Incompleto</option>
+                                <option value="fundamental_comp">Ensino Fundamental Completo</option>
+                                <option value="medio_inc">Ensino Médio Incompleto</option>
+                                <option value="medio_comp">Ensino Médio Completo</option>
+                                <option value="superior_inc">Ensino Superior Incompleto</option>
+                                <option value="superior_comp">Ensino Superior Completo</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nº de Dependentes
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Quantidade de dependentes financeiros do cliente.</span>
+                            </label>
+                            <select id="dependentes">
+                                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Analfabeto?
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Marque 'Sim' se o cliente for analfabeto.</span>
+                            </label>
+                            <select id="analfabeto">
+                                <option value="nao">Não</option>
+                                <option value="sim">Sim</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Telefone
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número de telefone fixo para contato.</span>
+                            </label>
+                            <input type="text" id="telefone">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Celular
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número de telefone celular para contato.</span>
+                            </label>
+                            <input type="text" id="celular">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Email
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Endereço de e-mail principal do cliente.</span>
+                            </label>
+                            <input type="text" id="email">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nome Pai
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome completo do pai do cliente.</span>
+                            </label>
+                            <input type="text" id="nome-pai">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nome Mãe
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome completo da mãe do cliente.</span>
+                            </label>
+                            <input type="text" id="nome-mae">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Estado Civil
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Situação conjugal do cliente.</span>
+                            </label>
+                            <select id="estado-civil">
+                                <option value="Solteiro">Solteiro</option>
+                                <option value="Casado">Casado</option>
+                                <option value="Divorciado">Divorciado</option>
+                                <option value="Viúvo">Viúvo</option>
+                            </select>
+                        </div>
+                        <div class="field-item" id="regime-casamento-container">
+                            <label class="tooltip-container">
+                                Regime de Casamento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Regime matrimonial adotado em caso de casamento.</span>
+                            </label>
+                            <select id="regime-casamento">
+                                <option value="">Selecione</option>
+                                <option value="Comunhão parcial de bens">Comunhão parcial de bens</option>
+                                <option value="Comunhão universal de bens">Comunhão universal de bens</option>
+                                <option value="Separação total de bens">Separação total de bens</option>
+                                <option value="Participação final nos aquestos">Participação final nos aquestos</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                União Estável
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Indique se o cliente vive em união estável.</span>
+                            </label>
+                            <select id="uniao-estavel">
+                                <option value="Não">Não</option>
+                                <option value="Sim">Sim</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group hidden" id="conjuge-info-container">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nome do Cônjuge
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome completo do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <input type="text" id="nome-conjuge">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                CPF do Cônjuge
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">CPF do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <input type="text" id="cpf-conjuge">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Sexo
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Sexo do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <select id="sexo-conjuge">
+                                <option value="">Selecione</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nacionalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nacionalidade do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <select id="nacionalidade-conjuge">
+                                <option value="Brasil">Brasil</option>
+                                <option value="Estrangeiro">Estrangeiro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group hidden" id="conjuge-info-container-2">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Cidade onde o cônjuge ou companheiro(a) nasceu.</span>
+                            </label>
+                            <input type="text" id="naturalidade-conjuge">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                UF Naturalidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Unidade Federativa (Estado) de nascimento do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <select id="uf-naturalidade-conjuge">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Tipo de documento de identificação do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <select id="tipo-documento-conjuge">
+                                <option value="RG">RG</option>
+                                <option value="CNH">CNH</option>
+                            </select>
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Nº Documento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número do documento de identificação do cônjuge ou companheiro(a).</span>
+                            </label>
+                            <input type="number" id="numero-documento-conjuge">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="endereco-pf" class="tab-content">
+                <div class="form-section">
+                    <div class="section-title">Endereço Principal</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Logradouro
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome da rua, avenida, praça, etc.</span>
+                            </label>
+                            <input type="text" id="logradouro">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item field-small">
+                            <label class="tooltip-container">
+                                Número
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número do imóvel.</span>
+                            </label>
+                            <input type="text" id="numero">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Complemento
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Informações adicionais como apartamento, bloco, etc.</span>
+                            </label>
+                            <input type="text" id="complemento">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Bairro
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome do bairro onde está localizado o imóvel.</span>
+                            </label>
+                            <input type="text" id="bairro">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Referência
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Ponto de referência próximo ao endereço.</span>
+                            </label>
+                            <input type="text" id="referencia">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                CEP
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Código de Endereçamento Postal.</span>
+                            </label>
+                            <input type="text" id="cep">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                Cidade
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Nome da cidade onde o imóvel está localizado.</span>
+                            </label>
+                            <input type="text" id="cidade">
+                        </div>
+                        <div class="field-item">
+                            <label class="tooltip-container">
+                                UF
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Unidade Federativa (Estado) onde o imóvel está localizado.</span>
+                            </label>
+                            <select id="uf-endereco">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                         <div class="field-item">
+                            <label class="tooltip-container">
+                                Tipo de Imóvel
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Tipo de propriedade (Casa, Apartamento, Terreno, etc.).</span>
+                            </label>
+                            <select id="tipo-imovel">
+                                <option value="">Selecione</option>
+                                <option value="Casa">Casa</option>
+                                <option value="Apartamento">Apartamento</option>
+                                <option value="Terreno">Terreno</option>
+                                <option value="Comercial">Comercial</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                         <div class="field-item">
+                            <label class="tooltip-container">
+                                Situação do Imóvel
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Condição atual do imóvel (Próprio, Alugado, Cedido).</span>
+                            </label>
+                            <select id="situacao-imovel">
+                                <option value="">Selecione</option>
+                                <option value="Proprio">Próprio</option>
+                                <option value="Alugado">Alugado</option>
+                                <option value="Cedido">Cedido</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div id="rendas" class="tab-content">
+                <div class="form-section">
+                    <div class="section-title">Rendas</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Renda Mensal Principal
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor estimado da renda mensal principal do cliente (salário, pró-labore, etc.).</span>
+                            </label>
+                            <input type="number" id="renda-mensal-principal" step="0.01">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                         <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Fonte da Renda Principal
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Descreva a principal fonte de renda do cliente.</span>
+                            </label>
+                            <input type="text" id="fonte-renda-principal">
+                        </div>
+                    </div>
+                     <div class="field-group">
+                         <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Renda de Aluguéis
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor mensal recebido de aluguéis de imóveis.</span>
+                            </label>
+                            <input type="number" id="renda-alugueis" step="0.01">
+                        </div>
+                    </div>
+                     <div class="field-group">
+                         <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Renda de Investimentos
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Rendimentos mensais provenientes de aplicações financeiras.</span>
+                            </label>
+                            <input type="number" id="renda-investimentos" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="outras-receitas" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Outras Receitas</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Descrição Outras Receitas
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Detalhe outras fontes de receita não listadas anteriormente (ex: pensão, comissões, fretes).</span>
+                            </label>
+                            <textarea id="descricao-outras-receitas" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Valor Mensal Estimado Outras Receitas
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor estimado mensal das outras receitas descritas.</span>
+                            </label>
+                            <input type="number" id="valor-mensal-outras-receitas" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dados-financeiros" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Dados Financeiros</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Patrimônio Líquido Estimado
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor estimado do patrimônio líquido do cliente (soma dos bens menos dívidas).</span>
+                            </label>
+                            <input type="number" id="patrimonio-liquido" step="0.01">
+                        </div>
+                    </div>
+                     <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Principais Dívidas/Obrigações
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Liste as principais dívidas ou obrigações financeiras do cliente (empréstimos, financiamentos, etc.).</span>
+                            </label>
+                            <textarea id="principais-dividas" rows="3"></textarea>
+                        </div>
+                    </div>
+                     <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Valor Mensal das Dívidas
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor total estimado das parcelas mensais das dívidas.</span>
+                            </label>
+                            <input type="number" id="valor-mensal-dividas" step="0.01">
+                        </div>
+                    </div>
+                     <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Limite de Crédito Utilizado
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor total do limite de crédito que o cliente já utiliza.</span>
+                            </label>
+                            <input type="number" id="limite-credito-utilizado" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pecuaria" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Pecuária</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Atividade Pecuária
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Descreva as atividades pecuárias realizadas pelo cliente (criação de gado, ovinos, suínos, aves, etc.).</span>
+                            </label>
+                            <textarea id="atividade-pecuaria" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Quantidade de Animais
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Número estimado de animais por espécie.</span>
+                            </label>
+                            <textarea id="quantidade-animais" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Área Destinada à Pecuária (ha)
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Extensão da área utilizada para atividades pecuárias em hectares.</span>
+                            </label>
+                            <input type="number" id="area-pecuaria" step="0.01">
+                        </div>
+                    </div>
+                     <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Produção Anual Estimada (kg/litros/unidades)
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Estimativa da produção anual das atividades pecuárias.</span>
+                            </label>
+                            <input type="text" id="producao-pecuaria">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bens-moveis" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Bens Móveis</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Descrição dos Bens Móveis
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Liste os principais bens móveis de propriedade do cliente (veículos, máquinas, equipamentos, etc.).</span>
+                            </label>
+                            <textarea id="descricao-bens-moveis" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Valor Estimado dos Bens Móveis
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor de mercado estimado para os bens móveis listados.</span>
+                            </label>
+                            <input type="number" id="valor-bens-moveis" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bens-imoveis" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Bens Imóveis</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Descrição dos Bens Imóveis
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Liste os principais bens imóveis de propriedade do cliente (casas, apartamentos, terrenos, fazendas, etc.).</span>
+                            </label>
+                            <textarea id="descricao-bens-imoveis" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Valor Estimado dos Bens Imóveis
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor de mercado estimado para os bens imóveis listados.</span>
+                            </label>
+                            <input type="number" id="valor-bens-imoveis" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="funcionarios" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Funcionários</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Número de Funcionários
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Quantidade de funcionários contratados pelo cliente.</span>
+                            </label>
+                            <input type="number" id="numero-funcionarios">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Folha de Pagamento Mensal Estimada
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor estimado total da folha de pagamento mensal.</span>
+                            </label>
+                            <input type="number" id="folha-pagamento-mensal" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="seguros" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Seguros</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Tipo de Seguros Contratados
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Liste os tipos de seguros que o cliente possui (vida, saúde, propriedade, veículos, etc.).</span>
+                            </label>
+                            <textarea id="tipos-seguros" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Valor Mensal dos Prêmios de Seguro
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor estimado total pago mensalmente pelos prêmios de seguro.</span>
+                            </label>
+                            <input type="number" id="valor-mensal-seguros" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="aceites" class="tab-content">
+                 <div class="form-section">
+                    <div class="section-title">Aceites</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Tipo de Aceites
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Descreva os tipos de aceites que o cliente costuma realizar (ex: títulos, notas promissórias, duplicatas).</span>
+                            </label>
+                            <textarea id="tipo-aceites" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Volume Médio Mensal de Aceites
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Valor médio mensal que o cliente costuma aceitar em títulos ou operações.</span>
+                            </label>
+                            <input type="number" id="volume-mensal-aceites" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="declaracao" class="tab-content">
+                </div>
+
+            <div id="conglomerado" class="tab-content">
+                <div class="form-section">
+                    <div class="section-title">Informações do Conglomerado</div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Nome do Conglomerado (se aplicável)
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Caso o cliente faça parte de um conglomerado empresarial, informe o nome dele aqui.</span>
+                            </label>
+                            <input type="text" id="nome-conglomerado">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field-item full-width">
+                            <label class="tooltip-container">
+                                Participação no Conglomerado
+                                <i class="tooltip-icon">i</i>
+                                <span class="tooltip-text">Descreva a participação ou vínculo do cliente com o conglomerado.</span>
+                            </label>
+                            <textarea id="participacao-conglomerado" rows="3"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="form-section">
-            <h2>Rendas de Safras</h2>
-            <div id="rendas-safra-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('rendas-safra-container', 'renda-safra')">Adicionar Renda de Safra</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Projeção de Safras</h2>
-            <div id="projecao-safra-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('projecao-safra-container', 'projecao-safra')">Adicionar Projeção de Safra</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Imóveis</h2>
-            <div id="imoveis-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('imoveis-container', 'imoveis')">Adicionar Imóvel</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Veículos</h2>
-            <div id="veiculos-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('veiculos-container', 'veiculos')">Adicionar Veículo</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Máquinas</h2>
-            <div id="maquinas-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('maquinas-container', 'maquinas')">Adicionar Máquina</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Áreas Próprias</h2>
-            <div id="areas-proprias-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('areas-proprias-container', 'areas-proprias')">Adicionar Área Própria</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Áreas Arrendadas</h2>
-            <div id="areas-arrendadas-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('areas-arrendadas-container', 'areas-arrendadas')">Adicionar Área Arrendada</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Seguros</h2>
-            <div id="seguros-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('seguros-container', 'seguros')">Adicionar Seguro</button>
-        </div>
-
-        <div class="form-section">
-            <h2>Conglomerado</h2>
-            <div id="conglomerado-container" class="dynamic-list"></div>
-            <button type="button" class="add-button" onclick="addDynamicItem('conglomerado-container', 'conglomerado')">Adicionar Conglomerado</button>
-        </div>
-
-        <div class="button-group">
-            <button type="button" id="loadBtn">Importar Dados</button>
-            <button type="button" id="saveBtn">Exportar Dados</button>
-        </div>
-
-    </form>
-    <div class="footer">
-        <span>© 2024 Ficha Cadastral. Todos os direitos reservados.</span>
-        <span>Desenvolvido por [Nome da Sua Empresa/Equipe]</span>
     </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script>
-    const dataEmissao = new Date().toLocaleDateString('pt-BR');
-    document.getElementById('dataEmissao').textContent = dataEmissao;
+    <script>
+        // Função para ativar as abas
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
 
-    function applyMasks() {
-        $('.cpf-mask').mask('000.000.000-00');
-        $('.phone-mask').mask('(00) 00000-0000');
-        $('.money-mask').mask('000.000.000.000.000,00', {reverse: true, placeholder: "0,00"});
-    }
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove a classe 'active' de todos os botões e conteúdos
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
 
-    function reapplyAllMasks() {
-        applyMasks();
-        document.querySelectorAll('.renda-safra-item .money-mask, .projecao-safra-item .money-mask').forEach(input => {
-            $(input).mask('000.000.000.000.000,00', {reverse: true, placeholder: "0,00"});
-        });
-    }
-
-    function createFormItem(label, name, type, maskClass, titleText) {
-        const div = document.createElement('div');
-        div.className = 'form-item';
-        if (maskClass === 'full-width') div.classList.add('full-width');
-        
-        const labelEl = document.createElement('label');
-        labelEl.textContent = label;
-        labelEl.htmlFor = name;
-
-        let inputEl;
-        if (type === 'select') {
-            inputEl = document.createElement('select');
-            const placeholderOption = document.createElement('option');
-            placeholderOption.value = "";
-            placeholderOption.textContent = "Selecione";
-            inputEl.appendChild(placeholderOption);
-        } else {
-            inputEl = document.createElement('input');
-            inputEl.type = type;
-        }
-
-        inputEl.id = name;
-        inputEl.name = name;
-        if (maskClass) {
-            inputEl.classList.add(maskClass);
-        }
-
-        const infoIcon = document.createElement('i');
-        infoIcon.className = 'info-icon';
-        infoIcon.title = titleText;
-        infoIcon.textContent = 'i';
-
-        div.appendChild(labelEl);
-        div.appendChild(inputEl);
-        div.appendChild(infoIcon);
-        
-        return div;
-    }
-
-    function addDynamicItem(containerId, listType) {
-        const container = document.getElementById(containerId);
-        const item = document.createElement('div');
-        item.className = 'list-item ' + listType + '-item';
-
-        const index = container.children.length;
-        const baseId = listType + '-' + index;
-
-        let inputs = [];
-        if (listType === 'renda-safra') {
-            inputs.push(createFormItem('Ano da Safra', baseId + '-ano', 'text', null, 'Informe o ano da safra.'));
-            inputs.push(createFormItem('Tipo de Safra', baseId + '-tipo', 'select', null, 'Selecione o tipo de safra (ex: Soja, Milho).'));
-            inputs.push(createFormItem('Área (ha)', baseId + '-area', 'text', null, 'Informe a área da safra em hectares.'));
-            inputs.push(createFormItem('Produtividade (sc/ha)', baseId + '-produtividade', 'text', null, 'Informe a produtividade da safra em sacas por hectare.'));
-            inputs.push(createFormItem('Preço de Venda (R$/sc)', baseId + '-preco', 'text', 'money-mask', 'Informe o preço de venda por saca.'));
-            inputs.push(createFormItem('Valor Total (R$)', baseId + '-valor', 'text', 'money-mask', 'Valor total da produção (calculado automaticamente).'));
-        } else if (listType === 'projecao-safra') {
-            inputs.push(createFormItem('Ano da Projeção', baseId + '-ano', 'text', null, 'Informe o ano da projeção de safra.'));
-            inputs.push(createFormItem('Tipo de Safra', baseId + '-tipo', 'select', null, 'Selecione o tipo de safra.'));
-            inputs.push(createFormItem('Área (ha)', baseId + '-area', 'text', null, 'Informe a área da safra em hectares.'));
-            inputs.push(createFormItem('Produtividade (sc/ha)', baseId + '-produtividade', 'text', null, 'Informe a produtividade da safra em sacas por hectare.'));
-            inputs.push(createFormItem('Preço de Venda (R$/sc)', baseId + '-preco', 'text', 'money-mask', 'Informe o preço de venda por saca.'));
-            inputs.push(createFormItem('Valor Total (R$)', baseId + '-valor', 'text', 'money-mask', 'Valor total da projeção (calculado automaticamente).'));
-        } else if (listType === 'imoveis') {
-            inputs.push(createFormItem('Descrição', baseId + '-descricao', 'text', 'full-width', 'Descreva o imóvel.'));
-            inputs.push(createFormItem('Valor (R$)', baseId + '-valor', 'text', 'money-mask', 'Informe o valor do imóvel.'));
-        } else if (listType === 'veiculos') {
-            inputs.push(createFormItem('Descrição', baseId + '-descricao', 'text', 'full-width', 'Descreva o veículo.'));
-            inputs.push(createFormItem('Placa', baseId + '-placa', 'text', null, 'Informe a placa do veículo.'));
-            inputs.push(createFormItem('Valor (R$)', baseId + '-valor', 'text', 'money-mask', 'Informe o valor do veículo.'));
-        } else if (listType === 'maquinas') {
-            inputs.push(createFormItem('Descrição', baseId + '-descricao', 'text', 'full-width', 'Descreva a máquina.'));
-            inputs.push(createFormItem('Valor (R$)', baseId + '-valor', 'text', 'money-mask', 'Informe o valor da máquina.'));
-        } else if (listType === 'areas-proprias') {
-            inputs.push(createFormItem('Área (ha)', baseId + '-area', 'text', null, 'Informe o tamanho da área própria em hectares.'));
-            inputs.push(createFormItem('Descrição', baseId + '-descricao', 'text', 'full-width', 'Descreva a área própria.'));
-        } else if (listType === 'areas-arrendadas') {
-            inputs.push(createFormItem('Área (ha)', baseId + '-area', 'text', null, 'Informe o tamanho da área arrendada em hectares.'));
-            inputs.push(createFormItem('Descrição', baseId + '-descricao', 'text', 'full-width', 'Descreva a área arrendada.'));
-        } else if (listType === 'seguros') {
-            inputs.push(createFormItem('Tipo de Seguro', baseId + '-tipo', 'text', null, 'Informe o tipo de seguro.'));
-            inputs.push(createFormItem('Valor (R$)', baseId + '-valor', 'text', 'money-mask', 'Informe o valor do seguro.'));
-        } else if (listType === 'conglomerado') {
-            inputs.push(createFormItem('Nome da Empresa', baseId + '-nome', 'text', null, 'Informe o nome da empresa no conglomerado.'));
-            inputs.push(createFormitem('CNPJ', baseId + '-cnpj', 'text', null, 'Informe o CNPJ da empresa.'));
-        }
-
-        inputs.forEach(input => item.appendChild(input));
-        
-        const removeButton = document.createElement('button');
-        removeButton.className = 'remove-button';
-        removeButton.textContent = 'Remover';
-        removeButton.onclick = () => {
-            item.remove();
-            recalculateTotals();
-        };
-
-        item.appendChild(removeButton);
-        container.appendChild(item);
-        reapplyAllMasks();
-        if (listType === 'renda-safra' || listType === 'projecao-safra') {
-            item.querySelectorAll('.money-mask, input[type="text"]:not(.money-mask)').forEach(input => {
-                input.addEventListener('input', () => calcularValorProducao(item));
-            });
-        }
-    }
-
-    function getNumberFromMaskedValue(value) {
-        if (!value) return 0;
-        return parseFloat(value.replace(/\./g, '').replace(',', '.'));
-    }
-    
-    function formatToMoney(number) {
-        return new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            minimumFractionDigits: 2
-        }).format(number);
-    }
-    
-    function calcularValorProducao(item) {
-        const areaInput = item.querySelector('[name*="-area"]');
-        const produtividadeInput = item.querySelector('[name*="-produtividade"]');
-        const precoInput = item.querySelector('[name*="-preco"]');
-        const valorTotalInput = item.querySelector('[name*="-valor"]');
-
-        if (areaInput && produtividadeInput && precoInput && valorTotalInput) {
-            const area = parseFloat(areaInput.value.replace(',', '.')) || 0;
-            const produtividade = parseFloat(produtividadeInput.value.replace(',', '.')) || 0;
-            const preco = getNumberFromMaskedValue(precoInput.value);
-
-            const valorTotal = area * produtividade * preco;
-            valorTotalInput.value = formatToMoney(valorTotal).replace('R$', '').trim();
-            valorTotalInput.title = formatToMoney(valorTotal).replace('R$', '').trim();
-        }
-    }
-
-    function calcularTotalRendas() {
-        // Esta função pode ser usada para somar valores de diferentes seções dinâmicas
-        // e atualizar um campo de total, se necessário.
-    }
-    
-    function recalculateTotals() {
-        document.querySelectorAll('.renda-safra-item, .projecao-safra-item').forEach(item => calcularValorProducao(item));
-        calcularTotalRendas();
-    }
-    
-    function toggleConjugeFields() {
-        const estadoCivil = document.getElementById('estadoCivil').value;
-        const conjugeFields = document.getElementById('conjugeFields');
-        const conjugeCpfFields = document.getElementById('conjugeCpfFields');
-        if (estadoCivil === 'casado' || estadoCivil === 'uniao_estavel') {
-            conjugeFields.style.display = 'flex';
-            conjugeCpfFields.style.display = 'flex';
-        } else {
-            conjugeFields.style.display = 'none';
-            conjugeCpfFields.style.display = 'none';
-        }
-    }
-
-    function togglePepFields() {
-        const pepCheckbox = document.getElementById('pep');
-        const pepRelacionamentoFields = document.getElementById('pepRelacionamentoFields');
-        if (pepCheckbox.checked) {
-            pepRelacionamentoFields.style.display = 'flex';
-        } else {
-            pepRelacionamentoFields.style.display = 'none';
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        applyMasks();
-        document.getElementById('estadoCivil').addEventListener('change', toggleConjugeFields);
-        document.getElementById('pep').addEventListener('change', togglePepFields);
-
-        // Funções de exportação e importação
-        const saveBtn = document.getElementById('saveBtn');
-        saveBtn.addEventListener('click', () => {
-            const form = document.getElementById('fichaCadastralForm');
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => {
-                if (!data[key]) {
-                    data[key] = value;
-                } else if (Array.isArray(data[key])) {
-                    data[key].push(value);
-                } else {
-                    data[key] = [data[key], value];
+                // Adiciona a classe 'active' ao botão clicado e ao seu conteúdo correspondente
+                button.classList.add('active');
+                const targetTab = document.querySelector(button.dataset.tabTarget);
+                if (targetTab) {
+                    targetTab.classList.add('active');
                 }
             });
-
-            // Coleta os dados dos campos dinâmicos
-            data.rendasSafra = collectDynamicData('rendas-safra-container', ['ano', 'tipo', 'area', 'produtividade', 'preco', 'valor']);
-            data.projecaoSafra = collectDynamicData('projecao-safra-container', ['ano', 'tipo', 'area', 'produtividade', 'preco', 'valor']);
-            data.imoveis = collectDynamicData('imoveis-container', ['descricao', 'valor']);
-            data.veiculos = collectDynamicData('veiculos-container', ['descricao', 'placa', 'valor']);
-            data.maquinas = collectDynamicData('maquinas-container', ['descricao', 'valor']);
-            data.areasProprias = collectDynamicData('areas-proprias-container', ['area', 'descricao']);
-            data.areasArrendadas = collectDynamicData('areas-arrendadas-container', ['area', 'descricao']);
-            data.seguros = collectDynamicData('seguros-container', ['tipo', 'valor']);
-            data.conglomerado = collectDynamicData('conglomerado-container', ['nome', 'cnpj']);
-
-            // Remove campos duplicados que foram capturados por formData
-            delete data.ano;
-            delete data.tipo;
-            delete data.area;
-            delete data.produtividade;
-            delete data.preco;
-            delete data.valor;
-            delete data.descricao;
-            delete data.placa;
-            delete data.nome;
-            delete data.cnpj;
-            delete data.pepRelacionamento;
-            delete data.pep;
-
-            const jsonData = JSON.stringify(data, null, 2);
-            const blob = new Blob([jsonData], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'ficha_cadastral.json';
-            a.click();
-            URL.revokeObjectURL(url);
-            alert('Dados exportados com sucesso!');
         });
 
-        function collectDynamicData(containerId, fieldNames) {
-            const container = document.getElementById(containerId);
-            const items = container.querySelectorAll('.list-item');
-            const dataList = [];
-            items.forEach((item) => {
-                const itemData = {};
-                fieldNames.forEach(fieldName => {
-                    const input = item.querySelector(`[name*="-${fieldName}"]`);
-                    if (input) {
-                        itemData[fieldName] = input.value;
-                    }
-                });
-                dataList.push(itemData);
-            });
-            return dataList;
+        // Função para exibir/ocultar campos de cônjuge baseado no estado civil
+        const estadoCivilSelect = document.getElementById('estado-civil');
+        const regimeCasamentoContainer = document.getElementById('regime-casamento-container');
+        const conjugeInfoContainer = document.getElementById('conjuge-info-container');
+        const conjugeInfoContainer2 = document.getElementById('conjuge-info-container-2');
+
+        function toggleConjugeFields() {
+            const selectedEstadoCivil = estadoCivilSelect.value;
+            if (selectedEstadoCivil === 'Casado' || selectedEstadoCivil === 'União Estável') { // Ajuste para incluir União Estável se for o caso
+                regimeCasamentoContainer.classList.remove('hidden');
+                conjugeInfoContainer.classList.remove('hidden');
+                conjugeInfoContainer2.classList.remove('hidden');
+            } else {
+                regimeCasamentoContainer.classList.add('hidden');
+                conjugeInfoContainer.classList.add('hidden');
+                conjugeInfoContainer2.classList.add('hidden');
+                // Limpar os campos de cônjuge se eles forem ocultados
+                document.getElementById('nome-conjuge').value = '';
+                document.getElementById('cpf-conjuge').value = '';
+                document.getElementById('sexo-conjuge').value = '';
+                document.getElementById('nacionalidade-conjuge').value = '';
+                document.getElementById('naturalidade-conjuge').value = '';
+                document.getElementById('uf-naturalidade-conjuge').value = '';
+                document.getElementById('tipo-documento-conjuge').value = '';
+                document.getElementById('numero-documento-conjuge').value = '';
+            }
         }
 
-        const loadBtn = document.getElementById('loadBtn');
-        loadBtn.addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        try {
-                            const data = JSON.parse(e.target.result);
-                            
-                            // Limpa os campos dinâmicos antes de popular
-                            document.getElementById('rendas-safra-container').innerHTML = '';
-                            document.getElementById('projecao-safra-container').innerHTML = '';
-                            document.getElementById('imoveis-container').innerHTML = '';
-                            document.getElementById('veiculos-container').innerHTML = '';
-                            document.getElementById('maquinas-container').innerHTML = '';
-                            document.getElementById('areas-proprias-container').innerHTML = '';
-                            document.getElementById('areas-arrendadas-container').innerHTML = '';
-                            document.getElementById('seguros-container').innerHTML = '';
-                            document.getElementById('conglomerado-container').innerHTML = '';
+        estadoCivilSelect.addEventListener('change', toggleConjugeFields);
+        // Chama a função uma vez ao carregar a página para definir o estado inicial
+        toggleConjugeFields();
 
-                            // Preenche os campos estáticos
-                            if (data.nome) document.getElementById('nome').value = data.nome;
-                            if (data.cpf) document.getElementById('cpf').value = data.cpf;
-                            if (data.rg) document.getElementById('rg').value = data.rg;
-                            if (data.dataNascimento) document.getElementById('dataNascimento').value = data.dataNascimento;
-                            if (data.estadoCivil) document.getElementById('estadoCivil').value = data.estadoCivil;
-                            if (data.nomeConjuge) document.getElementById('nomeConjuge').value = data.nomeConjuge;
-                            if (data.cpfConjuge) document.getElementById('cpfConjuge').value = data.cpfConjuge;
-                            if (data.endereco) document.getElementById('endereco').value = data.endereco;
-                            if (data.cidade) document.getElementById('cidade').value = data.cidade;
-                            if (data.estado) document.getElementById('estado').value = data.estado;
-                            if (data.telefone) document.getElementById('telefone').value = data.telefone;
-                            if (data.email) document.getElementById('email').value = data.email;
-                            if (data.atividade) document.getElementById('atividade').value = data.atividade;
-                            if (data.pep) document.getElementById('pep').checked = data.pep === 'on' || data.pep === true;
-                            if (data.pepRelacionamento) document.getElementById('pepRelacionamento').value = data.pepRelacionamento;
-                            if (data.rendaTotalMensal) document.getElementById('rendaTotalMensal').value = data.rendaTotalMensal;
-                            if (data.patrimonioTotal) document.getElementById('patrimonioTotal').value = data.patrimonioTotal;
-                            
-                            const populateDynamicItems = (containerId, items) => {
-                                items.forEach(itemData => {
-                                    const container = document.getElementById(containerId);
-                                    const listType = containerId.replace('-container', '');
-                                    addDynamicItem(containerId, listType);
-                                    const newItem = container.lastChild;
-                                    for (const key in itemData) {
-                                        const input = newItem.querySelector(`[name*="-${key}"]`);
-                                        if (input) {
-                                            input.value = itemData[key];
-                                        }
-                                    }
-                                });
-                            };
+        // Funções placeholder para botões (precisam ser implementadas)
+        function generatePdf() {
+            alert("Funcionalidade de Salvar PDF ainda não implementada!");
+            // Aqui você implementaria a lógica para gerar o PDF, por exemplo, usando jsPDF ou outras bibliotecas.
+        }
 
-                            if(data.rendasSafra) populateDynamicItems('rendas-safra-container', data.rendasSafra);
-                            if(data.projecaoSafra) populateDynamicItems('projecao-safra-container', data.projecaoSafra);
-                            if(data.imoveis) populateDynamicItems('imoveis-container', data.imoveis);
-                            if(data.veiculos) populateDynamicItems('veiculos-container', data.veiculos);
-                            if(data.maquinas) populateDynamicItems('maquinas-container', data.maquinas);
-                            if(data.areasProprias) populateDynamicItems('areas-proprias-container', data.areasProprias);
-                            if(data.areasArrendadas) populateDynamicItems('areas-arrendadas-container', data.areasArrendadas);
-                            if(data.seguros) populateDynamicItems('seguros-container', data.seguros);
-                            if(data.conglomerado) populateDynamicItems('conglomerado-container', data.conglomerado);
+        function saveDataAsJson() {
+            alert("Funcionalidade de Salvar Dados JSON ainda não implementada!");
+            // Aqui você coletaria os dados do formulário e os salvaria como JSON.
+        }
 
-
-                            reapplyAllMasks();
-                            document.querySelectorAll('.renda-safra-item, .projecao-safra-item').forEach(item => calcularValorProducao(item));
-                            calcularTotalRendas();
-                            toggleConjugeFields();
-                            togglePepFields();
-                            togglePepRelacionamentoFields();
-                            
-                            alert('Dados importados com sucesso!');
-                        } catch (error) {
-                            alert('Erro ao ler o arquivo JSON.');
-                            console.error('Erro de parsing do JSON:', error);
-                        }
-                    };
-                    reader.readAsText(file);
-                }
-            };
-            input.click();
-        };
-    });
-</script>
-
-       </body>
+        function importDataFromJson() {
+            alert("Funcionalidade de Importar Dados JSON ainda não implementada!");
+            // Aqui você implementaria a lógica para carregar dados de um arquivo JSON e preencher o formulário.
+        }
+    </script>
+</body>
 </html>
