@@ -389,6 +389,8 @@
  .tab-button[data-tab-target="#declaracao"] {
  display: none;
  }
+
+}
  </style>
 </head>
 <body>
@@ -404,9 +406,7 @@
  <h1>FICHA CADASTRO</h1>
  </div>
  <div class="header-date">
- Data do Cadastro<br>
- <input type="date" class="full-width" id="data-cadastro">
- </div>
+  </div>
  </div>
 
  <div class="tabs">
@@ -426,16 +426,19 @@
  <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
  
 
-</div>
- 
- <div class="tab-content-container">
- <div id="identificacao" class="tab-content active">
- <div class="form-section">
- <div class="field-group">
- <div class="field-item full-width">
- <label>Código Cliente</label>
- <input type="text" id="codigo-cliente">
- </div>
+
+<div class="tab-content-container">
+  <div id="identificacao" class="tab-content active">
+    <div class="form-section">
+      <div class="field-group">
+        <div class="field-item full-width">
+          <label class="tooltip-container">
+            Data do Cadastro
+            <i class="tooltip-icon">i</i>
+            <span class="tooltip-text">A data do Cadastro deve ser anterior a data de aprovação</span>
+          </label>
+          <input type="date" id="codigo-cliente">
+        </div>
  </div>
  <div class="field-group">
  <div class="field-item">
@@ -728,19 +731,6 @@
  <input type="text" id="orgao-emissor-conjuge">
  </div>
  </div>
- <div class="field-group">
- <div class="field-item">
- <label>Profissão</label>
- <input type="text" id="profissao">
- </div>
- <div class="field-item">
- <label>Valor remuneração</label>
- <input type="text" id="valor-remuneracao" class="valor-input" placeholder="R$ 0,00">
- </div>
- <div class="field-item">
- <label>Insc. Estadual</label>
- <input type="text" id="inscricao-estadual">
- </div>
  </div>
  </div>
  </div>
@@ -789,7 +779,9 @@
  <div class="section-title tooltip-container">
  Ano Civil
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Campos referentes ao ano de exercício do Imposto de Renda e receitas</span>
+ <span class="tooltip-text">
+  Preenchido conforme IRPF do <strong>CPF</strong>: Receita Bruta Agrícola e todas as receitas oriundas da agricultura
+</span>
  </div>
  
  <div class="field-group">
@@ -820,7 +812,7 @@
  <div class="section-title tooltip-container">
  Rendas do Último Ano Safra
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre o ano safra anterior, incluindo área, cultura, produtividade e preço</span>
+ <span class="tooltip-text">Estimativa de Receita por cultura do <strong>CPF</strong> no ultimo ano safra</span>
  </div>
  <div id="renda-safra-container">
  <div class="field-group renda-safra-item">
@@ -868,7 +860,7 @@
  <div class="section-title tooltip-container">
  Projeção do Próximo Ano Safra
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Estimativa de produção, área, cultura, produtividade e preço para o próximo ano safra</span>
+ <span class="tooltip-text">Estimativa de Receita por cultura do <strong>CPF</strong> no proximo ano safra</span>
  </div>
  <div id="projecao-safra-container">
  <div class="field-group projecao-safra-item">
@@ -1179,67 +1171,86 @@
 
 
 
- <div id="outras-receitas" class="tab-content">
- <div class="form-section">
- <div class="section-title">Outras Receitas</div>
- <div id="outras-receitas-container">
- <div class="field-group outras-receitas-item">
- <div class="field-item">
- <label>Origem</label>
- <input type="text" class="origem-outra-receita">
- </div>
- <div class="field-item">
- <label>Valor</label>
- <input type="text" class="valor-input valor-outra-receita" placeholder="R$ 0,00">
- </div>
- <button class="add-button" type="button">+ Adicionar</button>
- </div>
+<div id="outras-receitas" class="tab-content">
+  <div class="form-section">
+    <div class="section-title">
+      Outras Receitas
+      <span class="tooltip-container">
+        <span class="tooltip-icon">i</span>
+        <span class="tooltip-text">
+          Informe outras receitas não agricolas ou pecuarias do <strong>CPF</strong>. 
+          Exemplo: <b>aluguéis, dividendos, aplicações financeiras</b>.
+        </span>
+      </span>
+    </div>
+    <div id="outras-receitas-container">
+      <div class="field-group outras-receitas-item">
+        <div class="field-item">
+          <label>Origem</label>
+          <input type="text" class="origem-outra-receita">
+        </div>
+        <div class="field-item">
+          <label>Atividade</label>
+          <input type="text" class="atividade-outra-receita">
+        </div>
+        <div class="field-item">
+          <label>Valor</label>
+          <input type="text" class="valor-input valor-outra-receita" placeholder="R$ 0,00">
+        </div>
+        <button class="add-button" type="button">+ Adicionar</button>
+      </div>
  </div>
  </div>
  </div>
 
- <div id="dados-financeiros" class="tab-content">
- <div class="form-section">
- <div class="section-title">Bancos</div>
- <div id="bancos-container">
- <div class="field-group banco-item">
- <div class="field-item">
- <label>Banco</label>
- <select class="banco">
- <option value="">Selecione</option>
- <option value="TentosCap">TentosCap</option>
- <option value="Banco do Brasil">Banco do Brasil</option>
- <option value="Bradesco">Bradesco</option>
- <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
- <option value="Itaú">Itaú</option>
- <option value="Santander">Santander</option>
- <option value="Sicoob">Sicoob</option>
- <option value="Sicredi">Sicredi</option>
- </select>
- </div>
- <div class="field-item">
- <label>Tipo de Conta</label>
- <select class="tipo-conta">
- <option value="corrente">Conta Corrente</option>
- <option value="poupanca">Conta Poupança</option>
- </select>
- </div>
- <div class="field-item">
- <label>Agência</label>
- <input type="text" class="agencia">
- </div>
- <div class="field-item">
- <label>Conta</label>
- <input type="text" class="conta">
- </div>
- <div class="field-item field-small">
- <label>Dígito</label>
- <input type="text" class="digito">
- </div>
- </div>
- </div>
- </div>
- </div>
+<div id="dados-financeiros" class="tab-content">
+  <div class="form-section">
+    <div class="section-title">
+      Bancos
+      <span class="tooltip-container">
+        <span class="tooltip-icon">i</span>
+        <span class="tooltip-text">
+          Informe os todos os bancos utilizados pelo cliente para movimentações financeiras. <strong> Independente de Desembolso</strong>
+        </span>
+      </span>
+    </div>
+    <div id="bancos-container">
+      <div class="field-group banco-item">
+        <div class="field-item">
+          <label>Banco</label>
+          <select class="banco">
+            <option value="">Selecione</option>
+            <option value="TentosCap">TentosCap</option>
+            <option value="Banco do Brasil">Banco do Brasil</option>
+            <option value="Bradesco">Bradesco</option>
+            <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
+            <option value="Itaú">Itaú</option>
+            <option value="Santander">Santander</option>
+            <option value="Sicoob">Sicoob</option>
+            <option value="Sicredi">Sicredi</option>
+          </select>
+        </div>
+        <div class="field-item">
+          <label>Tipo de Conta</label>
+          <select class="tipo-conta">
+            <option value="">Selecione</option>
+            <option value="Corrente">Corrente</option>
+            <option value="Poupança">Poupança</option>
+          </select>
+        </div>
+        <div class="field-item">
+          <label>Agência</label>
+          <input type="text" class="agencia">
+        </div>
+        <div class="field-item">
+          <label>Conta</label>
+          <input type="text" class="conta">
+        </div>
+        <button class="add-button" type="button">+ Adicionar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
  <div id="pecuaria" class="tab-content">
  <div class="form-section">
@@ -1295,7 +1306,7 @@
  <div class="section-title tooltip-container">
  Veículos
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre veículos, incluindo ano, modelo, marca, valor de mercado e placa</span>
+ <span class="tooltip-text">Informações do veiculos conforme IR ou CRLV, anexado no cadastro do cliente</span>
  </div>
  <div id="veiculos-container">
  <div class="field-group veiculo-item">
@@ -1333,7 +1344,7 @@
  <div class="section-title tooltip-container">
  Máquinas e Implementos
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre máquinas e implementos agrícolas, incluindo ano, modelo, marca, tipo e valor de mercado</span>
+ <span class="tooltip-text">Informações do maquinario conforme IR, anexado no cadastro do cliente</span>
  </div>
  <div id="maquinas-container">
  <div class="field-group maquina-item">
@@ -1375,7 +1386,7 @@
  <div class="section-title tooltip-container">
  Áreas Próprias
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre áreas de propriedade do cliente, incluindo área total, valor venal, município, denominação, CAR, matrícula e CEP</span>
+ <span class="tooltip-text">Informações conforme IR ou Matricula Anexada</span>
  </div>
  <div id="areas-proprias-container">
  <div class="field-group area-propria-item">
@@ -1431,7 +1442,7 @@
  <div class="section-title tooltip-container">
  Áreas de Terceiros
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre áreas arrendadas, incluindo área total, área explorada, vigência, município, denominação, CAR, matrícula e CEP</span>
+ <span class="tooltip-text">Informações conforme contrato de parceria, arrendamento, comodato e etc. Anexados no cadastro do cliente.</span>
  </div>
  <div id="areas-arrendadas-container">
  <div class="field-group area-arrendada-item">
@@ -1561,7 +1572,7 @@
  <div class="section-title tooltip-container">
  Funcionários
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre a quantidade de funcionários fixos e temporários e a média da folha de pagamento</span>
+ <span class="tooltip-text">Informação Opccional, mas relevante do ponto de vista comercial.</span>
  </div>
  <div id="funcionarios-container">
  <div class="field-group funcionario-item">
@@ -1591,7 +1602,7 @@
  <div class="section-title tooltip-container">
  Seguros
  <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre seguros contratados, incluindo modalidade, bem segurado, valor da cobertura e vencimento</span>
+ <span class="tooltip-text">Informação Opccional, mas relevante do ponto de vista comercial.</span>
  </div>
  <div id="seguros-container">
  <div class="field-group seguro-item">
