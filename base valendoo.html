@@ -389,8 +389,6 @@
  .tab-button[data-tab-target="#declaracao"] {
  display: none;
  }
-
-}
  </style>
 </head>
 <body>
@@ -406,7 +404,9 @@
  <h1>FICHA CADASTRO</h1>
  </div>
  <div class="header-date">
-  </div>
+ Data do Cadastro<br>
+ <input type="date" class="full-width" id="data-cadastro">
+ </div>
  </div>
 
  <div class="tabs">
@@ -426,7 +426,8 @@
  <button class="tab-button section-title print-only" data-tab-target="#declaracao">Declaração</button>
  
 
-
+</div>
+ 
 <div class="tab-content-container">
   <div id="identificacao" class="tab-content active">
     <div class="form-section">
@@ -731,6 +732,7 @@
  <input type="text" id="orgao-emissor-conjuge">
  </div>
  </div>
+  </div>
  </div>
  </div>
  </div>
@@ -774,7 +776,7 @@
 
  <div id="rendas" class="tab-content">
 
- <!-- Ano Civil -->
+   <!-- Ano Civil -->
  <div class="form-section">
  <div class="section-title tooltip-container">
  Ano Civil
@@ -807,13 +809,15 @@
  </div>
  </div>
 
+
  <!-- Rendas da Última Safra -->
- <div class="form-section">
+<div class="form-section">
  <div class="section-title tooltip-container">
  Rendas do Último Ano Safra
  <i class="tooltip-icon">i</i>
  <span class="tooltip-text">Estimativa de Receita por cultura do <strong>CPF</strong> no ultimo ano safra</span>
  </div>
+
  <div id="renda-safra-container">
  <div class="field-group renda-safra-item">
 
@@ -856,12 +860,13 @@
  </div>
 
  <!-- Projeção da Próxima Safra -->
- <div class="form-section">
+  <div class="form-section">
  <div class="section-title tooltip-container">
  Projeção do Próximo Ano Safra
  <i class="tooltip-icon">i</i>
  <span class="tooltip-text">Estimativa de Receita por cultura do <strong>CPF</strong> no proximo ano safra</span>
  </div>
+
  <div id="projecao-safra-container">
  <div class="field-group projecao-safra-item">
 
@@ -904,268 +909,6 @@
  </div>
 
 </div>
-<div id="rendas" class="tab-content">
-
- <!-- Ano Civil -->
- <div class="form-section">
- <div class="section-title tooltip-container">
- Ano Civil
- <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Campos referentes ao ano de exercício do Imposto de Renda e receitas</span>
- </div>
- 
- <div class="field-group">
- <div class="field-item">
- <label>Ano de Exercício do I.R.</label>
- <input type="number" id="ano-exercicio-ir">
- </div>
-
- <div class="field-item">
- <label>Receita Bruta Agrícola</label>
- <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Demais Receitas</label>
- <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Total Rendas</label>
- <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
- </div>
- </div>
- </div>
-
- <!-- Rendas da Última Safra -->
- <div class="form-section">
- <div class="section-title tooltip-container">
- Rendas da Última Safra
- <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre a safra anterior, incluindo área, cultura, produtividade e preço</span>
- </div>
- <div id="renda-safra-container">
- <div class="field-group renda-safra-item">
-
- <div class="field-item">
- <label>Ano safra</label>
- <select class="ano-safra-renda">
- <option value="2024/2025">2024/2025</option>
- <option value="2025/2026">2025/2026</option>
- </select>
- </div>
-
- <div class="field-item">
- <label>Cultura</label>
- <input type="text" class="cultura-renda">
- </div>
-
- <div class="field-item">
- <label>Área (ha)</label>
- <input type="number" class="renda-area">
- </div>
-
- <div class="field-item">
- <label>Produtividade (sc/ha)</label>
- <input type="number" class="renda-produtividade">
- </div>
-
- <div class="field-item">
- <label>Preço (R$/sc)</label>
- <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Valor da Produção</label>
- <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
- </div>
-
- <button class="add-button" type="button">+ Adicionar</button>
- </div>
- </div>
- </div>
-
- <!-- Projeção da Próxima Safra -->
- <div class="form-section">
- <div class="section-title tooltip-container">
- Projeção da Próxima Safra
- <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Estimativa de produção, área, cultura, produtividade e preço para a próxima safra</span>
- </div>
- <div id="projecao-safra-container">
- <div class="field-group projecao-safra-item">
-
- <div class="field-item">
- <label>Ano safra</label>
- <select class="ano-safra-projecao">
- <option value="2024/2025">2024/2025</option>
- <option value="2025/2026">2025/2026</option>
- </select>
- </div>
-
- <div class="field-item">
- <label>Cultura</label>
- <input type="text" class="cultura-projecao">
- </div>
-
- <div class="field-item">
- <label>Área (ha)</label>
- <input type="number" class="projecao-area">
- </div>
-
- <div class="field-item">
- <label>Produtividade (sc/ha)</label>
- <input type="number" class="projecao-produtividade">
- </div>
-
- <div class="field-item">
- <label>Preço (R$/sc)</label>
- <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Valor da Produção</label>
- <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
- </div>
-
- <button class="add-button" type="button">+ Adicionar</button>
- </div>
- </div>
- </div>
-
-</div>
-<div id="rendas" class="tab-content">
-
- <!-- Ano Civil -->
- <div class="form-section">
- <div class="section-title tooltip-container">
- Ano Civil
- <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Campos referentes ao ano de exercício do Imposto de Renda e receitas</span>
- </div>
- 
- <div class="field-group">
- <div class="field-item">
- <label>Ano de Exercício do I.R.</label>
- <input type="number" id="ano-exercicio-ir">
- </div>
-
- <div class="field-item">
- <label>Receita Bruta Agrícola</label>
- <input type="text" class="valor-input" id="receita-agricola" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Demais Receitas</label>
- <input type="text" class="valor-input" id="demais-receitas" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Total Rendas</label>
- <input type="text" class="valor-input" id="total-rendas" placeholder="R$ 0,00" readonly>
- </div>
- </div>
- </div>
-
- <!-- Rendas da Última Safra -->
- <div class="form-section">
- <div class="section-title tooltip-container">
- Rendas da Última Safra
- <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Informações sobre a safra anterior, incluindo área, cultura, produtividade e preço</span>
- </div>
- <div id="renda-safra-container">
- <div class="field-group renda-safra-item">
-
- <div class="field-item">
- <label>Ano safra</label>
- <select class="ano-safra-renda">
- <option value="2024/2025">2024/2025</option>
- <option value="2025/2026">2025/2026</option>
- </select>
- </div>
-
- <div class="field-item">
- <label>Cultura</label>
- <input type="text" class="cultura-renda">
- </div>
-
- <div class="field-item">
- <label>Área (ha)</label>
- <input type="number" class="renda-area">
- </div>
-
- <div class="field-item">
- <label>Produtividade (sc/ha)</label>
- <input type="number" class="renda-produtividade">
- </div>
-
- <div class="field-item">
- <label>Preço (R$/sc)</label>
- <input type="text" class="valor-input renda-preco" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Valor da Produção</label>
- <input type="text" class="valor-input renda-producao" placeholder="R$ 0,00" readonly>
- </div>
-
- <button class="add-button" type="button">+ Adicionar</button>
- </div>
- </div>
- </div>
-
- <!-- Projeção da Próxima Safra -->
- <div class="form-section">
- <div class="section-title tooltip-container">
- Projeção da Próxima Safra
- <i class="tooltip-icon">i</i>
- <span class="tooltip-text">Estimativa de produção, área, cultura, produtividade e preço para a próxima safra</span>
- </div>
- <div id="projecao-safra-container">
- <div class="field-group projecao-safra-item">
-
- <div class="field-item">
- <label>Ano safra</label>
- <select class="ano-safra-projecao">
- <option value="2024/2025">2024/2025</option>
- <option value="2025/2026">2025/2026</option>
- </select>
- </div>
-
- <div class="field-item">
- <label>Cultura</label>
- <input type="text" class="cultura-projecao">
- </div>
-
- <div class="field-item">
- <label>Área (ha)</label>
- <input type="number" class="projecao-area">
- </div>
-
- <div class="field-item">
- <label>Produtividade (sc/ha)</label>
- <input type="number" class="projecao-produtividade">
- </div>
-
- <div class="field-item">
- <label>Preço (R$/sc)</label>
- <input type="text" class="valor-input projecao-preco" placeholder="R$ 0,00">
- </div>
-
- <div class="field-item">
- <label>Valor da Produção</label>
- <input type="text" class="valor-input projecao-producao" placeholder="R$ 0,00" readonly>
- </div>
-
- <button class="add-button" type="button">+ Adicionar</button>
- </div>
- </div>
- </div>
-
-</div>
-
-
 
 
 
@@ -1203,7 +946,8 @@
  </div>
  </div>
 
-<div id="dados-financeiros" class="tab-content">
+
+ <div id="dados-financeiros" class="tab-content">
   <div class="form-section">
     <div class="section-title">
       Bancos
@@ -1252,6 +996,7 @@
   </div>
 </div>
 
+
  <div id="pecuaria" class="tab-content">
  <div class="form-section">
  <div class="section-title tooltip-container">
@@ -1292,6 +1037,7 @@
  </div>
  </div>
 </div>
+
 
 
 
@@ -1378,6 +1124,7 @@
  </div>
 
 </div>
+
 
 <div id="bens-imoveis" class="tab-content">
 
@@ -1939,9 +1686,6 @@
  { id: 'nome-mae', nome: 'Nome Mãe' },
  { id: 'estado-civil', nome: 'Estado Civil' },
  { id: 'uniao-estavel', nome: 'União Estável' },
- { id: 'profissao', nome: 'Profissão' },
- { id: 'valor-remuneracao', nome: 'Valor remuneração' },
- { id: 'inscricao-estadual', nome: 'Insc. Estadual' }
  ];
  
  camposInfoPF.forEach(campo => {
@@ -2033,8 +1777,6 @@
  const camposEndereco = [
  { id: 'cep', nome: 'CEP' },
  { id: 'logradouro', nome: 'Endereço (Logradouro, Rua, Av.)' },
- { id: 'numero-endereco', nome: 'Nº' },
- { id: 'complemento-endereco', nome: 'Complemento' },
  { id: 'bairro', nome: 'Bairro' },
  { id: 'cidade', nome: 'Cidade' },
  { id: 'uf', nome: 'UF' }
@@ -2047,58 +1789,52 @@
  }
  });
  
- // Validação da aba Dados Financeiros (pelo menos um banco completo)
- const bancos = document.querySelectorAll('#bancos-container .banco-item');
- let temBancoCompleto = false;
- bancos.forEach(item => {
- const banco = item.querySelector('.banco')?.value;
- const tipoConta = item.querySelector('.tipo-conta')?.value;
- const agencia = item.querySelector('.agencia')?.value;
- const conta = item.querySelector('.conta')?.value;
- const digito = item.querySelector('.digito')?.value;
- 
- if (banco && tipoConta && agencia && conta && digito) {
- temBancoCompleto = true;
- }
- });
- if (!temBancoCompleto) {
- erros.push('Dados Financeiros - É necessário preencher completamente pelo menos um banco');
- }
+// Validação da aba Dados Financeiros (pelo menos um banco com conta e agência)
+const bancos = document.querySelectorAll('#bancos-container .banco-item');
+let temBancoValido = false;
+bancos.forEach(item => {
+  const agencia = item.querySelector('.agencia')?.value;
+  const conta = item.querySelector('.conta')?.value;
+  if (agencia && conta) {
+    temBancoValido = true;
+  }
+});
+if (!temBancoValido) {
+  erros.push('Dados Financeiros - É necessário preencher pelo menos um banco com Agência e Conta');
+}
+
  
  // Validação da aba Bens Imóveis (pelo menos uma área própria OU arrendada completa)
  const areasProprias = document.querySelectorAll('#areas-proprias-container .area-propria-item');
  let temAreaPropriaCompleta = false;
- areasProprias.forEach(item => {
- const areaTotal = item.querySelector('.area-total-propria')?.value;
- const valorVenal = item.querySelector('.valor-venal-propria')?.value;
- const cep = item.querySelector('.cep-area-propria')?.value;
- const municipio = item.querySelector('.municipio-area-propria')?.value;
- const denominacao = item.querySelector('.denominacao-area-propria')?.value;
- const car = item.querySelector('.car-area-propria')?.value;
- const matricula = item.querySelector('.matricula-area-propria')?.value;
- 
- if (areaTotal && valorVenal && cep && municipio && denominacao && car && matricula) {
- temAreaPropriaCompleta = true;
- }
- });
- 
+areasProprias.forEach(item => {
+  const areaTotal = item.querySelector('.area-total-propria')?.value;
+  const valorVenal = item.querySelector('.valor-venal-propria')?.value;
+  const cep = item.querySelector('.cep-area-propria')?.value;
+  const municipio = item.querySelector('.municipio-area-propria')?.value;
+  const denominacao = item.querySelector('.denominacao-area-propria')?.value;
+  const matricula = item.querySelector('.matricula-area-propria')?.value;
+
+  if (areaTotal && valorVenal && cep && municipio && denominacao && matricula) {
+    temAreaPropriaCompleta = true;
+  }
+});
  const areasArrendadas = document.querySelectorAll('#areas-arrendadas-container .area-arrendada-item');
  let temAreaArrendadaCompleta = false;
  areasArrendadas.forEach(item => {
- const proprietario = item.querySelector('.proprietario-area-arrendada')?.value;
- const areaTotal = item.querySelector('.area-total-arrendada')?.value;
- const areaExplorada = item.querySelector('.area-explorada-arrendada')?.value;
- const fimVigencia = item.querySelector('.fim-vigencia-arrendada')?.value;
- const cep = item.querySelector('.cep-area-arrendada')?.value;
- const municipio = item.querySelector('.municipio-area-arrendada')?.value;
- const denominacao = item.querySelector('.denominacao-area-arrendada')?.value;
- const car = item.querySelector('.car-area-arrendada')?.value;
- const matricula = item.querySelector('.matricula-area-arrendada')?.value;
- 
- if (proprietario && areaTotal && areaExplorada && fimVigencia && cep && municipio && denominacao && car && matricula) {
- temAreaArrendadaCompleta = true;
- }
- });
+  const proprietario = item.querySelector('.proprietario-area-arrendada')?.value;
+  const areaTotal = item.querySelector('.area-total-arrendada')?.value;
+  const areaExplorada = item.querySelector('.area-explorada-arrendada')?.value;
+  const fimVigencia = item.querySelector('.fim-vigencia-arrendada')?.value;
+  const cep = item.querySelector('.cep-area-arrendada')?.value;
+  const municipio = item.querySelector('.municipio-area-arrendada')?.value;
+  const denominacao = item.querySelector('.denominacao-area-arrendada')?.value;
+  const matricula = item.querySelector('.matricula-area-arrendada')?.value;
+
+  if (proprietario && areaTotal && areaExplorada && fimVigencia && cep && municipio && denominacao && matricula) {
+    temAreaArrendadaCompleta = true;
+  }
+});
  
  if (!temAreaPropriaCompleta && !temAreaArrendadaCompleta) {
  erros.push('Bens Imóveis - É necessário preencher completamente pelo menos uma área própria OU uma área arrendada');
@@ -2160,94 +1896,88 @@
  return field.id || field.name;
  };
 
- const getDynamicItemsData = (containerId) => {
- const container = document.getElementById(containerId);
- const items = container.querySelectorAll('.field-group');
- const data = [];
- items.forEach(item => {
- const itemData = {};
- item.querySelectorAll('input, select').forEach(field => {
- const key = getUniqueKey(field);
- if (key) {
- itemData[key] = field.value;
- }
- });
- data.push(itemData);
- });
- return data;
- };
+const getDynamicItemsData = (containerId) => {
+    const container = document.getElementById(containerId);
+    if (!container) return [];
 
- window.saveDataAsJson = () => {
- const erros = validarCamposObrigatorios();
- if (erros.length > 0) {
- alert('Por favor, preencha todos os campos obrigatórios antes de salvar os dados:\n\n' + erros.join('\n'));
- return;
- }
- 
- const formData = {};
- 
- document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
- if (field.type === 'checkbox') {
- formData[field.id] = field.checked;
- } else {
- formData[field.id] = field.value;
- }
- });
+    const items = container.querySelectorAll('.field-group');
+    const data = [];
 
- formData.rendasSafra = getDynamicItemsData('renda-safra-container');
- formData.projecoesSafra = getDynamicItemsData('projecao-safra-container');
- formData.outrasReceitas = getDynamicItemsData('outras-receitas-container');
- formData.bancos = getDynamicItemsData('bancos-container');
- formData.pecuaria = getDynamicItemsData('pecuaria-container');
- formData.veiculos = getDynamicItemsData('veiculos-container');
- formData.maquinas = getDynamicItemsData('maquinas-container');
- formData.areasProprias = getDynamicItemsData('areas-proprias-container');
- formData.areasArrendadas = getDynamicItemsData('areas-arrendadas-container');
- formData.seguros = getDynamicItemsData('seguros-container');
- formData.conglomerado = getDynamicItemsData('conglomerado-container');
+    items.forEach(item => {
+        const itemData = {};
+        // Seleciona todos os inputs e selects que tenham uma classe
+        const fields = item.querySelectorAll('input[class], select[class]');
 
+        fields.forEach(field => {
+            // Usa a primeira classe da lista como a chave.
+            // Isso é mais robusto que a lógica anterior.
+            const key = field.classList[0];
+            if (key && field.type !== 'file') { // Ignora input de arquivo
+                itemData[key] = field.value;
+            }
+        });
 
- const jsonString = JSON.stringify(formData, null, 2);
- const blob = new Blob([jsonString], { type: 'application/json' });
- const url = URL.createObjectURL(blob);
- const a = document.createElement('a');
- a.href = url;
- a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.json`;
- document.body.appendChild(a);
- a.click();
- document.body.removeChild(a);
- URL.revokeObjectURL(url);
- };
+        // Adiciona o objeto ao array de dados se ele não estiver vazio
+        if (Object.keys(itemData).length > 0) {
+            data.push(itemData);
+        }
+    });
 
- const populateDynamicItems = (containerId, data) => {
- const container = document.getElementById(containerId);
- const template = container.querySelector('.field-group');
- container.innerHTML = ''; 
- 
- if (data && data.length > 0) {
- data.forEach((itemData, index) => {
- const newItem = template.cloneNode(true);
- newItem.querySelectorAll('input, select').forEach(field => {
- const key = getUniqueKey(field);
- if (itemData.hasOwnProperty(key)) {
- field.value = itemData[key];
- }
- });
- 
- if(index > 0) { 
- const addButton = newItem.querySelector('.add-button');
- if(addButton){
- addButton.textContent = '- Remover';
- addButton.classList.replace('add-button', 'remove-button');
- }
- }
- container.appendChild(newItem);
- });
- } else {
- container.appendChild(template);
- }
- };
+    return data;
+};
 
+// Função para salvar todos os dados (incluindo campos dinâmicos)
+window.saveDataAsJson = () => {
+  const erros = validarCamposObrigatorios();
+  if (erros.length > 0) {
+    alert('Por favor, preencha todos os campos obrigatórios antes de salvar os dados:\n\n' + erros.join('\n'));
+    return;
+  }
+
+  const formData = {};
+
+  // Campos fixos
+  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
+    if (field.type === 'checkbox') {
+      formData[field.id] = field.checked;
+    } else {
+      formData[field.id] = field.value;
+    }
+  });
+
+  // Campos dinâmicos
+  const dynamicContainers = [
+    'renda-safra-container',
+    'projecao-safra-container',
+    'outras-receitas-container',
+    'bancos-container',
+    'pecuaria-container',
+    'veiculos-container',
+    'maquinas-container',
+    'areas-proprias-container',
+    'areas-arrendadas-container',
+    'seguros-container',
+    'conglomerado-container'
+  ];
+
+  dynamicContainers.forEach(containerId => {
+  const key = containerId
+    .replace('-container', '')
+    .replace(/-([a-z])/g, (_, char) => char.toUpperCase()); // transforma em camelCase
+  formData[key] = getDynamicItemsData(containerId);
+});
+
+  const jsonString = JSON.stringify(formData, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
  const reapplyAllMasks = () => {
  document.querySelectorAll('.valor-input').forEach(field => {
  field.dispatchEvent(new Event('blur', { bubbles: true }));
@@ -2280,17 +2010,32 @@
  }
  }
  
- if(data.rendasSafra) populateDynamicItems('renda-safra-container', data.rendasSafra);
- if(data.projecoesSafra) populateDynamicItems('projecao-safra-container', data.projecoesSafra);
- if(data.outrasReceitas) populateDynamicItems('outras-receitas-container', data.outrasReceitas);
- if(data.bancos) populateDynamicItems('bancos-container', data.bancos);
- if(data.pecuaria) populateDynamicItems('pecuaria-container', data.pecuaria);
- if(data.veiculos) populateDynamicItems('veiculos-container', data.veiculos);
- if(data.maquinas) populateDynamicItems('maquinas-container', data.maquinas);
- if(data.areasProprias) populateDynamicItems('areas-proprias-container', data.areasProprias);
- if(data.areasArrendadas) populateDynamicItems('areas-arrendadas-container', data.areasArrendadas);
- if(data.seguros) populateDynamicItems('seguros-container', data.seguros);
- if(data.conglomerado) populateDynamicItems('conglomerado-container', data.conglomerado);
+const dynamicContainers = [
+  'renda-safra-container',
+  'projecao-safra-container',
+  'outras-receitas-container',
+  'bancos-container',
+  'pecuaria-container',
+  'veiculos-container',
+  'maquinas-container',
+  'areas-proprias-container',
+  'areas-arrendadas-container',
+  'seguros-container',
+  'conglomerado-container'
+];
+
+dynamicContainers.forEach(containerId => {
+  const camelKey = containerId
+    .replace('-container', '')
+    .replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+  const kebabKey = containerId.replace('-container', ''); // versão antiga com hífen
+
+  if (data[camelKey]) {
+    populateDynamicItems(containerId, data[camelKey]);
+  } else if (data[kebabKey]) {
+    populateDynamicItems(containerId, data[kebabKey]);
+  }
+});
 
 
  reapplyAllMasks();
@@ -2360,6 +2105,55 @@ document.addEventListener("blur", function(event) {
         buscarCep(event.target);
     }
 }, true); // o true faz o listener ser no "capture phase", necessário para blur
+
+
+function populateDynamicItems(containerId, itemsData) {
+    const container = document.getElementById(containerId);
+    if (!container || !itemsData || !itemsData.length) return;
+
+    // Localiza o item que servirá de modelo (template)
+    const templateItem = container.querySelector('.field-group');
+    if (!templateItem) return;
+
+    // Limpa todos os itens dinâmicos que já existem no container
+    container.innerHTML = '';
+
+    // Itera sobre cada item dos dados importados (itemsData)
+    itemsData.forEach((itemData, index) => {
+        // Cria um novo item clonando o modelo
+        const newItem = templateItem.cloneNode(true);
+
+        // Preenche os campos do novo item com os dados do JSON
+        for (const key in itemData) {
+            if (itemData.hasOwnProperty(key)) {
+                const field = newItem.querySelector(`.${key}`);
+                if (field) {
+                    field.value = itemData[key];
+                }
+            }
+        }
+
+        // Se não for o primeiro item, muda o botão "Adicionar" para "Remover"
+        if (index > 0) {
+            const button = newItem.querySelector('.add-button');
+            if (button) {
+                button.textContent = '- Remover';
+                button.classList.replace('add-button', 'remove-button');
+            }
+        }
+        
+        // Limpa o campo de exibição do KML, se existir
+        const kmlDisplay = newItem.querySelector('.kml-area-display');
+        if (kmlDisplay) {
+            kmlDisplay.textContent = '';
+        }
+
+        // Adiciona o item recém-criado e preenchido ao container
+        container.appendChild(newItem);
+    });
+}
+
+
 
 
 </script>
