@@ -403,7 +403,7 @@
  <div class="header-title">
  <h1>FICHA CADASTRO</h1>
  </div>
- </div>
+
  </div>
 
  <div class="tabs">
@@ -1847,39 +1847,41 @@ areasProprias.forEach(item => {
  return;
  }
  updateDeclaracaoInfo(); window.print(); };
- const setDataAtual = () => {
- document.getElementById('data-cadastro').value = new Date().toISOString().slice(0, 10);
- };
- setDataAtual();
 
- function updateDeclaracaoInfo() {
- const unidade3T = document.getElementById('unidade-3t').value;
- const dataCadastro = document.getElementById('data-cadastro').value;
- const nomePf = document.getElementById('nome-pf').value;
- const cpf = document.getElementById('cpf').value;
 
- const unidadeElement = document.getElementById('assinatura-unidade-3t');
- const dataElement = document.getElementById('assinatura-data-cadastro');
- const nomeElement = document.getElementById('assinatura-nome');
- const cpfElement = document.getElementById('assinatura-cpf');
+function updateDeclaracaoInfo() {
+    const unidade3T = document.getElementById('unidade-3t').value;
+    const nomePf = document.getElementById('nome-pf').value;
+    const cpf = document.getElementById('cpf').value;
+    const codigoCliente = document.getElementById('codigo-cliente').value; // substitui data-cadastro
 
- let dataFormatada = '';
- if (dataCadastro) {
- const [ano, mes, dia] = dataCadastro.split('-');
- dataFormatada = `${dia}/${mes}/${ano}`;
- }
+    const unidadeElement = document.getElementById('assinatura-unidade-3t');
+    const dataElement = document.getElementById('assinatura-data-cadastro'); // manter id para exibição
+    const nomeElement = document.getElementById('assinatura-nome');
+    const cpfElement = document.getElementById('assinatura-cpf');
 
- if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
- if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
- if (nomeElement) nomeElement.textContent = nomePf ? `Nome: ${nomePf}` : '';
- if (cpfElement) cpfElement.textContent = cpf ? `CPF: ${cpf}` : '';
- }
- document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
- document.getElementById('data-cadastro').addEventListener('change', updateDeclaracaoInfo);
- document.getElementById('nome-pf').addEventListener('input', updateDeclaracaoInfo);
- document.getElementById('cpf').addEventListener('input', updateDeclaracaoInfo);
- updateDeclaracaoInfo();
+    let dataFormatada = '';
+    if (codigoCliente) {
+        const [ano, mes, dia] = codigoCliente.split('-');
+        dataFormatada = `${dia}/${mes}/${ano}`;
+    }
 
+    if (unidadeElement) unidadeElement.textContent = unidade3T ? `Unidade: ${unidade3T}` : '';
+    if (dataElement) dataElement.textContent = dataFormatada ? `Data: ${dataFormatada}` : '';
+    if (nomeElement) nomeElement.textContent = nomePf ? `Nome: ${nomePf}` : '';
+    if (cpfElement) cpfElement.textContent = cpf ? `CPF: ${cpf}` : '';
+}
+
+
+// Observadores de mudança
+document.getElementById('unidade-3t').addEventListener('change', updateDeclaracaoInfo);
+document.getElementById('codigo-cliente').addEventListener('change', updateDeclaracaoInfo); // alterado
+document.getElementById('nome-pf').addEventListener('input', updateDeclaracaoInfo);
+document.getElementById('cpf').addEventListener('input', updateDeclaracaoInfo);
+updateDeclaracaoInfo();
+
+// Inicializa data no novo campo
+document.getElementById('codigo-cliente').value = new Date().toISOString().slice(0, 10);
 
  // --- Funções para Salvar e Importar JSON (VERSÃO COMPLETA E CORRIGIDA) ---
 
@@ -2157,4 +2159,3 @@ function populateDynamicItems(containerId, itemsData) {
 
  </body>
 </html>
-
