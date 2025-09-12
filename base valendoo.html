@@ -272,7 +272,7 @@
  cursor: pointer;
  border-radius: 5px;
  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
- z-index: 1000;
+ z-index: 9999;
  }
  .save-button {
  right: 20px;
@@ -907,10 +907,6 @@
 
 </div>
 
-
-
-
-
 <div id="outras-receitas" class="tab-content">
   <div class="form-section">
     <div class="section-title">
@@ -942,7 +938,6 @@
  </div>
  </div>
  </div>
-
 
  <div id="dados-financeiros" class="tab-content">
   <div class="form-section">
@@ -993,7 +988,6 @@
   </div>
 </div>
 
-
  <div id="pecuaria" class="tab-content">
  <div class="form-section">
  <div class="section-title tooltip-container">
@@ -1034,13 +1028,6 @@
  </div>
  </div>
 </div>
-
-
-
-
-
-
-
 
  <div id="bens-moveis" class="tab-content">
 
@@ -1121,7 +1108,6 @@
  </div>
 
 </div>
-
 
 <div id="bens-imoveis" class="tab-content">
 
@@ -1248,7 +1234,6 @@
  </div>
 
 </div>
-
 
 <div id="conglomerado" class="tab-content">
  <div class="form-section">
@@ -1377,8 +1362,7 @@
  </div>
  </div>
 </div>
-
- <div id="aceites" class="tab-content">
+<div id="aceites" class="tab-content">
  <div class="form-section">
  <div class="section-title">Declaração de PEP</div>
  <div class="legal-text">
@@ -1499,6 +1483,25 @@
  </div>
  </div>
  </div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
  document.addEventListener("DOMContentLoaded", function() {
  // --- Funções de formatação e máscara ---
@@ -1885,216 +1888,85 @@ document.getElementById('codigo-cliente').value = new Date().toISOString().slice
 
  // --- Funções para Salvar e Importar JSON (VERSÃO COMPLETA E CORRIGIDA) ---
 
- const getUniqueKey = (field) => {
- const ignoredClasses = ['valor-input', 'cep-input', 'kml-file-input', 'form-control'];
- for (const cls of field.classList) {
- if (!ignoredClasses.includes(cls)) {
- return cls;
- }
- }
- return field.id || field.name;
- };
+let importedKmlContent = null;
+let importedKmlFileName = null;
 
-const getDynamicItemsData = (containerId) => {
+document.body.addEventListener('change', function(event) {
+    if (event.target.classList.contains('kml-file-input')) {
+        const fileInput = event.target;
+        const kmlDisplay = fileInput.parentElement.querySelector('.kml-area-display');
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            importedKmlFileName = file.name;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                importedKmlContent = e.target.result;
+                kmlDisplay.textContent = `KML importado: ${file.name}`;
+            };
+            reader.readAsText(file);
+        } else {
+            importedKmlContent = null;
+            importedKmlFileName = null;
+            kmlDisplay.textContent = '';
+        }
+    }
+}, true);
+
+// Função para obter dados de itens dinâmicos
+function getDynamicItemsData(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return [];
-
+    
     const items = container.querySelectorAll('.field-group');
     const data = [];
-
+    
     items.forEach(item => {
         const itemData = {};
-        // Seleciona todos os inputs e selects que tenham uma classe
-        const fields = item.querySelectorAll('input[class], select[class]');
-
-        fields.forEach(field => {
-            // Usa a primeira classe da lista como a chave.
-            // Isso é mais robusto que a lógica anterior.
-            const key = field.classList[0];
-            if (key && field.type !== 'file') { // Ignora input de arquivo
-                itemData[key] = field.value;
+        const inputs = item.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+            if (input.classList.length > 0) {
+                const className = Array.from(input.classList).find(cls => 
+                    !['valor-input', 'cep-input', 'kml-file-input'].includes(cls)
+                );
+                if (className) {
+                    if (input.type === 'checkbox') {
+                        itemData[className] = input.checked;
+                    } else {
+                        itemData[className] = input.value;
+                    }
+                }
             }
         });
-
-        // Adiciona o objeto ao array de dados se ele não estiver vazio
+        
         if (Object.keys(itemData).length > 0) {
             data.push(itemData);
         }
     });
-
+    
     return data;
-};
-
-// Função para salvar todos os dados (incluindo campos dinâmicos)
-window.saveDataAsJson = () => {
-  const erros = validarCamposObrigatorios();
-  if (erros.length > 0) {
-    alert('Por favor, preencha todos os campos obrigatórios antes de salvar os dados:\n\n' + erros.join('\n'));
-    return;
-  }
-
-  const formData = {};
-
-  // Campos fixos
-  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
-    if (field.type === 'checkbox') {
-      formData[field.id] = field.checked;
-    } else {
-      formData[field.id] = field.value;
-    }
-  });
-
-  // Campos dinâmicos
-  const dynamicContainers = [
-    'renda-safra-container',
-    'projecao-safra-container',
-    'outras-receitas-container',
-    'bancos-container',
-    'pecuaria-container',
-    'veiculos-container',
-    'maquinas-container',
-    'areas-proprias-container',
-    'areas-arrendadas-container',
-    'seguros-container',
-    'conglomerado-container'
-  ];
-
-  dynamicContainers.forEach(containerId => {
-  const key = containerId
-    .replace('-container', '')
-    .replace(/-([a-z])/g, (_, char) => char.toUpperCase()); // transforma em camelCase
-  formData[key] = getDynamicItemsData(containerId);
-});
-
-  const jsonString = JSON.stringify(formData, null, 2);
-  const blob = new Blob([jsonString], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
- const reapplyAllMasks = () => {
- document.querySelectorAll('.valor-input').forEach(field => {
- field.dispatchEvent(new Event('blur', { bubbles: true }));
- });
- document.querySelectorAll('#cpf, #cpf-conjuge, .cpf-conglomerado').forEach(f => 
- f.value = aplicarMascaraTexto(f.value, "###.###.###-##"));
-
- document.querySelectorAll('#telefone').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) ####-####"));
- document.querySelectorAll('#celular').forEach(f => f.value = aplicarMascaraTexto(f.value, "(##) #####-####"));
- document.querySelectorAll('#cep, .cep-input').forEach(f => f.value = aplicarMascaraTexto(f.value, "#####-###"));
- };
-
- window.importDataFromJson = () => {
- const input = document.createElement('input');
- input.type = 'file';
- input.accept = '.json';
- input.onchange = e => {
- const file = e.target.files[0];
- if (file) {
- const reader = new FileReader();
- reader.onload = event => {
- try {
- const data = JSON.parse(event.target.result);
- for (const key in data) {
- if (data.hasOwnProperty(key)) {
- const field = document.getElementById(key);
- if (field) {
- field.type === 'checkbox' ? field.checked = data[key] : field.value = data[key];
- }
- }
- }
- 
-const dynamicContainers = [
-  'renda-safra-container',
-  'projecao-safra-container',
-  'outras-receitas-container',
-  'bancos-container',
-  'pecuaria-container',
-  'veiculos-container',
-  'maquinas-container',
-  'areas-proprias-container',
-  'areas-arrendadas-container',
-  'seguros-container',
-  'conglomerado-container'
-];
-
-dynamicContainers.forEach(containerId => {
-  const camelKey = containerId
-    .replace('-container', '')
-    .replace(/-([a-z])/g, (_, char) => char.toUpperCase());
-  const kebabKey = containerId.replace('-container', ''); // versão antiga com hífen
-
-  if (data[camelKey]) {
-    populateDynamicItems(containerId, data[camelKey]);
-  } else if (data[kebabKey]) {
-    populateDynamicItems(containerId, data[kebabKey]);
-  }
-});
-
-
- reapplyAllMasks();
- document.querySelectorAll('.renda-safra-item, .projecao-safra-item').forEach(item => calcularValorProducao(item));
- calcularTotalRendas();
- toggleConjugeFields();
- togglePepFields();
- togglePepRelacionamentoFields();
- 
- alert('Dados importados com sucesso!');
- } catch (error) {
- alert('Erro ao ler o arquivo JSON.');
- console.error('Erro de parsing do JSON:', error);
- }
- };
- reader.readAsText(file);
- }
- };
- input.click();
- };
- });
-
-// Função para buscar CEP e preencher campos existentes e futuros
-function buscarCep(inputCep) {
-    const cep = inputCep.value.replace(/\D/g, "");
-    if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data.erro) {
-                const fieldGroup = inputCep.closest(".field-group");
-                if (fieldGroup) {
-                    const municipio = fieldGroup.querySelector("input[class*='municipio']");
-                    const bairro = fieldGroup.querySelector("input[class*='bairro']");
-                    if (municipio) municipio.value = data.localidade;
-                    if (bairro) bairro.value = data.bairro;
-                }
-            } else {
-                alert("CEP não encontrado.");
-                limparCampos(inputCep);
-            }
-        })
-        .catch(error => {
-            console.error("Erro ao buscar CEP:", error);
-            limparCampos(inputCep);
-        });
-    } else {
-        limparCampos(inputCep);
-    }
 }
 
-function limparCampos(inputCep) {
-    const fieldGroup = inputCep.closest(".field-group");
-    if (fieldGroup) {
-        const campos = fieldGroup.querySelectorAll("input");
-        campos.forEach(campo => {
-            if (campo !== inputCep && !campo.type.includes("file") && campo.type !== "number") {
-                campo.value = "";
-            }
-        });
+// Função para buscar CEP
+function buscarCep(cepInput) {
+    const cep = cepInput.value.replace(/\D/g, "");
+    if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.erro) {
+                    const container = cepInput.closest('.field-group');
+                    if (container) {
+                        const municipioInput = container.querySelector('.municipio-area-propria, .municipio-area-arrendada');
+                        if (municipioInput) {
+                            municipioInput.value = data.localidade;
+                        }
+                    }
+                } else {
+                    alert("CEP não encontrado.");
+                }
+            })
+            .catch(error => console.error("Erro ao buscar CEP:", error));
     }
 }
 
@@ -2105,7 +1977,7 @@ document.addEventListener("blur", function(event) {
     }
 }, true); // o true faz o listener ser no "capture phase", necessário para blur
 
-
+// Função para popular itens dinâmicos
 function populateDynamicItems(containerId, itemsData) {
     const container = document.getElementById(containerId);
     if (!container || !itemsData || !itemsData.length) return;
@@ -2127,7 +1999,11 @@ function populateDynamicItems(containerId, itemsData) {
             if (itemData.hasOwnProperty(key)) {
                 const field = newItem.querySelector(`.${key}`);
                 if (field) {
-                    field.value = itemData[key];
+                    if (field.type === 'checkbox') {
+                        field.checked = itemData[key];
+                    } else {
+                        field.value = itemData[key];
+                    }
                 }
             }
         }
@@ -2152,10 +2028,140 @@ function populateDynamicItems(containerId, itemsData) {
     });
 }
 
+// Função para salvar dados como JSON + KML em ZIP
+window.saveDataAsJson = function() {
+    const erros = validarCamposObrigatorios();
+    if (erros.length > 0) {
+        alert('Por favor, preencha todos os campos obrigatórios antes de salvar os dados:\n\n' + erros.join('\n'));
+        return;
+    }
 
+    const formData = {};
 
+    // Campos fixos
+    document.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
+        if (field.type === 'checkbox') {
+            formData[field.id] = field.checked;
+        } else {
+            formData[field.id] = field.value;
+        }
+    });
 
+    // Campos dinâmicos
+    const dynamicContainers = [
+        'renda-safra-container',
+        'projecao-safra-container',
+        'outras-receitas-container',
+        'bancos-container',
+        'pecuaria-container',
+        'veiculos-container',
+        'maquinas-container',
+        'areas-proprias-container',
+        'areas-arrendadas-container',
+        'seguros-container',
+        'conglomerado-container'
+    ];
+
+    dynamicContainers.forEach(containerId => {
+        const key = containerId
+            .replace('-container', '')
+            .replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+        formData[key] = getDynamicItemsData(containerId);
+    });
+
+    // Criar ZIP com JSON e KML
+    const zip = new JSZip();
+    
+    // Adicionar JSON ao ZIP
+    const jsonString = JSON.stringify(formData, null, 2);
+    zip.file("dados_formulario.json", jsonString);
+    
+    // Adicionar KML ao ZIP se existir
+    if (importedKmlContent && importedKmlFileName) {
+        zip.file(importedKmlFileName, importedKmlContent);
+    }
+    
+    // Gerar e baixar o ZIP
+    zip.generateAsync({type:"blob"}).then(function(content) {
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+};
+
+// Função para importar dados do JSON
+window.importDataFromJson = function() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Preencher campos fixos
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            const field = document.getElementById(key);
+                            if (field) {
+                                if (field.type === 'checkbox') {
+                                    field.checked = data[key];
+                                } else {
+                                    field.value = data[key];
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Preencher campos dinâmicos
+                    const dynamicMappings = {
+                        'rendaSafra': 'renda-safra-container',
+                        'projecaoSafra': 'projecao-safra-container',
+                        'outrasReceitas': 'outras-receitas-container',
+                        'bancos': 'bancos-container',
+                        'pecuaria': 'pecuaria-container',
+                        'veiculos': 'veiculos-container',
+                        'maquinas': 'maquinas-container',
+                        'areasProprias': 'areas-proprias-container',
+                        'areasArrendadas': 'areas-arrendadas-container',
+                        'seguros': 'seguros-container',
+                        'conglomerado': 'conglomerado-container'
+                    };
+                    
+                    for (const key in dynamicMappings) {
+                        if (data[key]) {
+                            populateDynamicItems(dynamicMappings[key], data[key]);
+                        }
+                    }
+                    
+                    // Atualizar informações da declaração
+                    updateDeclaracaoInfo();
+                    
+                    // Recalcular valores se necessário
+                    calcularTotalRendas();
+                    
+                    alert('Dados importados com sucesso!');
+                } catch (error) {
+                    alert('Erro ao importar dados: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+    input.click();
+};
+
+}); 
 </script>
 
- </body>
+</body>
 </html>
+
