@@ -1504,8 +1504,11 @@
 
 
 
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 <script>
  document.addEventListener("DOMContentLoaded", function() {
  // --- Funções de formatação e máscara ---
@@ -1639,23 +1642,43 @@
  }
  }, true);
 
- document.body.addEventListener('click', (event) => {
- if (event.target.matches('.add-button')) {
- const container = event.target.closest('[id$="-container"]');
- const item = event.target.closest('.field-group');
- const newItem = item.cloneNode(true);
- newItem.querySelectorAll('input, select, textarea').forEach(input => input.value = '');
- const newButton = newItem.querySelector('.add-button');
- newButton.textContent = '- Remover';
- newButton.classList.replace('add-button', 'remove-button');
- if (newItem.querySelector('.kml-area-display')) {
- newItem.querySelector('.kml-area-display').textContent = '';
- }
- container.appendChild(newItem);
- } else if (event.target.matches('.remove-button')) {
- event.target.closest('.field-group').remove();
- }
- });
+document.body.addEventListener('click', (event) => {
+    if (event.target.matches('.add-button')) {
+        const container = event.target.closest('[id$="-container"]');
+        const item = event.target.closest('.field-group');
+        const newItem = item.cloneNode(true);
+
+        // Limpa todos os inputs/selects/textarea
+        newItem.querySelectorAll('input, select, textarea').forEach(input => input.value = '');
+
+        // Remove checkbox selecionado
+        newItem.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+
+        // Remove mapa KML se existir
+        const existingWrapper = newItem.querySelector('.kml-map-wrapper');
+        if (existingWrapper) existingWrapper.remove();
+
+        // Limpa dataset do KML
+        delete newItem.dataset.kmlContent;
+        delete newItem.dataset.kmlFileName;
+
+        // Limpa exibição de KML
+        const kmlDisplay = newItem.querySelector('.kml-area-display');
+        if (kmlDisplay) kmlDisplay.textContent = '';
+
+        // Alterar botão para remover se não for o primeiro item
+        const newButton = newItem.querySelector('.add-button');
+        if (newButton && container.querySelectorAll('.field-group').length > 0) {
+            newButton.textContent = '- Remover';
+            newButton.classList.replace('add-button', 'remove-button');
+        }
+
+        container.appendChild(newItem);
+    } else if (event.target.matches('.remove-button')) {
+        event.target.closest('.field-group').remove();
+    }
+});
+
  
  document.body.addEventListener('click', function(event) {
  if (event.target.classList.contains('kml-button')) {
@@ -1895,26 +1918,76 @@ document.getElementById('codigo-cliente').value = new Date().toISOString().slice
 let importedKmlContent = null;
 let importedKmlFileName = null;
 
+
 document.body.addEventListener('change', function(event) {
-    if (event.target.classList.contains('kml-file-input')) {
-        const fileInput = event.target;
-        const kmlDisplay = fileInput.parentElement.querySelector('.kml-area-display');
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            importedKmlFileName = file.name;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                importedKmlContent = e.target.result;
-                kmlDisplay.textContent = `KML importado: ${file.name}`;
-            };
-            reader.readAsText(file);
-        } else {
-            importedKmlContent = null;
-            importedKmlFileName = null;
-            kmlDisplay.textContent = '';
-        }
+    if (!event.target.classList.contains('kml-file-input')) return;
+
+    const fileInput = event.target;
+    const container = fileInput.closest('.field-group');
+    const kmlDisplay = container.querySelector('.kml-area-display');
+
+    // Remove mapa antigo do item
+    const existingWrapper = container.querySelector('.kml-map-wrapper');
+    if (existingWrapper) existingWrapper.remove();
+
+    if (fileInput.files.length === 0) {
+        kmlDisplay.textContent = '';
+        return;
     }
-}, true);
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const kmlContent = e.target.result;
+
+        // Armazena localmente o KML apenas deste item
+        container.dataset.kmlContent = kmlContent;
+        container.dataset.kmlFileName = file.name;
+
+        // Cria wrapper do mapa
+        const mapWrapper = document.createElement('div');
+        mapWrapper.classList.add('kml-map-wrapper');
+        mapWrapper.style.width = '100%';
+        mapWrapper.style.height = '400px';
+        mapWrapper.style.marginTop = '10px';
+
+        const mapDiv = document.createElement('div');
+        mapDiv.classList.add('kml-map');
+        mapDiv.style.width = '100%';
+        mapDiv.style.height = '100%';
+        mapWrapper.appendChild(mapDiv);
+        container.appendChild(mapWrapper);
+
+        // Cria mapa Leaflet local
+        const map = L.map(mapDiv).setView([-15, -55], 4);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Parse do KML local
+        const parser = new DOMParser();
+        const kmlDom = parser.parseFromString(kmlContent, 'text/xml');
+        const kmlLayer = omnivore.kml.parse(kmlDom);
+        kmlLayer.addTo(map);
+        map.fitBounds(kmlLayer.getBounds());
+
+        // Calcula área somente deste KML
+        const geojson = kmlLayer.toGeoJSON();
+        let totalArea = 0;
+        geojson.features.forEach(feature => totalArea += turf.area(feature));
+        const totalHectares = (totalArea / 10000).toFixed(2);
+
+        kmlDisplay.textContent = `KML importado: ${file.name} - Área: ${totalHectares} ha`;
+        console.log(`Área total do KML "${file.name}" em hectares:`, totalArea / 10000);
+    };
+
+    reader.readAsText(file);
+});
+
+
+
+
 
 // Função para obter dados de itens dinâmicos
 function getDynamicItemsData(containerId) {
@@ -2072,30 +2145,40 @@ window.saveDataAsJson = function() {
             .replace(/-([a-z])/g, (_, char) => char.toUpperCase());
         formData[key] = getDynamicItemsData(containerId);
     });
+// Criar ZIP com JSON e KML
+const zip = new JSZip();
 
-    // Criar ZIP com JSON e KML
-    const zip = new JSZip();
-    
-    // Adicionar JSON ao ZIP
-    const jsonString = JSON.stringify(formData, null, 2);
-    zip.file("dados_formulario.json", jsonString);
-    
-    // Adicionar KML ao ZIP se existir
-    if (importedKmlContent && importedKmlFileName) {
-        zip.file(importedKmlFileName, importedKmlContent);
-    }
-    
-    // Gerar e baixar o ZIP
-    zip.generateAsync({type:"blob"}).then(function(content) {
-        const url = URL.createObjectURL(content);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.zip`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+// Adicionar JSON ao ZIP
+const jsonString = JSON.stringify(formData, null, 2);
+zip.file("dados_formulario.json", jsonString);
+
+// Adicionar todos os KMLs de todos os itens dinâmicos
+dynamicContainers.forEach(containerId => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const items = container.querySelectorAll('.field-group');
+    items.forEach((item, index) => {
+        const kmlContent = item.dataset.kmlContent;
+        const kmlFileName = item.dataset.kmlFileName;
+        if (kmlContent && kmlFileName) {
+            // Se houver mais de um KML com mesmo nome, adiciona índice
+            const finalFileName = items.length > 1 ? `${index+1}_${kmlFileName}` : kmlFileName;
+            zip.file(finalFileName, kmlContent);
+        }
     });
+});
+
+// Gerar e baixar o ZIP
+zip.generateAsync({type:"blob"}).then(function(content) {
+    const url = URL.createObjectURL(content);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ficha_cadastral_${new Date().toISOString().slice(0,10)}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
 };
 
 // Função para importar dados do JSON
@@ -2164,6 +2247,19 @@ window.importDataFromJson = function() {
 };
 
 }); 
+
+
+const geojson = kmlLayer.toGeoJSON();
+
+let totalArea = 0;
+
+geojson.features.forEach(feature => {
+    totalArea += turf.area(feature); // soma todas as features do KML
+});
+
+console.log("Área total em m²:", totalArea);
+console.log("Área total em hectares:", totalArea / 10000); // hectares
+
 </script>
 
 </body>
